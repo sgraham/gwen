@@ -28,6 +28,10 @@
 #ifndef GWEN_GWEN_H
 #define GWEN_GWEN_H
 
+#include <stdlib.h>
+#include <memory.h>
+#include <tchar.h>
+
 #include "Gwen/Macros.h"
 #include "Gwen/Config.h"
 #include "Gwen/Exports.h"

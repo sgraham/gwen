@@ -56,11 +56,12 @@ namespace Gwen
 								Gwen::UnicodeChar chr = (Gwen::UnicodeChar)msg.wParam;
 								return m_Canvas->InputCharacter( chr );
 							}
-
+#ifdef WM_MOUSEWHEEL 
 						case WM_MOUSEWHEEL:
 							{
 								return m_Canvas->InputMouseWheel( (short)HIWORD( msg.wParam ) );
 							}
+#endif
 
 						case WM_LBUTTONDOWN:
 							{
