@@ -151,7 +151,11 @@ namespace Gwen
 			fd.OutputPrecision = OUT_DEFAULT_PRECIS;
 			fd.Italic = 0;
 			fd.Weight = FW_NORMAL;
+#ifdef CLEARTYPE_QUALITY
 			fd.Quality = font->realsize < 14 ? DEFAULT_QUALITY : CLEARTYPE_QUALITY;
+#else 
+			fd.Quality = PROOF_QUALITY;
+#endif 
 			fd.PitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
 
 			LPD3DXFONT pD3DXFont;
@@ -342,6 +346,8 @@ namespace Gwen
 			DWORD* pixels = (DWORD*)lockedRect.pBits;
 			D3DXCOLOR color = pixels[lockedRect.Pitch / sizeof(DWORD) * y + x];
 			pSurface->UnlockRect();
+
+			pSurface->Release();
 
 			return Gwen::Color( color.r*255, color.g*255, color.b*255, color.a*255 );
 		}
