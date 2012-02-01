@@ -21,16 +21,17 @@ namespace Gwen
 
 		class ICacheToTexture
 		{
+			public:
 
-		public:
-			virtual void Initialize() = 0;
-			virtual void ShutDown() = 0;
-			virtual void SetupCacheTexture( Gwen::Controls::Base* control ) = 0;
-			virtual void FinishCacheTexture( Gwen::Controls::Base* control ) = 0;
-			virtual void DrawCachedControlTexture( Gwen::Controls::Base* control ) = 0;
-			virtual void CreateControlCacheTexture( Gwen::Controls::Base* control ) = 0;
-			virtual void UpdateControlCacheTexture( Gwen::Controls::Base* control ) = 0;
-			virtual void SetRenderer( Gwen::Renderer::Base* renderer ) = 0;
+				virtual ~ICacheToTexture() {}
+				virtual void Initialize() = 0;
+				virtual void ShutDown() = 0;
+				virtual void SetupCacheTexture( Gwen::Controls::Base* control ) = 0;
+				virtual void FinishCacheTexture( Gwen::Controls::Base* control ) = 0;
+				virtual void DrawCachedControlTexture( Gwen::Controls::Base* control ) = 0;
+				virtual void CreateControlCacheTexture( Gwen::Controls::Base* control ) = 0;
+				virtual void UpdateControlCacheTexture( Gwen::Controls::Base* control ) = 0;
+				virtual void SetRenderer( Gwen::Renderer::Base* renderer ) = 0;
 
 		};
 
