@@ -14,6 +14,11 @@ using namespace Gwen;
 	#pragma warning(disable:4267)// conversion from 'size_t' to 'int', possible loss of data
 #endif
 
+#ifdef __MINGW32__
+	#undef vswprintf
+	#define vswprintf _vsnwprintf
+#endif
+
 UnicodeString Gwen::Utility::Format( const wchar_t* fmt, ... )
 {
 	wchar_t strOut[ 4096 ];
