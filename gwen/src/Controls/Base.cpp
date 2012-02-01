@@ -362,7 +362,7 @@ Skin::Base* Base::GetSkin( void )
 
 void Base::MoveBy( int x, int y )
 {
-	SetBounds( X() + x, Y() + y, Width(), Height() );
+	MoveTo( X() + x, Y() + y );
 }
 
 void Base::MoveTo( int x, int y )

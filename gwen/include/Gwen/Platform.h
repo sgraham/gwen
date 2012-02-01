@@ -22,6 +22,12 @@ namespace Gwen
 		GWEN_EXPORT void SetCursor( unsigned char iCursor );
 
 		//
+		//
+		//
+		GWEN_EXPORT void GetCursorPos( Gwen::Point &p );
+		GWEN_EXPORT void GetDesktopSize( int& w, int &h );
+
+		//
 		// Used by copy/paste
 		//
 		GWEN_EXPORT UnicodeString GetClipboardText();
@@ -43,6 +49,7 @@ namespace Gwen
 		//
 		GWEN_EXPORT void* CreatePlatformWindow( int x, int y, int w, int h, const Gwen::String& strWindowTitle );
 		GWEN_EXPORT void DestroyPlatformWindow( void* pPtr );
+		GWEN_EXPORT void SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, int h );
 		GWEN_EXPORT void MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget );
 	}
 

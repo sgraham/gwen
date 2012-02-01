@@ -19,6 +19,8 @@
 using namespace Gwen;
 using namespace Gwen::Platform;
 
+static Gwen::Input::Windows GwenInput;
+
 #ifdef UNICODE
 static LPWSTR iCursorConvertion[] = 
 #else
@@ -41,6 +43,20 @@ void Gwen::Platform::SetCursor( unsigned char iCursor )
 {
 	// Todo.. Properly.
 	::SetCursor( LoadCursor( NULL, iCursorConvertion[iCursor] ) );
+}
+
+void Gwen::Platform::GetCursorPos( Gwen::Point &po )
+{
+	POINT p;
+	::GetCursorPos( &p );
+	po.x = p.x;
+	po.y = p.y;
+}
+
+void Gwen::Platform::GetDesktopSize( int& w, int &h )
+{
+	w = GetSystemMetrics( SM_CXFULLSCREEN );
+	h = GetSystemMetrics( SM_CYFULLSCREEN );
 }
 
 Gwen::UnicodeString Gwen::Platform::GetClipboardText()
@@ -271,12 +287,11 @@ void* Gwen::Platform::CreatePlatformWindow( int x, int y, int w, int h, const Gw
 
 void Gwen::Platform::DestroyPlatformWindow( void* pPtr )
 {
-	CloseWindow( (HWND)pPtr );
+	DestroyWindow( (HWND)pPtr );
 }
 
 void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget )
 {
-	Gwen::Input::Windows GwenInput;
 	GwenInput.Initialize( ptarget ); 
 
 	MSG msg;
@@ -288,6 +303,11 @@ void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+}
+
+void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, int h )
+{
+	SetWindowPos( (HWND)pPtr, HWND_NOTOPMOST, x, y, w, h, SWP_NOOWNERZORDER | SWP_NOACTIVATE );
 }
 
 #endif // WIN32

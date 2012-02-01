@@ -31,13 +31,17 @@ namespace Gwen
 				virtual void SetTarget( Controls::Base* pBase ){ m_pTarget = pBase; }
 				virtual bool IsDepressed(){ return m_bDepressed; }
 
+				virtual void SetDoMove( bool b ){ m_bDoMove = b; }
+
 				Gwen::Event::Caller	onDragged;
+				Gwen::Event::Caller	OnDragStart;
 
 			protected:
 
 				bool				m_bDepressed;
 				Gwen::Point			m_HoldPos;
 				Controls::Base*		m_pTarget;
+				bool				m_bDoMove;
 		};
 	}
 }
