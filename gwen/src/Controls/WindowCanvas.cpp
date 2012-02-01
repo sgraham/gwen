@@ -23,6 +23,15 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 {
 	m_bQuit = false;
 
+	// Centering the window on the desktop
+	{
+		int dw, dh;
+		Gwen::Platform::GetDesktopSize( dw, dh );
+
+		if ( x < 0 ) x = (dw - w) * 0.5;
+		if ( y < 0 ) y = (dh - h) * 0.5;
+	}
+
 	m_pOSWindow = Gwen::Platform::CreatePlatformWindow( x, y, w, h, strWindowTitle );
 	m_WindowPos  = Gwen::Point( x, y );
 

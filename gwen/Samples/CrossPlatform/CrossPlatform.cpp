@@ -29,7 +29,7 @@ int main()
 	// window - so we don't have to bother with all that crap.
 	//
 	//
-	Gwen::Controls::WindowCanvas window_canvas( 10, 10, 700, 500, &skin, "Gwen's Cross Platform Example" );
+	Gwen::Controls::WindowCanvas window_canvas( -1, -1, 700, 500, &skin, "Gwen's Cross Platform Example" );
 
 	//
 	// Now it's safe to set up the skin

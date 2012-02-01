@@ -9,25 +9,11 @@
 #include "Gwen/Controls/ImagePanel.h"
 #include "Gwen/Controls/Label.h"
 #include "Gwen/Controls/Modal.h"
-#include "Gwen/Controls/WindowCloseButton.h"
+
 
 using namespace Gwen;
 using namespace Gwen::Controls;
 using namespace Gwen::ControlsInternal;
-
-class GWEN_EXPORT Gwen::Controls::CloseButton : public Button
-{
-	GWEN_CONTROL_INLINE( CloseButton, Button ){}
-
-	virtual void Render( Skin::Base* skin )
-	{
-		skin->DrawWindowCloseButton( this, IsDepressed() && IsHovered(), IsHovered() && ShouldDrawHover(), !m_pWindow->IsOnTop() );
-	}
-
-	virtual void SetWindow( WindowControl* p ) { m_pWindow = p; }
-
-	WindowControl* m_pWindow;
-};
 
 
 GWEN_CONTROL_CONSTRUCTOR( WindowControl )
@@ -49,7 +35,7 @@ GWEN_CONTROL_CONSTRUCTOR( WindowControl )
 	m_Title->SetPadding( Padding( 8, 0, 0, 0 ) );
 	m_Title->SetTextColor( GetSkin()->Colors.Window.TitleInactive );
 
-	m_CloseButton = new CloseButton( m_TitleBar );
+	m_CloseButton = new Gwen::Controls::WindowCloseButton( m_TitleBar );
 	m_CloseButton->SetText( "" );
 	m_CloseButton->SetSize( 24, 24 );
 	m_CloseButton->Dock( Pos::Right );
