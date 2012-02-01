@@ -59,8 +59,7 @@ int main()
 	// Create a GWEN skin
 	//
 	//Gwen::Skin::Simple skin;
-	Gwen::Skin::TexturedBase skin;
-	skin.SetRender( pRenderer );
+	Gwen::Skin::TexturedBase skin( pRenderer );
 	skin.Init( "DefaultSkin.png" );
 
 	//
@@ -129,4 +128,6 @@ int main()
 		}
 	}
 
+	delete pCanvas;
+	delete pRenderer;
 }

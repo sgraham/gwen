@@ -580,6 +580,7 @@ void Base::RenderRecursive( Gwen::Skin::Base* skin, const Gwen::Rect& cliprect )
 void Base::SetSkin( Skin::Base* skin, bool doChildren )
 {
 	if ( m_Skin == skin ) return;
+
 	m_Skin = skin;
 	Invalidate();
 	Redraw();

@@ -101,6 +101,8 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
 	g_pD3D = Direct3DCreate9( D3D_SDK_VERSION );
 	g_pHWND = CreateGameWindow();
 	CreateD3DDevice();	
+	RECT FrameBounds;
+	GetClientRect( g_pHWND, &FrameBounds );
 
 	//
 	// Create a GWEN DirectX renderer
@@ -110,15 +112,14 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
 	//
 	// Create a GWEN skin
 	//
-	Gwen::Skin::TexturedBase skin;
-	skin.SetRender( pRenderer );
+	Gwen::Skin::TexturedBase skin( pRenderer );
 	skin.Init( "DefaultSkin.png" );
 
 	//
 	// Create a Canvas (it's root, on which all other GWEN panels are created)
 	//
 	Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas( &skin );
-	pCanvas->SetSize( 1000, 622 );
+	pCanvas->SetSize( FrameBounds.right, FrameBounds.bottom );
 	pCanvas->SetDrawBackground( true );
 	pCanvas->SetBackgroundColor( Gwen::Color( 150, 170, 170, 255 ) );
 
@@ -174,6 +175,9 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
 
 		}
 	}
+
+	delete pCanvas;
+	delete pRenderer;
 
 	if ( g_pD3DDevice )
 	{

@@ -109,11 +109,12 @@ int main()
 		Gwen::Renderer::OpenGL * pRenderer = new Gwen::Renderer::OpenGL();
 	#endif
 
+		pRenderer->Init();
+
 	//
 	// Create a GWEN skin
 	//
-	Gwen::Skin::TexturedBase skin;
-	skin.SetRender( pRenderer );
+	Gwen::Skin::TexturedBase skin( pRenderer );
 	skin.Init("DefaultSkin.png");
 
 	//
@@ -177,5 +178,8 @@ int main()
 	// Clean up OpenGL
 	wglMakeCurrent( NULL, NULL );
 	wglDeleteContext( OpenGLContext );
+
+	delete pCanvas;
+	delete pRenderer;
 
 }

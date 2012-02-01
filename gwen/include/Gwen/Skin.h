@@ -32,11 +32,11 @@ namespace Gwen
 		{
 			public:
 
-				Base()
+				Base( Gwen::Renderer::Base* renderer = NULL )
 				{
 					m_DefaultFont.facename = L"Arial";
 					m_DefaultFont.size = 10.0f;
-					m_Render = NULL;
+					m_Render = renderer;
 				}
 
 				virtual ~Base()

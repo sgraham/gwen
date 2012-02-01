@@ -14,6 +14,11 @@ namespace Gwen
 		{
 			public:
 
+				Simple( Gwen::Renderer::Base* renderer ) : Gwen::Skin::Base( renderer )
+				{
+
+				}
+
 				Gwen::Color m_colBorderColor;
 				Gwen::Color m_colControlOutlineLight;
 				Gwen::Color m_colControlOutlineLighter;

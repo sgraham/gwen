@@ -80,6 +80,8 @@ end
 -- Samples
 --
 
+DefineSample( "CrossPlatform", { "../Samples/CrossPlatform/CrossPlatform.cpp" }, { "Renderer-OpenGL_DebugFont", "GWEN Static", "UnitTest", "opengl32", "FreeImage" }, nil, { "USE_DEBUG_FONT" } )
+
 DefineSample( "SFML", { "../Samples/SFML/SFML.cpp" }, SFML_LIBS, SFML_LIBS_D )
 DefineSample( "Allegro", { "../Samples/Allegro/AllegroSample.cpp" }, ALLEGRO_LIBS, ALLEGRO_LIBS_D )
 

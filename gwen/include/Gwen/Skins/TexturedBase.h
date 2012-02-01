@@ -16,6 +16,11 @@ namespace Gwen
 		{
 			public:
 
+				TexturedBase( Gwen::Renderer::Base* renderer ) : Gwen::Skin::Base( renderer )
+				{
+
+				}
+
 				Texture m_Texture;
 
 				struct Textures_t

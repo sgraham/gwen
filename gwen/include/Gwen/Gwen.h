@@ -31,6 +31,7 @@
 #include <stdlib.h>
 #include <memory.h>
 #include <tchar.h>
+#include <set>
 
 #include "Gwen/Macros.h"
 #include "Gwen/Config.h"

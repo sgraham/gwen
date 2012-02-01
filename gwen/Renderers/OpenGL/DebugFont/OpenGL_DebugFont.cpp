@@ -19,7 +19,11 @@ namespace Gwen
 			m_fLetterSpacing = 1.0f/16.0f;
 			m_fFontScale[0] = 1.5f;
 			m_fFontScale[1] = 1.5f;
+			m_pFontTexture = NULL;
+		}
 
+		void OpenGL_DebugFont::Init()
+		{
 			m_pFontTexture = new Gwen::Texture();
 
 			// Create a little texture pointer..
@@ -51,8 +55,11 @@ namespace Gwen
 
 		OpenGL_DebugFont::~OpenGL_DebugFont()
 		{
-			FreeTexture( m_pFontTexture );
-			delete m_pFontTexture;
+			if ( m_pFontTexture )
+			{
+				FreeTexture( m_pFontTexture );
+				delete m_pFontTexture;
+			}
 		}
 
 		void OpenGL_DebugFont::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text )
@@ -67,7 +74,6 @@ namespace Gwen
 			float yOffset=0.0f;
 			for ( int i=0; i<text.length(); i++ )
 			{
-				wchar_t chr = text[i];
 				char ch = converted_string[i];
 				float curSpacing = sGwenDebugFontSpacing[ch] * m_fLetterSpacing * fSize * m_fFontScale[0];
 				Gwen::Rect r( pos.x + yOffset, pos.y-fSize*0.2f, (fSize * m_fFontScale[0]), fSize * m_fFontScale[1] );

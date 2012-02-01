@@ -38,6 +38,15 @@ namespace Gwen
 
 					switch ( msg.message )
 					{
+						//case WM_NCLBUTTONDOWN:
+						case WM_SYSCOMMAND:
+							{
+								if ( msg.message == WM_SYSCOMMAND && msg.wParam != SC_CLOSE )
+									return false;
+
+								return m_Canvas->InputQuit();
+							}
+
 						case WM_MOUSEMOVE:
 							{
 								int x = (signed short)LOWORD( msg.lParam );

@@ -6,6 +6,7 @@
 
 #include "Gwen/Macros.h"
 #include "Gwen/Platform.h"
+#include "Gwen/Input/Windows.h"
 
 #ifdef _WIN32
 
@@ -243,6 +244,50 @@ bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, cons
 #else 
 	return false;
 #endif 
+}
+
+
+void* Gwen::Platform::CreatePlatformWindow( int x, int y, int w, int h, const Gwen::String& strWindowTitle )
+{
+	WNDCLASSA	wc;
+	ZeroMemory( &wc, sizeof( wc ) );
+
+	wc.style			= CS_OWNDC;
+	wc.lpfnWndProc		= DefWindowProc;
+	wc.hInstance		= GetModuleHandle(NULL);
+	wc.lpszClassName	= "GWEN_Window_Class";
+	wc.hCursor			= LoadCursor( NULL, IDC_ARROW );
+
+	RegisterClassA( &wc );
+
+	HWND hWindow = CreateWindowExA( WS_EX_APPWINDOW, wc.lpszClassName, strWindowTitle.c_str(), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, x, y, w, h, NULL, NULL, GetModuleHandle(NULL), NULL );
+
+	ShowWindow( hWindow, SW_SHOW );
+	SetForegroundWindow( hWindow );
+	SetFocus( hWindow );
+
+	return (void*)hWindow;
+}
+
+void Gwen::Platform::DestroyPlatformWindow( void* pPtr )
+{
+	CloseWindow( (HWND)pPtr );
+}
+
+void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget )
+{
+	Gwen::Input::Windows GwenInput;
+	GwenInput.Initialize( ptarget ); 
+
+	MSG msg;
+	while ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+	{
+		if ( GwenInput.ProcessMessage( msg ) )
+			continue;
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 }
 
 #endif // WIN32

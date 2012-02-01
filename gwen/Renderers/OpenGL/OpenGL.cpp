@@ -3,6 +3,7 @@
 #include "Gwen/Utility.h"
 #include "Gwen/Font.h"
 #include "Gwen/Texture.h"
+#include "Gwen/WindowProvider.h"
 
 #include <math.h>
 
@@ -17,6 +18,7 @@ namespace Gwen
 		OpenGL::OpenGL()
 		{
 			m_iVertNum = 0;
+			m_pContext = NULL;
 
 			::FreeImage_Initialise();
 
@@ -29,6 +31,11 @@ namespace Gwen
 		OpenGL::~OpenGL()
 		{
 			::FreeImage_DeInitialise();
+		}
+
+		void OpenGL::Init()
+		{
+
 		}
 
 		void OpenGL::Begin()
@@ -269,6 +276,96 @@ namespace Gwen
 			free( data );
 
 			return c;
+		}
+
+		bool OpenGL::InitializeContext( Gwen::WindowProvider* pWindow )
+		{
+			#ifdef _WIN32
+
+				HWND pHwnd = (HWND) pWindow->GetWindow();
+				if ( !pHwnd ) return false;
+
+				HDC hDC = GetDC( pHwnd );
+
+				//
+				// Set the pixel format
+				//
+				PIXELFORMATDESCRIPTOR pfd;
+					memset( &pfd, 0, sizeof( pfd ) );
+					pfd.nSize = sizeof( pfd );
+					pfd.nVersion = 1;
+					pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
+					pfd.iPixelType = PFD_TYPE_RGBA;
+					pfd.cColorBits = 24;
+					pfd.cDepthBits = 32;
+					pfd.iLayerType = PFD_MAIN_PLANE;
+					int iFormat = ChoosePixelFormat( hDC, &pfd );
+					SetPixelFormat( hDC, iFormat, &pfd );
+
+				HGLRC hRC;
+				hRC = wglCreateContext( hDC );
+				wglMakeCurrent( hDC, hRC );
+
+				RECT r;
+				if ( GetClientRect( pHwnd, &r ) )
+				{
+					glMatrixMode( GL_PROJECTION );
+					glLoadIdentity();
+					glOrtho( r.left, r.right, r.bottom, r.top, -1.0, 1.0);
+					glMatrixMode( GL_MODELVIEW );
+					glViewport(0, 0, r.right - r.left, r.bottom - r.top);
+				}
+
+				m_pContext = (void*) hRC;
+
+				return true;
+			#endif
+
+			return false;
+		}
+
+		bool OpenGL::ShutdownContext( Gwen::WindowProvider* pWindow )
+		{
+			#ifdef _WIN32
+				wglDeleteContext( (HGLRC)m_pContext );
+				return true;
+			#endif
+
+			return false;
+		}
+
+		bool OpenGL::PresentContext( Gwen::WindowProvider* pWindow )
+		{
+			#ifdef _WIN32 
+				HWND pHwnd = (HWND) pWindow->GetWindow();
+				if ( !pHwnd ) return false;
+
+				HDC hDC = GetDC( pHwnd );
+				SwapBuffers( hDC );
+				return true;
+			#endif 
+
+			return false;
+		}
+
+		bool OpenGL::ResizedContext( Gwen::WindowProvider* pWindow, int w, int h )
+		{
+			#ifdef _WIN32
+				return true;
+			#endif
+
+			return false;
+		}
+
+		bool OpenGL::BeginContext( Gwen::WindowProvider* pWindow )
+		{
+			glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+			return true;
+		}
+
+		bool OpenGL::EndContext( Gwen::WindowProvider* pWindow )
+		{
+			return true;
 		}
 
 	}

@@ -19,24 +19,31 @@ namespace Gwen
 		// Set the system cursor to iCursor
 		// Cursors are defined in Structures.h
 		//
-		void GWEN_EXPORT SetCursor( unsigned char iCursor );
+		GWEN_EXPORT void SetCursor( unsigned char iCursor );
 
 		//
 		// Used by copy/paste
 		//
-		UnicodeString GWEN_EXPORT GetClipboardText();
-		bool GWEN_EXPORT SetClipboardText( const UnicodeString& str );
+		GWEN_EXPORT UnicodeString GetClipboardText();
+		GWEN_EXPORT bool SetClipboardText( const UnicodeString& str );
 
 		//
 		// Needed for things like double click
 		//
-		float GWEN_EXPORT GetTimeInSeconds();
+		GWEN_EXPORT float GetTimeInSeconds();
 
 		//
 		// System Dialogs ( Can return false if unhandled )
 		//
-		bool GWEN_EXPORT FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionStr fnCallback );
-		bool GWEN_EXPORT FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionStr fnCallback );
+		GWEN_EXPORT bool FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionStr fnCallback );
+		GWEN_EXPORT bool FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionStr fnCallback );
+
+		//
+		// Window Creation
+		//
+		GWEN_EXPORT void* CreatePlatformWindow( int x, int y, int w, int h, const Gwen::String& strWindowTitle );
+		GWEN_EXPORT void DestroyPlatformWindow( void* pPtr );
+		GWEN_EXPORT void MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget );
 	}
 
 }

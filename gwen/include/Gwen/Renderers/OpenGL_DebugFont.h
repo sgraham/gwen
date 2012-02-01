@@ -22,6 +22,8 @@ namespace Gwen
 				OpenGL_DebugFont();
 				~OpenGL_DebugFont();
 
+				void Init();
+
 				void RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text );
 				Gwen::Point MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text );
 				

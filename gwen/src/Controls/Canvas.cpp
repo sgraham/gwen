@@ -22,10 +22,17 @@ using namespace Gwen::Controls;
 Canvas::Canvas( Gwen::Skin::Base* pSkin ) : BaseClass( NULL ), m_bAnyDelete( false )
 {
 	SetBounds( 0, 0, 10000, 10000 );
-	SetSkin( pSkin );
+	
 	SetScale( 1.0f );
 	SetBackgroundColor( Color( 255, 255, 255, 255 ) );
 	SetDrawBackground( false );
+
+	if ( pSkin ) SetSkin( pSkin );
+}
+
+Canvas::~Canvas()
+{
+	ReleaseChildren();
 }
 
 void Canvas::RenderCanvas()
@@ -57,9 +64,6 @@ void Canvas::RenderCanvas()
 		render->EndClip();
 
 	render->End();
-
-	ProcessDelayedDeletes();
-
 }
 
 void Canvas::Render( Gwen::Skin::Base* /*pRender*/ )
@@ -76,6 +80,8 @@ void Canvas::OnBoundsChanged( Gwen::Rect oldBounds )
 
 void Canvas::DoThink()
 {
+	ProcessDelayedDeletes();
+
 	if ( Hidden() ) return;
 
 	#ifndef GWEN_NO_ANIMATION
@@ -156,7 +162,7 @@ void Canvas::ProcessDelayedDeletes()
 	}
 }
 
-void Canvas::Release()
+void Canvas::ReleaseChildren()
 {
 	Base::List::iterator iter = Children.begin();
 	while ( iter != Children.end() )
@@ -165,8 +171,6 @@ void Canvas::Release()
 		iter = Children.erase( iter );
 		delete pChild;
 	}
-
-	delete this;
 }
 
 bool Canvas::InputMouseMoved( int x, int y, int deltaX, int deltaY )
