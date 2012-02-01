@@ -310,4 +310,9 @@ void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, i
 	SetWindowPos( (HWND)pPtr, HWND_NOTOPMOST, x, y, w, h, SWP_NOOWNERZORDER | SWP_NOACTIVATE );
 }
 
+bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )
+{
+	return GetActiveWindow() == (HWND)pPtr;
+}
+
 #endif // WIN32

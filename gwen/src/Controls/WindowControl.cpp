@@ -9,6 +9,7 @@
 #include "Gwen/Controls/ImagePanel.h"
 #include "Gwen/Controls/Label.h"
 #include "Gwen/Controls/Modal.h"
+#include "Gwen/Controls/WindowCloseButton.h"
 
 using namespace Gwen;
 using namespace Gwen::Controls;

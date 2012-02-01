@@ -675,6 +675,9 @@ void Base::Blur()
 
 bool Base::IsOnTop()
 {
+	if ( !GetParent() )
+		return false;
+
 	Base::List::iterator iter = GetParent()->Children.begin();
 	Base* pChild = *iter;
 

@@ -11,13 +11,13 @@
 #include "Gwen/Controls/Menu.h"
 #include "Gwen/DragAndDrop.h"
 #include "Gwen/ToolTip.h"
+#include "Gwen/Controls/WindowCloseButton.h"
 
 #ifndef GWEN_NO_ANIMATION
 #include "Gwen/Anim.h"
 #endif
 
 using namespace Gwen::Controls;
-
 
 WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin, const Gwen::String& strWindowTitle ) : BaseClass( NULL )
 {
@@ -48,6 +48,16 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 		m_Title->Dock( Pos::Fill );
 		m_Title->SetPadding( Padding( 8, 0, 0, 0 ) );
 		m_Title->SetTextColor( GetSkin()->Colors.Window.TitleInactive );
+
+	Gwen::Controls::WindowCloseButton* pButton = new Gwen::Controls::WindowCloseButton( m_TitleBar );
+		pButton->SetText( "" );
+		pButton->SetSize( 24, 24 );
+		pButton->Dock( Pos::Right );
+		pButton->SetMargin( Margin( 0, 0, 6, 0 ) );
+		pButton->onPress.Add( this, &WindowCanvas::CloseButtonPressed );
+		pButton->SetTabable( false );
+		pButton->SetName( "closeButton" );
+		pButton->SetWindow( this );
 }
 
 WindowCanvas::~WindowCanvas()
@@ -102,7 +112,7 @@ void WindowCanvas::RenderCanvas()
 
 void WindowCanvas::Render( Skin::Base* skin )
 {
-	bool bHasFocus = true;//IsOnTop();
+	bool bHasFocus = IsOnTop();
 
 	if ( bHasFocus )
 		m_Title->SetTextColor( GetSkin()->Colors.Window.TitleActive );
@@ -161,11 +171,20 @@ void WindowCanvas::SetPos( int x, int y )
 {
 	int w, h;
 	Gwen::Platform::GetDesktopSize( w, h );
-	//x = Gwen::Clamp( x, 0, w );
 	y = Gwen::Clamp( y, 0, h );
 
 	m_WindowPos.x = x;
 	m_WindowPos.y = y;
 
 	Gwen::Platform::SetBoundsPlatformWindow( m_pOSWindow, x, y, Width(), Height() );
+}
+
+void WindowCanvas::CloseButtonPressed()
+{
+	InputQuit();
+}
+
+bool WindowCanvas::IsOnTop()
+{
+	return Gwen::Platform::HasFocusPlatformWindow( m_pOSWindow );
 }

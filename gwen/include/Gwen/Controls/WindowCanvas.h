@@ -40,11 +40,15 @@ namespace Gwen
 				virtual void Render( Skin::Base* skin );
 
 				virtual void SetPos( int x, int y );
+				virtual bool IsOnTop();
+
 
 			protected:
 
 				virtual void RenderCanvas();
 				virtual void DestroyWindow();
+
+				virtual void CloseButtonPressed();
 
 				virtual void Dragger_Start();
 				virtual void Dragger_Moved();

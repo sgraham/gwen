@@ -51,6 +51,7 @@ namespace Gwen
 		GWEN_EXPORT void DestroyPlatformWindow( void* pPtr );
 		GWEN_EXPORT void SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, int h );
 		GWEN_EXPORT void MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget );
+		GWEN_EXPORT bool HasFocusPlatformWindow( void* pPtr );
 	}
 
 }
