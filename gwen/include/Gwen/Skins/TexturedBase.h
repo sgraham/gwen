@@ -18,14 +18,14 @@ namespace Gwen
 
 				Texture m_Texture;
 
-				struct
+				struct Textures_t
 				{
 					Texturing::Bordered StatusBar;
 					Texturing::Bordered Selection;
 					Texturing::Bordered	Shadow;
 					Texturing::Bordered	Tooltip;
 
-					struct /* Panel */
+					struct Panel_t
 					{
 						Texturing::Bordered Normal;
 						Texturing::Bordered Bright;
@@ -34,7 +34,7 @@ namespace Gwen
 
 					} Panel;
 
-					struct /* Window */
+					struct Window_t
 					{
 						Texturing::Bordered Normal;
 						Texturing::Bordered Inactive;
@@ -47,16 +47,16 @@ namespace Gwen
 
 
 
-					struct /* Checkbox */
+					struct Checkbox_t
 					{
-						struct /* Active */
+						struct  Active_t
 						{
 							Texturing::Single Normal;
 							Texturing::Single Checked;
 
 						} Active;
 
-						struct /* Disabled */
+						struct  Disabled_t
 						{
 							Texturing::Single Normal;
 							Texturing::Single Checked;
@@ -65,16 +65,16 @@ namespace Gwen
 
 					} Checkbox;
 
-					struct /* RadioButton */
+					struct  RadioButton_t
 					{
-						struct /* Active */
+						struct  Active_t
 						{
 							Texturing::Single Normal;
 							Texturing::Single Checked;
 
 						} Active;
 
-						struct /* Disabled */
+						struct  Disabled_t
 						{
 							Texturing::Single Normal;
 							Texturing::Single Checked;
@@ -83,7 +83,7 @@ namespace Gwen
 
 					} RadioButton;
 
-					struct /* TextBox */
+					struct  TextBox_t
 					{
 						Texturing::Bordered Normal;
 						Texturing::Bordered Focus;
@@ -91,7 +91,7 @@ namespace Gwen
 
 					} TextBox;
 
-					struct   /* Tree */
+					struct  Tree_t
 					{
 						Texturing::Bordered Background;
 						Texturing::Single Minus;
@@ -100,14 +100,14 @@ namespace Gwen
 					} Tree;
 					
 
-					struct  /* ProgressBar */
+					struct  ProgressBar_t
 					{
 						Texturing::Bordered Back;
 						Texturing::Bordered Front;
 
 					} ProgressBar;
 
-					struct  /* Scroller */
+					struct  Scroller_t
 					{
 						Texturing::Bordered TrackV;
 						Texturing::Bordered ButtonV_Normal;
@@ -120,7 +120,7 @@ namespace Gwen
 						Texturing::Bordered ButtonH_Down;
 						Texturing::Bordered ButtonH_Disabled;
 
-						struct /* Button */
+						struct  Button_t
 						{
 							Texturing::Bordered	Normal[4];
 							Texturing::Bordered	Hover[4];
@@ -131,7 +131,7 @@ namespace Gwen
 
 					} Scroller;
 
-					struct /* Menu */
+					struct  Menu_t
 					{
 						Texturing::Single RightArrow;
 						Texturing::Single Check;
@@ -143,9 +143,9 @@ namespace Gwen
 
 					} Menu;
 
-					struct /* Input */
+					struct  Input_t
 					{
-						struct /* Button */
+						struct  Button_t
 						{
 							Texturing::Bordered Normal;
 							Texturing::Bordered Hovered;
@@ -154,7 +154,7 @@ namespace Gwen
 
 						} Button;
 
-						struct /* ListBox */
+						struct  ListBox_t
 						{
 							Texturing::Bordered Background;
 							Texturing::Bordered Hovered;
@@ -166,9 +166,9 @@ namespace Gwen
 
 						} ListBox;
 
-						struct /* UpDown */
+						struct  UpDown_t
 						{
-							struct /* Up */
+							struct  Up_t
 							{
 								Texturing::Single Normal;
 								Texturing::Single Hover;
@@ -177,7 +177,7 @@ namespace Gwen
 
 							} Up;
 
-							struct /* Down */
+							struct  Down_t
 							{
 								Texturing::Single Normal;
 								Texturing::Single Hover;
@@ -188,14 +188,14 @@ namespace Gwen
 
 						} UpDown;
 
-						struct /* ComboBox */
+						struct  ComboBox_t
 						{
 							Texturing::Bordered Normal;
 							Texturing::Bordered Hover;
 							Texturing::Bordered Down;
 							Texturing::Bordered Disabled;
 
-							struct /* Button */
+							struct  Button_t
 							{
 								Texturing::Single Normal;
 								Texturing::Single Hover;
@@ -206,9 +206,9 @@ namespace Gwen
 
 						} ComboBox;
 
-						struct /* Slider */
+						struct  Slider_t
 						{
-							struct /* H */
+							struct  H_t
 							{
 								Texturing::Single Normal;
 								Texturing::Single Hover;
@@ -216,7 +216,7 @@ namespace Gwen
 								Texturing::Single Disabled;
 							} H;
 
-							struct /* Slider */
+							struct  V_t
 							{
 								Texturing::Single Normal;
 								Texturing::Single Hover;
@@ -228,27 +228,27 @@ namespace Gwen
 
 					} Input;
 
-					struct /* Tab */
+					struct  Tab_t
 					{
-						struct /* Bottom */
+						struct  Bottom_t
 						{
 							Texturing::Bordered Active;
 							Texturing::Bordered Inactive;
 						} Bottom;
 
-						struct /* Top */
+						struct  Top_t
 						{
 							Texturing::Bordered Active;
 							Texturing::Bordered Inactive;
 						} Top;
 
-						struct /* Left */
+						struct  Left_t
 						{
 							Texturing::Bordered Active;
 							Texturing::Bordered Inactive;
 						} Left;
 
-						struct /* Right */
+						struct  Right_t
 						{
 							Texturing::Bordered Active;
 							Texturing::Bordered Inactive;
@@ -259,7 +259,7 @@ namespace Gwen
 
 					} Tab;
 
-					struct /* CategoryList */
+					struct  CategoryList_t
 					{
 						Texturing::Bordered Outer;
 						Texturing::Bordered Inner;
