@@ -351,6 +351,17 @@ namespace Gwen
 		bool OpenGL::ResizedContext( Gwen::WindowProvider* pWindow, int w, int h )
 		{
 			#ifdef _WIN32
+
+				RECT r;
+				if ( GetClientRect( (HWND)pWindow->GetWindow(), &r ) )
+				{
+					glMatrixMode( GL_PROJECTION );
+					glLoadIdentity();
+					glOrtho( r.left, r.right, r.bottom, r.top, -1.0, 1.0 );
+					glMatrixMode( GL_MODELVIEW );
+					glViewport( 0, 0, r.right - r.left, r.bottom - r.top );
+				}
+
 				return true;
 			#endif
 

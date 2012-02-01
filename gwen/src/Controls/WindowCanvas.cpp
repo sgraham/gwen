@@ -45,7 +45,6 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 		m_TitleBar->SetHeight( 24 );
 		m_TitleBar->SetPadding( Padding( 0, 0, 0, 0 ) );
 		m_TitleBar->SetMargin( Margin( 0, 0, 0, 4 ) );
-		m_TitleBar->SetTarget( this );
 		m_TitleBar->Dock( Pos::Top );
 		m_TitleBar->SetDoMove( false );
 		m_TitleBar->onDragged.Add( this, &WindowCanvas::Dragger_Moved );
@@ -67,6 +66,13 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 		pButton->SetTabable( false );
 		pButton->SetName( "closeButton" );
 		pButton->SetWindow( this );
+
+	m_Sizer = new Gwen::ControlsInternal::Dragger( this );
+		m_Sizer->SetSize( 16, 16 );
+		m_Sizer->SetDoMove( false );
+		m_Sizer->onDragged.Add( this, &WindowCanvas::Sizer_Moved );
+		m_Sizer->OnDragStart.Add( this, &WindowCanvas::Dragger_Start );
+		m_Sizer->SetCursor( Gwen::CursorType::SizeNWSE );
 }
 
 WindowCanvas::~WindowCanvas()
@@ -77,6 +83,15 @@ WindowCanvas::~WindowCanvas()
 void* WindowCanvas::GetWindow()
 {
 	return m_pOSWindow;
+}
+
+void WindowCanvas::Layout( Skin::Base* skin )
+{
+	m_Sizer->BringToFront();
+	Align::AlignRight(  m_Sizer );
+	Align::AlignBottom( m_Sizer );
+
+	BaseClass::Layout( skin );
 }
 
 void WindowCanvas::DoThink()
@@ -196,4 +211,24 @@ void WindowCanvas::CloseButtonPressed()
 bool WindowCanvas::IsOnTop()
 {
 	return Gwen::Platform::HasFocusPlatformWindow( m_pOSWindow );
+}
+
+
+void WindowCanvas::Sizer_Moved()
+{
+	Gwen::Point p;
+	Gwen::Platform::GetCursorPos( p );	
+
+	int w = (p.x) - m_WindowPos.x;
+	int h = (p.y) - m_WindowPos.y;
+
+	w = Clamp( w, 100, 9999 );
+	h = Clamp( h, 100, 9999 );
+
+	Gwen::Platform::SetBoundsPlatformWindow( m_pOSWindow, m_WindowPos.x, m_WindowPos.y, w, h );
+	GetSkin()->GetRender()->ResizedContext( this, w, h );
+	this->SetSize( w, h );
+
+	BaseClass::DoThink();
+	RenderCanvas();
 }

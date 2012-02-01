@@ -22,12 +22,13 @@ GWEN_CONTROL_CONSTRUCTOR( Dragger )
 
 void Dragger::OnMouseClickLeft( int x, int y, bool bDown )
 {
-	if ( !m_pTarget ) return;
-
 	if ( bDown )
 	{
 		m_bDepressed = true;
-		m_HoldPos = m_pTarget->CanvasPosToLocal( Gwen::Point( x, y ) );
+
+		if ( m_pTarget)
+			m_HoldPos = m_pTarget->CanvasPosToLocal( Gwen::Point( x, y ) );
+
 		Gwen::MouseFocus = this;
 		OnDragStart.Call( this );
 	}
@@ -40,10 +41,9 @@ void Dragger::OnMouseClickLeft( int x, int y, bool bDown )
 
 void Dragger::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 {
-	if ( !m_pTarget ) return;
 	if ( !m_bDepressed ) return;
 
-	if ( m_bDoMove )
+	if ( m_bDoMove && m_pTarget )
 	{
 		Gwen::Point p = Gwen::Point( x - m_HoldPos.x, y - m_HoldPos.y );
 		
@@ -57,7 +57,7 @@ void Dragger::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	onDragged.Call( this );
 }
 
-void Dragger::Render( Skin::Base* /*skin*/ )
+void Dragger::Render( Skin::Base* skin )
 {
-	//skin->DrawButton(this,false,false);
+	//skin->DrawButton(this,false,false, false);
 }

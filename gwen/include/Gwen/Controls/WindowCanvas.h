@@ -42,6 +42,8 @@ namespace Gwen
 				virtual void SetPos( int x, int y );
 				virtual bool IsOnTop();
 
+				virtual void Layout( Skin::Base* skin );
+
 
 			protected:
 
@@ -52,6 +54,7 @@ namespace Gwen
 
 				virtual void Dragger_Start();
 				virtual void Dragger_Moved();
+				virtual void Sizer_Moved();
 
 				void*		m_pOSWindow;
 				bool		m_bQuit;
@@ -59,6 +62,7 @@ namespace Gwen
 				Gwen::Skin::Base*			m_pSkinChange;
 
 				ControlsInternal::Dragger*	m_TitleBar;
+				ControlsInternal::Dragger*	m_Sizer;
 				Gwen::Controls::Label*		m_Title;
 
 
