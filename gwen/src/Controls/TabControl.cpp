@@ -42,12 +42,12 @@ GWEN_CONTROL_CONSTRUCTOR( TabControl )
 	m_pScroll[0] = new ControlsInternal::ScrollBarButton( this );
 	m_pScroll[0]->SetDirectionLeft();
 	m_pScroll[0]->onPress.Add( this, &TabControl::ScrollPressLeft );
-	m_pScroll[0]->SetSize( 14, 16 );
+	m_pScroll[0]->SetSize( 14, 14 );
 
 	m_pScroll[1] = new ControlsInternal::ScrollBarButton( this );
 	m_pScroll[1]->SetDirectionRight();
 	m_pScroll[1]->onPress.Add( this, &TabControl::ScrollPressRight );
-	m_pScroll[1]->SetSize( 14, 16 );
+	m_pScroll[1]->SetSize( 14, 14 );
 
 	m_InnerPanel = new TabControlInner( this );
 	m_InnerPanel->Dock( Pos::Fill );

@@ -29,12 +29,7 @@ namespace Gwen
 						SetHeight( 17 );
 					}
 
-					virtual String GetPropertyValueAnsi()
-					{
-						return Gwen::Utility::UnicodeToString( GetPropertyValue() );
-					}
-
-					virtual UnicodeString GetPropertyValue() = 0;
+					virtual TextObject GetPropertyValue() = 0;
 
 					virtual void SetPropertyValue( const TextObject& v, bool bFireChangeEvents = false ) = 0;
 

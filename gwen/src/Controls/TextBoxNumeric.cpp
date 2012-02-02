@@ -22,7 +22,7 @@ GWEN_CONTROL_CONSTRUCTOR( TextBoxNumeric )
 
 bool TextBoxNumeric::IsTextAllowed( const Gwen::UnicodeString& str, int iPos )
 {
-	const UnicodeString& strString = GetText();
+	const UnicodeString& strString = GetText().GetUnicode();
 
 	if ( str.length() == 0 )
 		return true;
@@ -70,6 +70,6 @@ bool TextBoxNumeric::IsTextAllowed( const Gwen::UnicodeString& str, int iPos )
 
 float TextBoxNumeric::GetFloatFromText()
 {
-	double temp = GwenUtil_WideStringToFloat( GetText().c_str() );
+	double temp = Gwen::Utility::Strings::To::Float( GetText().GetUnicode() );
 	return temp;
 }

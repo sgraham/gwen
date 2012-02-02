@@ -125,7 +125,7 @@ namespace Gwen
 				}
 
 				//You might hate this. Actually I know you will
-				virtual UnicodeString GetText( int i )
+				virtual const TextObject& GetText( int i )
 				{
 					return m_Columns[i]->GetText();
 				}

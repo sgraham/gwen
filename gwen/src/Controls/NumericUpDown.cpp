@@ -9,34 +9,30 @@
 #include "Gwen/Utility.h"
 #include "Gwen/Skin.h"
 #include "Gwen/Controls/NumericUpDown.h"
-#include "Gwen/Controls/Layout/Splitter.h"
 
 using namespace Gwen;
 using namespace Gwen::Controls;
-
 
 
 GWEN_CONTROL_CONSTRUCTOR( NumericUpDown )
 {
 	SetSize( 100, 20 );
 
-	Layout::Splitter* pSplitter = new Layout::Splitter( this );
+	Controls::Base* pSplitter = new Controls::Base( this );
 		pSplitter->Dock( Pos::Right );
-		pSplitter->SetSize( 13, 13 );
+		pSplitter->SetWidth( 13 );
 
 	NumericUpDownButton_Up* pButtonUp = new NumericUpDownButton_Up( pSplitter );
 		pButtonUp->onPress.Add( this, &NumericUpDown::OnButtonUp );
 		pButtonUp->SetTabable( false );
-
-		pSplitter->SetPanel( 0, pButtonUp, false );
-		
+		pButtonUp->Dock( Pos::Top );	
+		pButtonUp->SetHeight( 10 );		
 
 	NumericUpDownButton_Down* pButtonDown = new NumericUpDownButton_Down( pSplitter );
 		pButtonDown->onPress.Add( this, &NumericUpDown::OnButtonDown );
 		pButtonDown->SetTabable( false );
+		pButtonDown->Dock( Pos::Fill );
 		pButtonUp->SetPadding( Padding( 0, 1, 1, 0 ) );
-
-		pSplitter->SetPanel( 1, pButtonDown, false );
 
 	m_iMax = 100;
 	m_iMin = 0;

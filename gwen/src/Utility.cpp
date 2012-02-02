@@ -84,6 +84,11 @@ float Gwen::Utility::Strings::To::Float( const Gwen::String& str )
 	return (float)atof( str.c_str() );
 }
 
+float Gwen::Utility::Strings::To::Float( const Gwen::UnicodeString& str )
+{
+	return wcstod( str.c_str(), NULL);
+}
+
 bool Gwen::Utility::Strings::To::Bool( const Gwen::String& str )
 {
 	if ( str.size() == 0 ) return false;

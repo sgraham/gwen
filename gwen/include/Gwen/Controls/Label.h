@@ -24,7 +24,7 @@ namespace Gwen
 
 				virtual void SetText( const TextObject& str, bool bDoEvents = true );
 
-				virtual const UnicodeString& GetText() const { return m_Text->GetText(); }
+				virtual const TextObject& GetText() const { return m_Text->GetText(); }
 
 				virtual void Render( Skin::Base* /*skin*/ ){}
 
@@ -51,8 +51,6 @@ namespace Gwen
 
 				virtual void SetTextPadding( const Padding& padding ){ m_rTextPadding = padding; Invalidate(); InvalidateParent(); }
 				virtual const Padding& GetTextPadding(){ return m_rTextPadding; }
-
-				virtual Gwen::UnicodeString GetText() { return m_Text->GetText(); }
 
 				inline int Alignment() const { return m_iAlign; }
 

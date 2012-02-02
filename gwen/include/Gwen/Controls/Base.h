@@ -279,20 +279,23 @@ namespace Gwen
 				virtual bool HandleAccelerator( Gwen::UnicodeString& accelerator );
 				
 				template <typename T>
-				void AddAccelerator( Gwen::UnicodeString accelerator, T func, Gwen::Event::Handler* handler = NULL )
+				void AddAccelerator( const TextObject& accelerator, T func, Gwen::Event::Handler* handler = NULL )
 				{
 					if ( handler == NULL )
 						handler = this;
+
 					Gwen::Event::Caller* caller = new Gwen::Event::Caller();
 					caller->Add( handler, func );
 
-					Gwen::Utility::Strings::ToUpper( accelerator );
-					Gwen::Utility::Strings::Strip( accelerator, L" " );
+					Gwen::UnicodeString str = accelerator.GetUnicode();
 
-					m_Accelerators[ accelerator ] = caller;
+					Gwen::Utility::Strings::ToUpper( str );
+					Gwen::Utility::Strings::Strip( str, L" " );
+
+					m_Accelerators[ str ] = caller;
 				}
 
-				void AddAccelerator( Gwen::UnicodeString accelerator )
+				void AddAccelerator( const TextObject& accelerator )
 				{
 					AddAccelerator( accelerator, &Base::DefaultAccel, this );
 				}

@@ -76,7 +76,7 @@ namespace Gwen
 			{
 				char ch = converted_string[i];
 				float curSpacing = sGwenDebugFontSpacing[ch] * m_fLetterSpacing * fSize * m_fFontScale[0];
-				Gwen::Rect r( pos.x + yOffset, pos.y-fSize*0.2f, (fSize * m_fFontScale[0]), fSize * m_fFontScale[1] );
+				Gwen::Rect r( pos.x + yOffset, pos.y-fSize*0.5, (fSize * m_fFontScale[0]), fSize * m_fFontScale[1] );
 
 				if ( m_pFontTexture )
 				{
@@ -120,7 +120,7 @@ namespace Gwen
 			}
 
 			p.x = spacing*m_fLetterSpacing*fSize * m_fFontScale[0];
-			p.y = pFont->size * Scale() * m_fFontScale[1];
+			p.y = pFont->size * Scale();
 			return p;
 		}
 

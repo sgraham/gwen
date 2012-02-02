@@ -66,6 +66,11 @@ namespace Gwen
 				return Gwen::Utility::UnicodeToString( m_Data );
 			}
 
+			const char* c_str() const 
+			{
+				return Get().c_str();
+			}
+
 			const Gwen::UnicodeString& GetUnicode() const
 			{
 				return m_Data;

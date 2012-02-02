@@ -34,12 +34,12 @@ namespace Gwen
 
 				void SetFont( Gwen::Font* pFont ){ m_Font = pFont; }
 
-				const UnicodeString& GetText() const { return m_String; }
+				const TextObject& GetText() const { return m_String; }
 
 				Gwen::Point GetCharacterPosition( int iChar );
 				int GetClosestCharacter( Gwen::Point p );
 
-				int Length() const { return (int)m_String.size(); }
+				int Length() const { return (int)m_String.GetUnicode().size(); }
 
 				virtual void SetTextColor( const Gwen::Color& col ){ m_Color = col; }
 				virtual void SetTextColorOverride( const Gwen::Color& col ){ m_ColorOverride = col; }
@@ -52,7 +52,7 @@ namespace Gwen
 
 			private:
 
-				Gwen::UnicodeString	m_String;
+				Gwen::TextObject	m_String;
 				Gwen::Font*			m_Font;
 				Gwen::Color			m_Color;
 				Gwen::Color			m_ColorOverride;

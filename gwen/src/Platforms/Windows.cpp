@@ -141,7 +141,7 @@ float Gwen::Platform::GetTimeInSeconds()
 
 
 
-bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionStr fnCallback )
+bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback )
 {
 #ifndef __MINGW32__  
 	char Filestring[256];
@@ -201,7 +201,7 @@ bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, cons
 #endif 
 }
 
-bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Gwen::Event::Handler::FunctionStr fnCallback )
+bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Gwen::Event::Handler::FunctionWithString fnCallback )
 {
 #ifndef __MINGW32__  
 

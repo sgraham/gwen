@@ -66,7 +66,7 @@ void TextBox::InsertText( const Gwen::UnicodeString& strInsert )
 	if ( !IsTextAllowed( strInsert, m_iCursorPos )  )
 		return;
 
-	UnicodeString str = GetText();
+	UnicodeString str = GetText().GetUnicode();
 	str.insert( m_iCursorPos, strInsert );
 	SetText( str );
 
@@ -163,7 +163,7 @@ UnicodeString TextBox::GetSelection()
 	int iStart = Utility::Min( m_iCursorPos, m_iCursorEnd );
 	int iEnd = Utility::Max( m_iCursorPos, m_iCursorEnd );
 
-	const UnicodeString& str = GetText();
+	const UnicodeString& str = GetText().GetUnicode();
 	return str.substr( iStart, iEnd - iStart );
 }
 
@@ -295,7 +295,7 @@ void TextBox::SetCursorEnd( int i )
 
 void TextBox::DeleteText( int iStartPos, int iLength )
 {
-	UnicodeString str = GetText();
+	UnicodeString str = GetText().GetUnicode();
 	str.erase( iStartPos, iLength );
 	SetText( str );
 

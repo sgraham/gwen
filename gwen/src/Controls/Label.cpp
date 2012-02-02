@@ -50,6 +50,7 @@ void Label::SetText( const TextObject& str, bool bDoEvents )
 	if ( bDoEvents )
 		OnTextChanged();
 }
+
 void Label::SizeToContents()
 {
 	m_Text->SetPos( m_rTextPadding.left + m_Padding.left, m_rTextPadding.top + m_Padding.top );

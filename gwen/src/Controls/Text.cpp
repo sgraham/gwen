@@ -39,7 +39,7 @@ void Text::RefreshSize()
 	
 	if ( Length() > 0 )
 	{
-		p = GetSkin()->GetRender()->MeasureText( GetFont(), m_String );
+		p = GetSkin()->GetRender()->MeasureText( GetFont(), m_String.GetUnicode() );
 	}
 
 	if ( p.x == Width() && p.y == Height() ) 
@@ -69,7 +69,7 @@ void Text::Render( Skin::Base* skin )
 	else
 		skin->GetRender()->SetDrawColor( m_ColorOverride );
 
-	skin->GetRender()->RenderText( GetFont(), Gwen::Point( 0, 0 ), m_String );
+	skin->GetRender()->RenderText( GetFont(), Gwen::Point( 0, 0 ), m_String.GetUnicode() );
 }
 
 void Text::Layout( Skin::Base* /*skin*/ )
@@ -84,7 +84,7 @@ Gwen::Point Text::GetCharacterPosition( int iChar )
 		return Gwen::Point( 1, 0 );
 	}
 
-	UnicodeString sub = m_String.substr( 0, iChar );
+	UnicodeString sub = m_String.GetUnicode().substr( 0, iChar );
 	Gwen::Point p = GetSkin()->GetRender()->MeasureText( GetFont(), sub );
 	
 	if ( p.y >= m_Font->size )
@@ -98,7 +98,7 @@ int Text::GetClosestCharacter( Gwen::Point p )
 	int iDistance = 4096;
 	int iChar = 0;
 
-	for ( size_t i=0; i<m_String.length()+1; i++ )
+	for ( size_t i=0; i<m_String.GetUnicode().length()+1; i++ )
 	{
 		Gwen::Point cp = GetCharacterPosition( i );
 		int iDist = abs(cp.x - p.x) + abs(cp.y - p.y); // this isn't proper

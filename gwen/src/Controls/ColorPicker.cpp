@@ -62,7 +62,7 @@ void ColorPicker::NumericTyped( Gwen::Controls::Base* control )
 	if ( box->GetText() == L"")
 		return;
 
-	int textValue = atoi( Utility::UnicodeToString( box->GetText()).c_str()  );
+	int textValue = atoi( box->GetText().c_str() );
 	if ( textValue < 0) textValue = 0;
 	if ( textValue > 255) textValue = 255;
 
