@@ -42,9 +42,9 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 	SetSize( w, h );
 
 	m_TitleBar = new Gwen::ControlsInternal::Dragger( this );
-		m_TitleBar->SetHeight( 20 );
+		m_TitleBar->SetHeight( 24 );
 		m_TitleBar->SetPadding( Padding( 0, 0, 0, 0 ) );
-		m_TitleBar->SetMargin( Margin( 0, 0, 0, 4 ) );
+		m_TitleBar->SetMargin( Margin( 0, 0, 0, 0 ) );
 		m_TitleBar->Dock( Pos::Top );
 		m_TitleBar->SetDoMove( false );
 		m_TitleBar->onDragged.Add( this, &WindowCanvas::Dragger_Moved );

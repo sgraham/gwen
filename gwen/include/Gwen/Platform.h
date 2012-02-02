@@ -43,6 +43,8 @@ namespace Gwen
 		//
 		GWEN_EXPORT bool FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback );
 		GWEN_EXPORT bool FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback );
+		GWEN_EXPORT bool FolderOpen( const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback );
+		
 
 		//
 		// Window Creation

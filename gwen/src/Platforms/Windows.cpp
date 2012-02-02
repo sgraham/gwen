@@ -11,6 +11,7 @@
 #ifdef _WIN32
 
 #include <windows.h>
+#include <ShlObj.h>
 
 #include <mmsystem.h>
 #pragma comment( lib, "winmm.lib" )
@@ -186,16 +187,73 @@ bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, cons
 			(pHandler->*fnCallback)( opf.lpstrFile );
 		}
 	}
-	else
-	{
-		if ( pHandler && fnCallback )
-		{
-			(pHandler->*fnCallback)( "" );
-		}
-	}
 
 	return true;
 
+#else 
+	return false;
+#endif 
+}
+
+#ifndef __MINGW32__
+
+// An annoying function just to change the folder that we start in, in the folder browser.
+static String g_InitialFolder;
+
+INT CALLBACK FolderBrowseCallback( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM pData )
+{
+	switch(uMsg) 
+	{
+		case BFFM_INITIALIZED: 
+			{
+				TCHAR szDir[MAX_PATH];
+
+				if ( g_InitialFolder.empty() && GetCurrentDirectoryW( MAX_PATH, szDir) )
+				{
+					SendMessageW( hwnd, BFFM_SETSELECTION, TRUE, (LPARAM) szDir );
+					return 0;
+				}
+
+				SendMessageW( hwnd, BFFM_SETSELECTION, TRUE, (LPARAM) Gwen::Utility::StringToUnicode( g_InitialFolder ).c_str() );
+				return 0;
+			}
+
+			break;
+	}
+
+	return 0;
+}
+
+#endif 
+
+bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback )
+{
+#ifndef __MINGW32__  
+
+	g_InitialFolder = StartPath;
+
+	BROWSEINFOA   bi; 
+	ZeroMemory(&bi,   sizeof(bi)); 
+
+	bi.lpszTitle        =   Name.c_str(); 
+	bi.ulFlags          =   BIF_RETURNONLYFSDIRS | BIF_USENEWUI;
+	bi.lpfn				=	&FolderBrowseCallback;
+
+	LPITEMIDLIST pidl = SHBrowseForFolderA( &bi );
+
+	if ( pidl == NULL )
+		return true;
+
+	char szPathName[MAX_PATH]; 
+	if( !SHGetPathFromIDListA( pidl, szPathName ) )
+		return true;
+
+	if ( pHandler && fnCallback )
+	{
+		(pHandler->*fnCallback)( szPathName );
+	}
+
+	return true;
 #else 
 	return false;
 #endif 
@@ -245,13 +303,6 @@ bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, cons
 		if ( pHandler && fnCallback )
 		{
 			(pHandler->*fnCallback)( opf.lpstrFile );
-		}
-	}
-	else
-	{
-		if ( pHandler && fnCallback )
-		{
-			(pHandler->*fnCallback)( "" );
 		}
 	}
 
