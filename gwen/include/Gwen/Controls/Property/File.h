@@ -1,7 +1,7 @@
 
 #pragma once
-#ifndef GWEN_CONTROLS_PROPERTY_FOLDER_H
-#define GWEN_CONTROLS_PROPERTY_FOLDER_H
+#ifndef GWEN_CONTROLS_PROPERTY_FILE_H
+#define GWEN_CONTROLS_PROPERTY_FILE_H
 
 #include "Gwen/Controls/Properties.h"
 #include "Gwen/Controls/Button.h"
@@ -13,9 +13,9 @@ namespace Gwen
 	{
 		namespace Property
 		{
-			class Folder : public Property::Text
+			class File : public Property::Text
 			{
-				GWEN_CONTROL_INLINE( Folder, Property::Text )
+				GWEN_CONTROL_INLINE( File, Property::Text )
 				{
 					Controls::Button* pButton = new Controls::Button( this );
 					pButton->Dock( Pos::Right );
@@ -24,12 +24,19 @@ namespace Gwen
 					pButton->onPress.Add( this, &ThisClass::OnButtonPress );
 					pButton->SetMargin( Margin( 1, 1, 1, 2 ) );
 
-					m_strDialogName = "Find Folder";
+					m_strDialogName = "Find File";
+					m_strFileExtension = "*.*";
+				}
+
+				File* SetExtension( const Gwen::String& string )
+				{
+					m_strFileExtension = string;
+					return this;
 				}
 
 				void OnButtonPress( Controls::Base* control )
 				{
-					Gwen::Dialogs::FolderOpen( true, m_strDialogName, m_TextBox->GetText().Get(), this, &Folder::EventFilePicked );
+					Gwen::Dialogs::FileOpen( true, m_strDialogName, m_TextBox->GetText().Get(), m_strFileExtension, this, &Folder::EventFilePicked );
 				}
 
 				void EventFilePicked( const Gwen::String& string )
@@ -39,6 +46,7 @@ namespace Gwen
 
 
 				String	m_strDialogName;
+				String	m_strFileExtension;
 
 			};
 		}
