@@ -151,7 +151,7 @@ bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, cons
 	char FilterBuffer[512];
 	{
 		memset( FilterBuffer, 0, sizeof(FilterBuffer) );
-		memcpy( FilterBuffer, Extension.c_str(), GwenUtil_Min( Extension.size(), 512 ) );
+		memcpy( FilterBuffer, Extension.c_str(), GwenUtil_Min( Extension.length(), 512 ) );
 		for (int i=0; i<512; i++)
 		{
 			if ( FilterBuffer[i] == '|' )
