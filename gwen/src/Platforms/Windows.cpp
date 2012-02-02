@@ -306,7 +306,7 @@ void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget
 
 void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, int h )
 {
-	SetWindowPos( (HWND)pPtr, HWND_NOTOPMOST, x, y, w, h, SWP_NOOWNERZORDER | SWP_NOACTIVATE | SWP_NOREDRAW | SWP_NOCOPYBITS | SWP_NOSENDCHANGING );
+	SetWindowPos( (HWND)pPtr, HWND_NOTOPMOST, x, y, w, h, SWP_NOOWNERZORDER | SWP_NOACTIVATE | SWP_NOCOPYBITS | SWP_NOSENDCHANGING );
 }
 
 bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )
