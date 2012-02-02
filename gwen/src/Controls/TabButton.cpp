@@ -24,7 +24,7 @@ GWEN_CONTROL_CONSTRUCTOR( TabButton )
 	DragAndDrop_SetPackage( true, "TabButtonMove" );
 	SetAlignment( Pos::Top | Pos::Left );
 	SetTextPadding( Padding( 5, 3, 3, 3 ) );
-	SetPadding( Padding( 2, 2, 2, 2 ));
+	SetPadding( Padding( 5, 3, 5, 3 ));
 }
 
 
