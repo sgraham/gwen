@@ -55,6 +55,8 @@ Base::Base( Base* pParent )
 	m_bCacheTextureDirty = true;
 	m_bCacheToTexture = false;
 
+	m_bIncludeInSize = true;
+
 }
 
 Base::~Base()
@@ -230,7 +232,6 @@ void Base::BringToFront()
 	m_ActualParent->Children.push_back( this );
 
 	InvalidateParent();
-
 	Redraw();
 }
 
@@ -975,6 +976,7 @@ Gwen::Point Base::ChildrenSize()
 	{
 		Base* pChild = *iter;
 		if ( pChild->Hidden() ) continue;
+		if ( !pChild->ShouldIncludeInSize() ) continue;
 
 		size.x = GwenUtil_Max( size.x, pChild->Right() );
 		size.y = GwenUtil_Max( size.y, pChild->Bottom() );

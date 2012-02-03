@@ -1,6 +1,6 @@
 /*
 	GWEN
-	Copyright (c) 2011 Facepunch Studios
+	Copyright (c) 2012 Facepunch Studios
 	See license in Gwen.h
 */
 
@@ -12,6 +12,11 @@
 #include <time.h>
 
 static Gwen::UnicodeString gs_ClipboardEmulator;
+
+void Gwen::Platform::Sleep( unsigned int iMS )
+{
+	// TODO.
+}
 
 void Gwen::Platform::SetCursor( unsigned char iCursor )
 {

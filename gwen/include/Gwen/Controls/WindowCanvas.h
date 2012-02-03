@@ -33,6 +33,7 @@ namespace Gwen
 
 				// Gwen::WindowProvider
 				virtual void* GetWindow();
+
 				virtual bool InputQuit();
 
 				Skin::Base* GetSkin( void );

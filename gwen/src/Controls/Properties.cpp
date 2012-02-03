@@ -20,12 +20,11 @@ GWEN_CONTROL_CONSTRUCTOR( Properties )
 	m_SplitterBar->SetCursor( Gwen::CursorType::SizeWE );
 	m_SplitterBar->onDragged.Add( this, &Properties::OnSplitterMoved );
 	m_SplitterBar->SetShouldDrawBackground( false );
+	m_SplitterBar->DoNotIncludeInSize();
 }
 
 void Properties::PostLayout( Gwen::Skin::Base* /*skin*/ )
 {
-	m_SplitterBar->SetHeight( 0 );
-
 	if ( SizeToChildren( false, true ) )
 	{
 		InvalidateParent();

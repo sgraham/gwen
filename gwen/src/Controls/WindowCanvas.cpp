@@ -88,8 +88,7 @@ void* WindowCanvas::GetWindow()
 void WindowCanvas::Layout( Skin::Base* skin )
 {
 	m_Sizer->BringToFront();
-	Align::AlignRight(  m_Sizer );
-	Align::AlignBottom( m_Sizer );
+	m_Sizer->Position( Pos::Right | Pos::Bottom );
 
 	BaseClass::Layout( skin );
 }
@@ -103,6 +102,19 @@ void WindowCanvas::DoThink()
 
 void WindowCanvas::RenderCanvas()
 {
+	//
+	// If there isn't anything going on we sleep the thread for a few ms
+	// This gives some cpu time back to the os. If you're using a rendering
+	// method that needs continual updates, just call canvas->redraw every frame.
+	//
+	if  ( !NeedsRedraw() )
+	{
+		Platform::Sleep( 40 );
+		return;
+	}
+
+	m_bNeedsRedraw = false;
+
 	Gwen::Renderer::Base* render = m_Skin->GetRender();
 
 	render->BeginContext( this );

@@ -345,13 +345,24 @@ void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget
 	GwenInput.Initialize( ptarget ); 
 
 	MSG msg;
-	while ( PeekMessage( &msg, NULL, 0, 0, PM_REMOVE ) )
+	while ( PeekMessage( &msg, (HWND)pWindow, 0, 0, PM_REMOVE ) )
 	{
 		if ( GwenInput.ProcessMessage( msg ) )
 			continue;
 
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
+	}
+
+	// If the active window has changed then force a redraw of our canvas
+	// since we might paint ourselves a different colour if we're inactive etc
+	{
+		static HWND g_LastFocus = NULL;
+		if ( GetActiveWindow()  != g_LastFocus )
+		{
+			g_LastFocus = GetActiveWindow();
+			ptarget->Redraw();
+		}
 	}
 }
 
@@ -363,6 +374,11 @@ void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, i
 bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )
 {
 	return GetActiveWindow() == (HWND)pPtr;
+}
+
+void Gwen::Platform::Sleep( unsigned int iMS )
+{
+	::Sleep( iMS );
 }
 
 #endif // WIN32

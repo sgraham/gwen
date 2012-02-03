@@ -6,6 +6,7 @@
 #include "Gwen/Utility.h"
 #include "Gwen/Font.h"
 #include "Gwen/Texture.h"
+#include "Gwen/WindowProvider.h"
 
 #include <math.h>
 
@@ -190,6 +191,38 @@ namespace Gwen
 			pImage->GetPixel( x, y, &c );
 
 			return Gwen::Color( c.GetR(), c.GetG(), c.GetB(), c.GetA() );
+		}
+
+
+		bool GDIPlus::InitializeContext( Gwen::WindowProvider* pWindow )
+		{
+			m_HWND = (HWND) pWindow->GetWindow();
+			return true;
+		}
+
+		bool GDIPlus::ShutdownContext( Gwen::WindowProvider* pWindow )
+		{
+			return true;
+		}
+
+		bool GDIPlus::PresentContext( Gwen::WindowProvider* pWindow )
+		{
+			return true;
+		}
+
+		bool GDIPlus::ResizedContext( Gwen::WindowProvider* pWindow, int w, int h )
+		{
+			return true;
+		}
+
+		bool GDIPlus::BeginContext( Gwen::WindowProvider* pWindow )
+		{
+			return true;
+		}
+
+		bool GDIPlus::EndContext( Gwen::WindowProvider* pWindow )
+		{
+			return true;
 		}
 	}
 }

@@ -199,10 +199,10 @@ void Button::Layout( Skin::Base* pSkin )
 
 	if ( m_Image )	
 	{		
-		Gwen::Align::CenterVertically( m_Image );
-
 		if ( m_bCenterImage )
-			Gwen::Align::CenterHorizontally( m_Image );
+			m_Image->Position( Pos::Center );
+		else
+			m_Image->Position( Pos::Left | Pos::CenterV );
 	}
 }
 

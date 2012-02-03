@@ -16,6 +16,11 @@ namespace Gwen
 	namespace Platform
 	{
 		//
+		// Do nothing for this many milliseconds
+		//
+		GWEN_EXPORT void Sleep( unsigned int iMS );
+
+		//
 		// Set the system cursor to iCursor
 		// Cursors are defined in Structures.h
 		//

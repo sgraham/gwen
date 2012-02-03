@@ -59,13 +59,13 @@ int main()
 	// Create a GWEN skin
 	//
 	//Gwen::Skin::Simple skin;
-	Gwen::Skin::TexturedBase skin( pRenderer );
-	skin.Init( "DefaultSkin.png" );
+	Gwen::Skin::TexturedBase* skin = new Gwen::Skin::TexturedBase( pRenderer );
+	skin->Init( "DefaultSkin.png" );
 
 	//
 	// Create a Canvas (it's root, on which all other GWEN panels are created)
 	//
-	Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas( &skin );
+	Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas( skin );
 	pCanvas->SetSize( 998, 650 - 24 );
 	pCanvas->SetDrawBackground( true );
 	pCanvas->SetBackgroundColor( Gwen::Color( 150, 170, 170, 255 ) );
@@ -129,5 +129,6 @@ int main()
 	}
 
 	delete pCanvas;
+	delete skin;
 	delete pRenderer;
 }

@@ -4,7 +4,9 @@
 #include "Gwen/UnitTest/UnitTest.h"
 #include "Gwen/Renderers/OpenGL.h"
 #include "Gwen/Controls/WindowCanvas.h"
+
 #include "Gwen/Renderers/OpenGL_DebugFont.h"
+//#include "Gwen/Renderers/GDIPlus.h"
 
 
 //
@@ -20,6 +22,7 @@ int main()
 	//
 	// Create the skin and renderer
 	//
+	//Gwen::Renderer::GDIPlusBuffered		renderer;
 	Gwen::Renderer::OpenGL_DebugFont	renderer;
 	Gwen::Skin::TexturedBase			skin( &renderer );
 

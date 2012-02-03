@@ -437,6 +437,16 @@ namespace Gwen
 				{
 					return NULL;
 				}
+
+
+			public:
+
+				void DoNotIncludeInSize(){ m_bIncludeInSize = false; }
+				bool ShouldIncludeInSize(){ return m_bIncludeInSize; }
+
+			protected:
+
+				bool	m_bIncludeInSize;
 				
 		};
 
