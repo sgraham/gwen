@@ -31,7 +31,7 @@ void RichLabel::AddLineBreak()
 
 void RichLabel::AddText( const Gwen::TextObject& text, Gwen::Color color, Gwen::Font* font )
 {
-	if ( text.m_Data.size() == 0 ) return;
+	if ( text.length() == 0 ) return;
 
 	Gwen::Utility::Strings::UnicodeList lst;
 	Gwen::Utility::Strings::Split( text.GetUnicode(), L"\n", lst, false );

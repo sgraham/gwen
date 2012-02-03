@@ -28,17 +28,20 @@ namespace Gwen
 
 			TextObject( const Gwen::String& text )
 			{
-				*this = text;
+				m_String = text;
+				m_Unicode = Gwen::Utility::StringToUnicode( m_String );
 			}
 
 			TextObject( const char* text )
 			{
-				*this = Gwen::String( text );
+				m_String = text;
+				m_Unicode = Gwen::Utility::StringToUnicode( m_String );
 			}
 
 			TextObject( const wchar_t* text )
 			{
-				*this = Gwen::UnicodeString( text );
+				m_Unicode = text;
+				m_String = Gwen::Utility::UnicodeToString( m_Unicode );
 			}
 
 			TextObject( const Gwen::UnicodeString& unicode )
@@ -48,35 +51,40 @@ namespace Gwen
 			
 			void operator = ( const Gwen::String& str )
 			{
-				m_Data = Gwen::Utility::StringToUnicode( str );
+				m_String = str;
+				m_Unicode = Gwen::Utility::StringToUnicode( m_String );
 			}
 
 			void operator = ( const Gwen::UnicodeString& unicodeStr )
 			{
-				m_Data = unicodeStr;
+				m_Unicode = unicodeStr;
+				m_String = Gwen::Utility::UnicodeToString( m_Unicode );
 			}
 
 			bool operator == ( const TextObject& to ) const
 			{
-				return m_Data == to.m_Data;
+				return m_Unicode == to.m_Unicode;
 			}
 
 			Gwen::String Get() const
 			{
-				return Gwen::Utility::UnicodeToString( m_Data );
+				return m_String;
 			}
 
 			const char* c_str() const 
 			{
-				return Get().c_str();
+				return m_String.c_str();
 			}
 
 			const Gwen::UnicodeString& GetUnicode() const
 			{
-				return m_Data;
+				return m_Unicode;
 			}
 
-			Gwen::UnicodeString m_Data;
+			int length() const { return m_Unicode.length(); }
+
+			Gwen::UnicodeString		m_Unicode;
+			Gwen::String			m_String;
 	};
 }
 #endif

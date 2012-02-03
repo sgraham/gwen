@@ -95,6 +95,7 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 		Controls::CollapsibleCategory* cat = pList->Add( "Non-Standard" );
 
 		ADD_UNIT_TEST( CollapsibleList );
+		ADD_UNIT_TEST( ColorPicker );
 	}
 
 	m_StatusBar->SendToBack();
