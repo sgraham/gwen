@@ -32,7 +32,6 @@ namespace Gwen
 				{
 					m_Texture.Release( GetSkin()->GetRender() );
 				}
-
 				
 				virtual void SetUV( float u1, float v1, float u2, float v2 )
 				{
@@ -45,6 +44,16 @@ namespace Gwen
 				virtual void SetImage( const TextObject& imageName )
 				{ 
 					m_Texture.Load( imageName, GetSkin()->GetRender() );
+				}
+
+				virtual int TextureWidth()
+				{
+					return m_Texture.width;
+				}
+
+				virtual int TextureHeight()
+				{
+					return m_Texture.height;
 				}
 
 				virtual const TextObject& GetImageName()
@@ -67,6 +76,8 @@ namespace Gwen
 				{
 					m_DrawColor = color;
 				}
+
+			protected:
 
 				Texture	m_Texture;
 				float	m_uv[4];
