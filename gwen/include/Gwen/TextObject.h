@@ -65,7 +65,7 @@ namespace Gwen
 				return m_Unicode == to.m_Unicode;
 			}
 
-			Gwen::String Get() const
+			const Gwen::String& Get() const
 			{
 				return m_String;
 			}

@@ -683,13 +683,17 @@ namespace Gwen
 					{
 						Textures.ProgressBar.Back.Draw( GetRender(), rect );
 						rect.w *= progress;
-						Textures.ProgressBar.Front.Draw( GetRender(), rect );
+
+						if ( rect.w > 0 )
+							Textures.ProgressBar.Front.Draw( GetRender(), rect );
 					}
 					else
 					{
 						Textures.ProgressBar.Back.Draw( GetRender(), rect );
-						rect.y += rect.h * (1-progress);
-						rect.h *= progress;
+
+						int inv_progress = rect.h * (1-progress);
+						rect.y += inv_progress;
+						rect.h -= inv_progress;
 						Textures.ProgressBar.Front.Draw( GetRender(), rect );
 					}
 				}
