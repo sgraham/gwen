@@ -61,8 +61,6 @@ void Canvas::RenderCanvas()
 
 		ToolTip::RenderToolTip( m_Skin );
 
-		render->EndClip();
-
 	render->End();
 }
 

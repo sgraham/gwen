@@ -476,36 +476,42 @@ void Base::DoCacheRender( Gwen::Skin::Base* skin, Gwen::Controls::Base* pMaster 
 	if ( m_bCacheTextureDirty && render->ClipRegionVisible() )
 	{
 		render->StartClip();
-
-		if ( ShouldCacheToTexture() )
-			cache->SetupCacheTexture( this );
-
-		//Render myself first
-		Render( skin );
-
-		if ( !Children.empty() )
 		{
-			//Now render my kids
-			for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+
+			if ( ShouldCacheToTexture() )
+				cache->SetupCacheTexture( this );
+
+			//Render myself first
+			Render( skin );
+
+			if ( !Children.empty() )
 			{
-				Base* pChild = *iter;
-				if ( pChild->Hidden() ) continue;
+				//Now render my kids
+				for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+				{
+					Base* pChild = *iter;
+					if ( pChild->Hidden() ) continue;
 
-				pChild->DoCacheRender( skin, pMaster );
-			}		
-		}
+					pChild->DoCacheRender( skin, pMaster );
+				}		
+			}
 
-		if ( ShouldCacheToTexture() )
-		{
-			cache->FinishCacheTexture( this );
-			m_bCacheTextureDirty = false;
+			if ( ShouldCacheToTexture() )
+			{
+				cache->FinishCacheTexture( this );
+				m_bCacheTextureDirty = false;
+			}
 		}
+		render->EndClip();
 	}
 
 	render->SetClipRegion( rOldRegion );
 	render->StartClip();
-	render->SetRenderOffset( pOldRenderOffset );
-	cache->DrawCachedControlTexture( this );
+	{
+		render->SetRenderOffset( pOldRenderOffset );
+		cache->DrawCachedControlTexture( this );
+	}
+	render->EndClip();
 }
 
 void Base::DoRender( Gwen::Skin::Base* skin )
@@ -540,6 +546,10 @@ void Base::RenderRecursive( Gwen::Skin::Base* skin, const Gwen::Rect& cliprect )
 
 	Gwen::Rect rOldRegion = render->ClipRegion();
 
+	//
+	// If this control is clipping, change the clip rect to ourselves
+	// ( if not then we still clip using our parents clip rect )
+	//
 	if ( ShouldClip() )
 	{
 		render->AddClipRegion( cliprect );
@@ -549,32 +559,43 @@ void Base::RenderRecursive( Gwen::Skin::Base* skin, const Gwen::Rect& cliprect )
 			render->SetRenderOffset( pOldRenderOffset );
 			render->SetClipRegion( rOldRegion );
 			return;
-		}
-
-		render->StartClip();
-	}
-
-	Render( skin );
-
-	if ( !Children.empty() )
-	{
-		//Now render my kids
-		for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
-		{
-			Base* pChild = *iter;
-			if ( pChild->Hidden() ) continue;
-
-			pChild->DoRender( skin );
 		}		
 	}
 
-	render->SetClipRegion( rOldRegion );
+	//
+	// Render this control and children controls
+	//
 	render->StartClip();
+	{
+		Render( skin );
 
-	RenderOver( skin );
-	RenderFocus( skin );
+		if ( !Children.empty() )
+		{
+			//Now render my kids
+			for (Base::List::iterator iter = Children.begin(); iter != Children.end(); ++iter)
+			{
+				Base* pChild = *iter;
+				if ( pChild->Hidden() ) continue;
 
-	render->SetRenderOffset( pOldRenderOffset );
+				pChild->DoRender( skin );
+			}		
+		}
+	}
+	render->EndClip();
+
+	//
+	// Render overlay/focus
+	//
+	{
+		render->SetClipRegion( rOldRegion );
+		render->StartClip();
+		{
+			RenderOver( skin );
+			RenderFocus( skin );
+		}
+		render->EndClip();
+		render->SetRenderOffset( pOldRenderOffset );
+	}
 
 }
 
