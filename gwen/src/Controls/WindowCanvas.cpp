@@ -117,8 +117,9 @@ void WindowCanvas::RenderCanvas()
 
 	Gwen::Renderer::Base* render = m_Skin->GetRender();
 
-	render->BeginContext( this );
-	render->Begin();
+	if ( render->BeginContext( this ) )
+	{
+		render->Begin();
 
 		RecurseLayout( m_Skin );
 
@@ -138,9 +139,9 @@ void WindowCanvas::RenderCanvas()
 
 		ToolTip::RenderToolTip( m_Skin );
 
-		render->EndClip();
+		render->End();
+	}
 
-	render->End();
 	render->EndContext( this );
 
 	render->PresentContext( this );

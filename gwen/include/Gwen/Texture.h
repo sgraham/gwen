@@ -19,6 +19,8 @@ namespace Gwen
 	//
 	struct Texture
 	{
+		typedef std::list<Texture*>		List;
+
 		TextObject	name;
 		void*	data;
 		bool	failed;

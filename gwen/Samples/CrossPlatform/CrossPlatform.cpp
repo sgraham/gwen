@@ -5,8 +5,13 @@
 #include "Gwen/Renderers/OpenGL.h"
 #include "Gwen/Controls/WindowCanvas.h"
 
+//
+// These are the renderers that work with WindowCanvas
+// (you need to include the relevant libs to use them)
+//
 #include "Gwen/Renderers/OpenGL_DebugFont.h"
 //#include "Gwen/Renderers/GDIPlus.h"
+//#include "Gwen/Renderers/Direct2D.h"
 
 
 //
@@ -23,7 +28,8 @@ int main()
 	// Create the skin and renderer
 	//
 	//Gwen::Renderer::GDIPlusBuffered		renderer;
-	Gwen::Renderer::OpenGL_DebugFont	renderer;
+	//Gwen::Renderer::Direct2D				renderer;
+	Gwen::Renderer::OpenGL_DebugFont		renderer;
 	Gwen::Skin::TexturedBase			skin( &renderer );
 
 	//

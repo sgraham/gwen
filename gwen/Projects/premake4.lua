@@ -73,6 +73,7 @@ DefineRenderer( "Allegro", { "../Renderers/Allegro/Allegro.cpp" } )
 
 if ( os.get() == "windows" ) then
 	DefineRenderer( "DirectX9", { "../Renderers/DirectX9/DirectX9.cpp" } )
+	DefineRenderer( "Direct2D", { "../Renderers/Direct2D/Direct2D.cpp" } )
 	DefineRenderer( "GDI", { "../Renderers/GDIPlus/GDIPlus.cpp", "../Renderers/GDIPlus/GDIPlusBuffered.cpp" } )
 end
 
@@ -87,6 +88,7 @@ DefineSample( "Allegro", { "../Samples/Allegro/AllegroSample.cpp" }, ALLEGRO_LIB
 
 if ( os.get() == "windows" ) then
 
+	DefineSample( "Direct2D", { "../Samples/Direct2D/Direct2DSample.cpp" }, { "Renderer-Direct2D", "GWEN Static", "UnitTest", "d2d1", "dwrite", "windowscodecs" } )
 	DefineSample( "DirectX9", { "../Samples/Direct3D/Direct3DSample.cpp" }, { "Renderer-DirectX9", "GWEN Static", "UnitTest" } )
 	DefineSample( "WindowsGDI", { "../Samples/WindowsGDI/WindowsGDI.cpp" }, { "Renderer-GDI", "GWEN Static", "UnitTest" } )
 	DefineSample( "OpenGL", { "../Samples/OpenGL/OpenGLSample.cpp" }, { "Renderer-OpenGL", "GWEN Static", "UnitTest", "opengl32", "FreeImage" } )
