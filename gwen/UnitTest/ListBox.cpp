@@ -65,7 +65,7 @@ class ListBox : public GUnit
 	{
 		Gwen::Controls::ListBox* ctrl = (Gwen::Controls::ListBox*)pControl;
 
-		UnitPrint( Utility::Format( L"Listbox Item Selected: %s", ctrl->GetSelectedRow()->GetText( 0 ).c_str() ) );
+		UnitPrint( Utility::Format( L"Listbox Item Selected: %s", ctrl->GetSelectedRow()->GetText( 0 ).GetUnicode().c_str() ) );
 	}
 
 	Gwen::Font	m_Font;

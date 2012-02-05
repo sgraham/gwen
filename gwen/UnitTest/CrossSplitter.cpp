@@ -11,6 +11,7 @@ class CrossSplitter : public GUnit
 
 	GWEN_CONTROL_INLINE( CrossSplitter, GUnit )
 	{
+		Dock( Pos::Fill );
 
 		m_bSplittersVisible = false;
 		m_iCurZoom = 0;

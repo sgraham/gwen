@@ -9,6 +9,8 @@ class MenuStrip : public GUnit
 
 	GWEN_CONTROL_INLINE( MenuStrip, GUnit )
 	{
+		Dock( Pos::Fill );
+
 		Gwen::Controls::MenuStrip* menu = new Gwen::Controls::MenuStrip( this );
 
 		{
@@ -97,7 +99,7 @@ class MenuStrip : public GUnit
 	{
 		Gwen::Controls::MenuItem* pMenuItem = (Gwen::Controls::MenuItem*)pControl;
 
-		UnitPrint( Utility::Format( L"Menu Selected: %s", pMenuItem->GetText().c_str() ) );
+		UnitPrint( Utility::Format( L"Menu Selected: %s", pMenuItem->GetText().GetUnicode().c_str() ) );
 	}
 
 };

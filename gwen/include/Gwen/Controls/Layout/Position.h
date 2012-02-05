@@ -32,7 +32,11 @@ namespace Gwen
 						for ( Base::List::iterator it = Children.begin(); it != Children.end(); ++it )
 						{
 							Base* pChild = *it;
+
+							if ( pChild->GetDock() != Pos::None ) continue;
+
 							pChild->Position( m_iPosition );
+
 						}
 					}
 

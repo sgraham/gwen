@@ -18,7 +18,6 @@ using namespace Gwen;
 	{\
 		Controls::Button* pButton = cat->Add( #name );\
 		GUnit* test = RegisterUnitTest_##name( pCenter );\
-		test->Dock( Pos::Fill );\
 		test->Hide();\
 		test->SetUnitTest( this );\
 		pButton->onPress.Add( this, &ThisClass::OnCategorySelect, test );\

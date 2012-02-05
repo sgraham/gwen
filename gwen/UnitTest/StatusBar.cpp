@@ -10,6 +10,8 @@ class StatusBar : public GUnit
 
 	GWEN_CONTROL_INLINE( StatusBar, GUnit )
 	{
+		Dock( Pos::Fill );
+
 		Gwen::Controls::StatusBar* pStatus = new Gwen::Controls::StatusBar( this );
 
 		Gwen::Controls::Label* pRight = new Gwen::Controls::Label( pStatus );

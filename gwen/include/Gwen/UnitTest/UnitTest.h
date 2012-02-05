@@ -45,6 +45,8 @@ class GUnit : public Gwen::Controls::Base
 
 		void Layout( Gwen::Skin::Base* skin )
 		{
+			if ( GetDock() != Gwen::Pos::None ) return;
+
 			SizeToChildren( true, true );
 		}
 
