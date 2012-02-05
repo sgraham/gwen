@@ -27,8 +27,7 @@ int main()
 	//Gwen::Skin::Simple skin;
 	//skin.SetRender( &GwenRenderer );
 
-	Gwen::Skin::TexturedBase skin;
-	skin.SetRender( &GwenRenderer );
+	Gwen::Skin::TexturedBase skin( &GwenRenderer );
 	skin.Init( "DefaultSkin.png" );
 
 	// The fonts work differently in SFML - it can't use
@@ -57,7 +56,11 @@ int main()
 	Gwen::Input::SFML GwenInput;
 	GwenInput.Initialize( pCanvas );
 	
+#if SFML_VERSION_MAJOR == 2
+	while ( App.IsOpen() )
+#else
 	while ( App.IsOpened() )
+#endif
 	{
 		// Handle events
 		sf::Event Event;

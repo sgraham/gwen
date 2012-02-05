@@ -34,7 +34,11 @@ namespace Gwen
 			Translate( rect );
 
 			#if SFML_VERSION_MAJOR == 2
-			m_Target.Draw( sf::Shape::Rectangle( rect.x, rect.y, rect.w, rect.h, m_Color ) );
+			sf::RectangleShape rectShape( sf::Vector2f( rect.w, rect.h ) );
+			rectShape.SetPosition( rect.x, rect.y );
+			rectShape.SetFillColor( m_Color );
+
+			m_Target.Draw( rectShape );
 			#else
 			m_Target.Draw( sf::Shape::Rectangle( rect.x, rect.y, rect.x + rect.w, rect.y + rect.h, m_Color ) );
 			#endif
@@ -55,7 +59,8 @@ namespace Gwen
 				// Ideally here we should be setting the font to a system default font here.
 				delete pFont;
 
-				pFont = const_cast<sf::Font*>( &sf::Font::GetDefaultFont() );
+				static sf::Font defaultFont = sf::Font::GetDefaultFont();
+				pFont = &defaultFont;
 			}
 			
 			font->data = pFont;
@@ -80,29 +85,28 @@ namespace Gwen
 		{
 			Translate( pos.x, pos.y );
 
-			const sf::Font* pSFFont = (sf::Font*)(pFont->data);
-
 			// If the font doesn't exist, or the font size should be changed
-			if ( !pSFFont || fabs( pFont->realsize - pFont->size * Scale() ) > 2 )
+			if ( !pFont->data || fabs( pFont->realsize - pFont->size * Scale() ) > 2 )
 			{
 				FreeFont( pFont );
 				LoadFont( pFont );
 			}
 
+			const sf::Font* pSFFont = (sf::Font*)(pFont->data);
+
 			if  ( !pSFFont )
 			{
-				pSFFont = &(sf::Font::GetDefaultFont());
+				static sf::Font defaultFont = sf::Font::GetDefaultFont();
+				pSFFont = &defaultFont;
 			}
 
 			#if SFML_VERSION_MAJOR == 2
-				m_Target.SaveGLStates();
-					sf::Text sfStr( text );
-					sfStr.SetFont( *pSFFont );
-					sfStr.Move( pos.x, pos.y );
-					sfStr.SetCharacterSize( pFont->realsize );
-					sfStr.SetColor( m_Color );
-					m_Target.Draw( sfStr );
-				m_Target.RestoreGLStates();
+				sf::Text sfStr( text );
+				sfStr.SetFont( *pSFFont );
+				sfStr.Move( pos.x, pos.y );
+				sfStr.SetCharacterSize( pFont->realsize );
+				sfStr.SetColor( m_Color );
+				m_Target.Draw( sfStr );
 			#else
 				sf::String sfStr( text );
 				sfStr.SetFont( *pSFFont );
@@ -117,27 +121,27 @@ namespace Gwen
 
 		Gwen::Point SFML::MeasureText( Gwen::Font* pFont, const Gwen::UnicodeString& text )
 		{
-			const sf::Font* pSFFont = (sf::Font*)(pFont->data);
-
 			// If the font doesn't exist, or the font size should be changed
-			if ( !pSFFont || fabs( pFont->realsize - pFont->size * Scale() ) > 2 )
+			if ( !pFont->data || fabs( pFont->realsize - pFont->size * Scale() ) > 2 )
 			{
 				FreeFont( pFont );
 				LoadFont( pFont );
 			}
 
+			const sf::Font* pSFFont = (sf::Font*)(pFont->data);
+
 			if  ( !pSFFont )
 			{
-				pSFFont = &(sf::Font::GetDefaultFont());
+				static sf::Font defaultFont = sf::Font::GetDefaultFont();
+				pSFFont = &defaultFont;
 			}
 
 			#if SFML_VERSION_MAJOR == 2
 				sf::Text sfStr( text );
 				sfStr.SetFont( *pSFFont );
 				sfStr.SetCharacterSize( pFont->realsize );
-				sf::FloatRect sz = sfStr.GetRect();
-				return Gwen::Point( sz.Width, sz.Height );
-
+				sf::FloatRect sz = sfStr.GetLocalBounds();
+				return Gwen::Point( sz.Left + sz.Width, sz.Top + sz.Height );
 			#else
 				sf::String sfStr( text );
 				sfStr.SetFont( *pSFFont );
@@ -224,6 +228,23 @@ namespace Gwen
 
 			Translate( rect );
 		
+#if SFML_VERSION_MAJOR == 2
+			u1 *= tex->GetWidth();
+			v1 *= tex->GetHeight();
+
+			u2 *= tex->GetWidth();
+			u2 -= u1;
+
+			v2 *= tex->GetHeight();
+			v2 -= v1;
+
+			sf::RectangleShape rectShape( sf::Vector2f( rect.w, rect.h ) );
+			rectShape.SetPosition( rect.x, rect.y );
+			rectShape.SetTexture( tex );
+			rectShape.SetTextureRect( sf::IntRect( u1, v1, u2, v2 ) );
+			
+			m_Target.Draw( rectShape );
+#else
 			tex->Bind();
 
 			glColor4f(1, 1, 1, 1 );
@@ -236,6 +257,7 @@ namespace Gwen
 			glEnd();
 
 			glBindTexture( GL_TEXTURE_2D, 0);
+#endif
 		}
 
 		Gwen::Color SFML::PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default )
