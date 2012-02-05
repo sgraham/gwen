@@ -4,11 +4,11 @@
 	See license in Gwen.h
 */
 
+#ifdef _WIN32
+
 #include "Gwen/Macros.h"
 #include "Gwen/Platform.h"
 #include "Gwen/Input/Windows.h"
-
-#ifdef _WIN32
 
 #include <windows.h>
 #include <ShlObj.h>
