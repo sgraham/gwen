@@ -33,6 +33,7 @@
 #include <set>
 
 #include "Gwen/Macros.h"
+#include "Gwen/TextObject.h"
 #include "Gwen/Config.h"
 #include "Gwen/Exports.h"
 #include "Gwen/Structures.h"
@@ -40,7 +41,6 @@
 #include "Gwen/Controls/Base.h"
 #include "Gwen/Controls/Canvas.h"
 #include "Gwen/Align.h"
-#include "Gwen/TextObject.h"
 
 // Enable the hook system (se Hook.h)
 #define GWEN_HOOKSYSTEM
