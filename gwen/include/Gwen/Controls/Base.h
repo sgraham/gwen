@@ -13,6 +13,8 @@
 #include "Gwen/BaseRender.h"
 #include "Gwen/Events.h"
 #include "Gwen/Utility.h"
+#include "Gwen/TextObject.h"
+#include "Gwen/Skin.h"
 #include <list>
 #include <map>
 

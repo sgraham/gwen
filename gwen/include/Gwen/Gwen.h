@@ -33,7 +33,6 @@
 #include <set>
 
 #include "Gwen/Macros.h"
-#include "Gwen/TextObject.h"
 #include "Gwen/Config.h"
 #include "Gwen/Exports.h"
 #include "Gwen/Structures.h"

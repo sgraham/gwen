@@ -7,6 +7,7 @@
 #pragma once
 #ifndef GWEN_UTILITY_H
 #define GWEN_UTILITY_H
+
 #include <sstream>
 #include <vector>
 #include "Gwen/Structures.h"

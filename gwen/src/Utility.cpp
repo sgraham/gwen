@@ -6,7 +6,6 @@
 
 #include "Gwen/ToolTip.h"
 #include "Gwen/Utility.h"
-#include "Gwen/TextObject.h"
 
 using namespace Gwen;
 
