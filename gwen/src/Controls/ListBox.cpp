@@ -69,12 +69,7 @@ GWEN_CONTROL_CONSTRUCTOR( ListBox )
 	m_bMultiSelect = false;
 }
 
-Layout::TableRow* ListBox::AddItem( const String& strLabel, const String& strName )
-{
-	return AddItem( Utility::StringToUnicode( strLabel ), strName );
-}
-
-Layout::TableRow* ListBox::AddItem( const UnicodeString& strLabel, const String& strName )
+Layout::TableRow* ListBox::AddItem( const TextObject& strLabel, const String& strName )
 {
 	ListBoxRow* pRow = new ListBoxRow( this );
 	m_Table->AddRow( pRow );

@@ -77,6 +77,11 @@ namespace Gwen
 					m_DrawColor = color;
 				}
 
+				virtual bool FailedToLoad()
+				{
+					return m_Texture.FailedToLoad();
+				}
+
 			protected:
 
 				Texture	m_Texture;

@@ -27,8 +27,7 @@ namespace Gwen
 
 				typedef std::list<Layout::TableRow*> Rows;
 
-				Layout::TableRow* AddItem( const String& strLabel, const String& strName = "" );
-				Layout::TableRow* AddItem( const UnicodeString& strLabel, const String& strName = "" );
+				Layout::TableRow* AddItem( const TextObject& strLabel, const String& strName = "" );
 
 				void RemoveItem( Layout::TableRow * row );
 

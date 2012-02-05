@@ -21,6 +21,11 @@ namespace Gwen
 
 				}
 
+				~TexturedBase()
+				{
+					m_Texture.Release( m_Render );
+				}
+
 				Texture m_Texture;
 
 				struct Textures_t

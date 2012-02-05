@@ -50,6 +50,11 @@ namespace Gwen
 		{
 			render->FreeTexture( this );
 		}
+
+		bool FailedToLoad() const
+		{
+			return failed;
+		}
 	};
 
 }
