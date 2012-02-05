@@ -431,7 +431,7 @@ namespace Gwen
 					Textures.Input.ListBox.Hovered.Init			( &m_Texture, 320,	320, 31, 31, Margin( 8, 8, 8, 8 ) );
 					Textures.Input.ListBox.EvenLine.Init		( &m_Texture, 352,  256, 31, 31, Margin( 8, 8, 8, 8 ) );
 					Textures.Input.ListBox.OddLine.Init			( &m_Texture, 352,  288, 31, 31, Margin( 8, 8, 8, 8 ) );
-					Textures.Input.ListBox.EvenLineSelected.Init( &m_Texture, 320,	270, 31, 31, Margin( 8, 8, 8, 8 ) );
+					Textures.Input.ListBox.EvenLineSelected.Init( &m_Texture, 320,	256, 31, 31, Margin( 8, 8, 8, 8 ) );
 					Textures.Input.ListBox.OddLineSelected.Init	( &m_Texture, 320,	288, 31, 31, Margin( 8, 8, 8, 8 ) );
 
 					Textures.Input.ComboBox.Normal.Init			 ( &m_Texture, 384,	336,	127, 31, Margin( 8, 8, 32, 8 ) );
