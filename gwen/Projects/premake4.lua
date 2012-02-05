@@ -4,7 +4,7 @@ solution "GWEN"
 
 	language "C++"
 	location ( os.get() .. "/" .. _ACTION )
-	flags { "Unicode", "Symbols", "NoMinimalRebuild", "NoEditAndContinue", "NoPCH", "No64BitChecks" } -- "NoRTTI"
+	flags { "Unicode", "Symbols", "NoEditAndContinue", "NoPCH", "No64BitChecks", "StaticRuntime", "EnableSSE" } -- "NoRTTI"
 	targetdir ( "../lib/" .. os.get() )
 	libdirs { "../lib/", "../lib/" .. os.get() }
 
