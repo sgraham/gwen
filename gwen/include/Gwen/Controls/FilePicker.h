@@ -9,10 +9,9 @@
 #define GWEN_CONTROLS_FILEPICKER_H
 
 #include "Gwen/BaseRender.h"
-#include "Gwen/Controls/Base.h"
-#include "Gwen/Controls/Text.h"
-#include "Gwen/Controls/Button.h"
 #include "Gwen/Controls/Dialogs/FileOpen.h"
+#include "Gwen/Controls/TextBox.h"
+
 
 namespace Gwen 
 {

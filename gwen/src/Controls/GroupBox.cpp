@@ -25,12 +25,14 @@ GWEN_CONTROL_CONSTRUCTOR( GroupBox )
 
 	m_InnerPanel = new Base( this );
 	m_InnerPanel->Dock( Pos::Fill );
+
+	m_InnerMargin = 6;
 	
 }
 
 void GroupBox::Layout( Skin::Base* skin )
 {
-	m_InnerPanel->SetMargin( Margin( TextHeight() + 3, 6, 6, 6 ) );
+	m_InnerPanel->SetMargin( Margin( m_InnerMargin, TextHeight() - 3 + m_InnerMargin, m_InnerMargin, m_InnerMargin ) );
 
 	BaseClass::Layout( skin );
 }

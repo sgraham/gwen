@@ -25,7 +25,7 @@ GWEN_CONTROL_CONSTRUCTOR( TextBox )
 	SetKeyboardInputEnabled( true );
 
 	SetAlignment( Pos::Left | Pos::CenterV );
-	SetTextPadding( Padding( 4, 2, 4, 2 ) );
+	SetPadding( Padding( 4, 2, 4, 2 ) );
 
 	m_iCursorPos = 0;
 	m_iCursorEnd = 0;
@@ -81,7 +81,6 @@ void TextBox::Render( Skin::Base* skin )
 	if ( ShouldDrawBackground() )
 		skin->DrawTextBox( this );
 	
-
 	if ( !HasFocus() ) return;
 
 	// Draw selection.. if selected..
@@ -379,12 +378,12 @@ void TextBox::MakeCaratVisible()
 	int idealx = -iCaratPos + Width() * 0.5f;;
 
 	// Don't show too much whitespace to the right
-	if ( idealx + m_Text->Width() < Width() - m_rTextPadding.right )
-		idealx = -m_Text->Width() + (Width() - m_rTextPadding.right );
+	if ( idealx + m_Text->Width() < Width() - GetPadding().right )
+		idealx = -m_Text->Width() + (Width() - GetPadding().right );
 
 	// Or the left
-	if ( idealx > m_rTextPadding.left )
-		idealx = m_rTextPadding.left;
+	if ( idealx > GetPadding().left )
+		idealx = GetPadding().left;
 
 	m_Text->SetPos( idealx, m_Text->Y() );
 

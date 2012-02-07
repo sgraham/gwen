@@ -24,20 +24,7 @@ GWEN_CONTROL_CONSTRUCTOR( Label )
 
 void Label::Layout( Skin::Base* /*skin*/ )
 {
-	
-	int iAlign = m_iAlign;
-
-	int x = m_rTextPadding.left + m_Padding.left;
-	int y = m_rTextPadding.top + m_Padding.top;
-
-	if ( iAlign & Pos::Right ) x = Width() - m_Text->Width() - m_rTextPadding.right - m_Padding.right;
-	if ( iAlign & Pos::CenterH ) x = (m_rTextPadding.left + m_Padding.left) + ((Width() - m_Text->Width() - m_rTextPadding.left - m_Padding.left - m_rTextPadding.right - m_Padding.right ) * 0.5f);
-
-	if ( iAlign & Pos::CenterV ) y = (m_rTextPadding.top + m_Padding.top) + ((Height() - m_Text->Height()) * 0.5f)  - m_rTextPadding.bottom - m_Padding.bottom;
-	if ( iAlign & Pos::Bottom ) y = Height() - m_Text->Height() - m_rTextPadding.bottom - m_Padding.bottom;
-
-	m_Text->SetPos( x, y );
-	
+	m_Text->Position( m_iAlign );
 }
 
 void Label::SetText( const TextObject& str, bool bDoEvents )
@@ -53,11 +40,10 @@ void Label::SetText( const TextObject& str, bool bDoEvents )
 
 void Label::SizeToContents()
 {
-	m_Text->SetPos( m_rTextPadding.left + m_Padding.left, m_rTextPadding.top + m_Padding.top );
+	m_Text->SetPos( m_Padding.left, m_Padding.right );
 	m_Text->RefreshSize();
 
-	SetSize( m_Text->Width() + m_Padding.left + m_Padding.right + m_rTextPadding.left + m_rTextPadding.right, m_Text->Height() + m_Padding.top + m_Padding.bottom + m_rTextPadding.top + m_rTextPadding.bottom );
-	
+	SetSize( m_Text->Width() + m_Padding.left + m_Padding.right, m_Text->Height() + m_Padding.top + m_Padding.bottom );
 }
 
 Gwen::Point Label::GetCharacterPosition( int iChar )

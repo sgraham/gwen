@@ -42,6 +42,9 @@ void Text::RefreshSize()
 		p = GetSkin()->GetRender()->MeasureText( GetFont(), m_String.GetUnicode() );
 	}
 
+	p.x += GetPadding().left + GetPadding().right;
+	p.y += GetPadding().top + GetPadding().bottom;
+
 	if ( p.x == Width() && p.y == Height() ) 
 		return;
 
@@ -69,7 +72,7 @@ void Text::Render( Skin::Base* skin )
 	else
 		skin->GetRender()->SetDrawColor( m_ColorOverride );
 
-	skin->GetRender()->RenderText( GetFont(), Gwen::Point( 0, 0 ), m_String.GetUnicode() );
+	skin->GetRender()->RenderText( GetFont(), Gwen::Point( GetPadding().left, GetPadding().top ), m_String.GetUnicode() );
 }
 
 void Text::Layout( Skin::Base* /*skin*/ )

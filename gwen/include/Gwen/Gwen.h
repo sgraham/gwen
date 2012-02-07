@@ -84,6 +84,15 @@ namespace Gwen
 	extern GWEN_EXPORT Controls::Base*	KeyboardFocus;
 	extern GWEN_EXPORT Controls::Base*	MouseFocus;
 
+	namespace Input
+	{
+		inline void Blur()
+		{
+			if ( KeyboardFocus )
+				KeyboardFocus->Blur();
+		}
+	}
+
 } //namespace Gwen
 
 

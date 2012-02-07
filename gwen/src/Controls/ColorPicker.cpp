@@ -118,7 +118,7 @@ void ColorPicker::UpdateColorControls( Gwen::String name, Gwen::Color col, int s
 	disp->SetColor( col );
 
 	HorizontalSlider* slider = gwen_cast<HorizontalSlider>( FindChildByName( name + "Slider", true ) );
-	slider->SetValue( sliderVal );
+	slider->SetFloatValue( sliderVal );
 
 	TextBoxNumeric* box = gwen_cast<TextBoxNumeric>( FindChildByName( name + "Box", true ) );
 	box->SetText( Gwen::Utility::ToString( sliderVal ) );
@@ -149,7 +149,7 @@ void ColorPicker::SlidersMoved( Gwen::Controls::Base* control )
 
 	HorizontalSlider* slider = gwen_cast<HorizontalSlider>( control );
 	if (slider)
-		SetColorByName( GetColorFromName( slider->GetName() ), slider->GetValue() );
+		SetColorByName( GetColorFromName( slider->GetName() ), slider->GetFloatValue() );
 
 	UpdateControls();
 	//SetColor( Gwen::Color( redSlider->GetValue(), greenSlider->GetValue(), blueSlider->GetValue(), alphaSlider->GetValue() ) );

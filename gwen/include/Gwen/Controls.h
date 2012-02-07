@@ -3,7 +3,24 @@
 #define GWEN_CONTROLS_H
 
 #include "Gwen/Controls/Button.h"
+#include "Gwen/Controls/DockBase.h"
+#include "Gwen/Controls/FieldLabel.h"
+#include "Gwen/Controls/FilePicker.h"
+#include "Gwen/Controls/GroupBox.h"
+#include "Gwen/Controls/ImagePanel.h"
+#include "Gwen/Controls/ListBox.h"
+#include "Gwen/Controls/PropertyTree.h"
+#include "Gwen/Controls/Property/Checkbox.h"
+#include "Gwen/Controls/Property/ColorSelector.h"
+#include "Gwen/Controls/Property/Folder.h"
+#include "Gwen/Controls/Property/File.h"
+#include "Gwen/Controls/Property/Text.h"
+#include "Gwen/Controls/StatusBar.h"
+#include "Gwen/Controls/TabControl.h"
+#include "Gwen/Controls/Text.h"
 #include "Gwen/Controls/TextBox.h"
+
+#include "Gwen/Controls/Dialogs/FileOpen.h"
 
 #include "Gwen/Anim.h"
 

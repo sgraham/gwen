@@ -49,6 +49,8 @@ namespace Gwen
 				void Layout( Gwen::Skin::Base* pskin )
 				{
 					m_pField->SetWidth( Width() - 70 );
+
+					BaseClass::Layout( pskin );
 				}
 
 			protected:

@@ -277,6 +277,8 @@ namespace Gwen
 
 					} CategoryList;
 
+					Texturing::Bordered GroupBox;
+
 				} Textures;
 
 				
@@ -470,6 +472,8 @@ namespace Gwen
 					Textures.CategoryList.Outer.Init			 ( &m_Texture, 256,			384, 63, 63, Margin( 8, 8, 8, 8 ) );
 					Textures.CategoryList.Inner.Init			 ( &m_Texture, 256 + 64,	384, 63, 63, Margin( 8, 21, 8, 8 ) );
 					Textures.CategoryList.Header.Init			 ( &m_Texture, 320,			352, 63, 31, Margin( 8, 8, 8, 8 ) );
+
+					Textures.GroupBox.Init						 ( &m_Texture, 0,			448, 31, 31, Margin( 8, 8, 8, 8 ) );
 				}
 
 
@@ -565,26 +569,12 @@ namespace Gwen
 					rect.y += textHeight * 0.5f;
 					rect.h -= textHeight * 0.5f;
 
-					Gwen::Color m_colDarker			= Gwen::Color(   0,  50,  60, 50 );
-					Gwen::Color m_colLighter		= Gwen::Color( 255, 255, 255, 150 );
+					Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, true, false );
 
-					GetRender()->SetDrawColor( m_colLighter );
+					rect.x += textStart + textWidth - 4;
+					rect.w -= textStart + textWidth - 4;
 
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.x+1, rect.y+1, textStart-3, 1 ) );
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.x+1+textStart+textWidth, rect.y+1, rect.w-textStart+textWidth-2, 1 ) );
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.x+1, (rect.y + rect.h)-1, rect.x+rect.w-2, 1 ) );
-
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.x+1, rect.y+1, 1, rect.h ) );
-						GetRender()->DrawFilledRect( Gwen::Rect( (rect.x + rect.w)-2, rect.y+1, 1, rect.h-1 ) );
-
-					GetRender()->SetDrawColor( m_colDarker );
-
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.x+1, rect.y, textStart-3, 1 ) );
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.x+1+textStart+textWidth, rect.y, rect.w-textStart-textWidth-2, 1 ) );
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.x+1, (rect.y + rect.h)-1, rect.x+rect.w-2, 1 ) );
-						
-						GetRender()->DrawFilledRect( Gwen::Rect( rect.x, rect.y+1, 1, rect.h-1 ) );
-						GetRender()->DrawFilledRect( Gwen::Rect( (rect.x + rect.w)-1, rect.y+1, 1, rect.h-1 ) );			
+					Textures.GroupBox.Draw( GetRender(), rect, Gwen::Colors::White, false, true, false, false, false, false, false, false, false );
 				}
 
 				virtual void DrawTextBox( Gwen::Controls::Base* control )

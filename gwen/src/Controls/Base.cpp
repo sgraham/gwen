@@ -23,13 +23,14 @@
 using namespace Gwen;
 using namespace Controls;
 
-Base::Base( Base* pParent )
+Base::Base( Base* pParent, const Gwen::String& Name )
 {
 	m_Parent = NULL;
 	m_ActualParent = NULL;
 	m_InnerPanel = NULL;
 	m_Skin = NULL;
 
+	SetName( Name );
 	SetParent( pParent );
 
 	m_bHidden = false;
@@ -241,7 +242,7 @@ Controls::Base* Base::FindChildByName( const Gwen::String& name, bool bRecursive
 	for (iter = Children.begin(); iter != Children.end(); ++iter)
 	{
 		Base* pChild = *iter;
-		if ( pChild->GetName() == name )
+		if ( !pChild->GetName().empty() && pChild->GetName() == name )
 			return pChild;
 
 		if ( bRecursive )
@@ -1114,6 +1115,33 @@ void Base::SetToolTip( const TextObject& strText )
 	tooltip->SizeToContents();
 
 	SetToolTip( tooltip );
+}
+
+TextObject Base::GetChildValue( const Gwen::String& strName )
+{
+	Base* pChild = FindChildByName( strName, true );
+	if ( !pChild ) return "";
+
+	return pChild->GetValue();
+}
+
+TextObject Base::GetValue()
+{
+	// Generic value accessor should be filled in if we have a value to give.
+	return "";
+}
+
+void Base::SetChildValue( const Gwen::String& strName, const TextObject& strValue )
+{
+	Base* pChild = FindChildByName( strName, true );
+	if ( !pChild ) return;
+
+	return pChild->SetValue( strValue );
+}
+
+void Base::SetValue( const TextObject& strValue )
+{
+
 }
 
 #ifndef GWEN_NO_ANIMATION

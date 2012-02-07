@@ -24,7 +24,7 @@ void SliderBar::Render( Skin::Base* skin )
 }
 
 
-Slider::Slider( Controls::Base* pParent ) : BaseClass( pParent )
+GWEN_CONTROL_CONSTRUCTOR( Slider )
 {
 	SetBounds( Gwen::Rect( 0, 0, 32, 128) );
 
@@ -57,7 +57,7 @@ float Slider::CalculateValue()
 	return 0;
 }
 
-void Slider::SetValue( float val, bool /*forceUpdate*/ ) 
+void Slider::SetFloatValue( float val, bool /*forceUpdate*/ ) 
 {
 	if (val < m_fMin) val = m_fMin;
 	if (val > m_fMax) val = m_fMax;
@@ -84,7 +84,7 @@ void Slider::SetValueInternal( float val )
 	UpdateBarFromValue();	
 }
 
-float Slider::GetValue()
+float Slider::GetFloatValue()
 {
 	return m_fMin + (m_fValue * (m_fMax - m_fMin));
 }

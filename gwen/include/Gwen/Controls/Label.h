@@ -49,8 +49,8 @@ namespace Gwen
 
 				Gwen::Point GetCharacterPosition( int iChar );
 
-				virtual void SetTextPadding( const Padding& padding ){ m_rTextPadding = padding; Invalidate(); InvalidateParent(); }
-				virtual const Padding& GetTextPadding(){ return m_rTextPadding; }
+				virtual void SetTextPadding( const Padding& padding ){ m_Text->SetPadding( padding ); Invalidate(); InvalidateParent(); }
+				virtual const Padding& GetTextPadding(){ return m_Text->GetPadding(); }
 
 				inline int Alignment() const { return m_iAlign; }
 
@@ -59,11 +59,14 @@ namespace Gwen
 				virtual void MakeColorDark(){ SetTextColor( GetSkin()->Colors.Label.Dark ); }
 				virtual void MakeColorHighlight(){ SetTextColor( GetSkin()->Colors.Label.Highlight ); }
 
+				virtual TextObject GetValue(){ return GetText(); }
+				virtual void SetValue( const TextObject& strValue ){ return SetText( strValue ); }
+
+
 			protected:
 
 				virtual void OnTextChanged(){};
 
-				Padding m_rTextPadding;
 				ControlsInternal::Text*	m_Text;
 				int m_iAlign;
 

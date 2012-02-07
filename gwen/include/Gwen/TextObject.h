@@ -47,7 +47,10 @@ namespace Gwen
 			{
 				*this = unicode;
 			}
-			
+
+			operator const Gwen::String&(){ return m_String; }
+			operator const Gwen::UnicodeString&(){ return m_Unicode; }
+		
 			void operator = ( const Gwen::String& str )
 			{
 				m_String = str;
