@@ -49,12 +49,31 @@ namespace Gwen
 				void FreeTexture( Gwen::Texture* pTexture );
 				Gwen::Color PixelColour( Gwen::Texture* pTexture, unsigned int x, unsigned int y, const Gwen::Color& col_default );
 
+			public:
+
+				//
+				// Self Initialization
+				//
+
+				virtual bool InitializeContext( Gwen::WindowProvider* pWindow );
+				virtual bool ShutdownContext( Gwen::WindowProvider* pWindow );
+				virtual bool PresentContext( Gwen::WindowProvider* pWindow );
+				virtual bool ResizedContext( Gwen::WindowProvider* pWindow, int w, int h );
+				virtual bool BeginContext( Gwen::WindowProvider* pWindow );
+				virtual bool EndContext( Gwen::WindowProvider* pWindow );
+
+			protected:
+
+				virtual void FillPresentParameters( Gwen::WindowProvider* pWindow, D3DPRESENT_PARAMETERS& Params );
+
 			protected:
 
 				void*				m_pCurrentTexture;
 				IDirect3DDevice9*	m_pDevice;
+				IDirect3D9*			m_pD3D;
 				DWORD				m_Color;
 				Gwen::Font::List	m_FontList;
+				//Gwen::Texture::List	m_TextureList;
 
 				void Flush();
 				void AddVert( int x, int y );

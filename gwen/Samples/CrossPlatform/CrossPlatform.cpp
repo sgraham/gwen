@@ -12,6 +12,7 @@
 #include "Gwen/Renderers/OpenGL_DebugFont.h"
 //#include "Gwen/Renderers/GDIPlus.h"
 //#include "Gwen/Renderers/Direct2D.h"
+//#include "Gwen/Renderers/DirectX9.h"
 
 
 //
@@ -29,6 +30,7 @@ int main()
 	//
 	//Gwen::Renderer::GDIPlusBuffered		renderer;
 	//Gwen::Renderer::Direct2D				renderer;
+	//Gwen::Renderer::DirectX9				renderer;
 	Gwen::Renderer::OpenGL_DebugFont		renderer;
 	Gwen::Skin::TexturedBase			skin( &renderer );
 

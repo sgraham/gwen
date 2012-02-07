@@ -3,6 +3,7 @@
 #include "Gwen/Utility.h"
 #include "Gwen/Font.h"
 #include "Gwen/Texture.h"
+#include "Gwen/WindowProvider.h"
 
 #define D3DFVF_VERTEXFORMAT2D ( D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 
@@ -18,6 +19,7 @@ namespace Gwen
 	{
 		DirectX9::DirectX9( IDirect3DDevice9* pDevice )
 		{
+			m_pD3D = NULL;
 			m_pDevice = pDevice;
 			m_iVertNum = 0;
 
@@ -357,5 +359,107 @@ namespace Gwen
 				it = m_FontList.begin();
 			}
 		}
+
+		void DirectX9::FillPresentParameters( Gwen::WindowProvider* pWindow, D3DPRESENT_PARAMETERS& Params )
+		{
+			HWND pHWND = (HWND)pWindow->GetWindow();
+
+			RECT ClientRect;
+			GetClientRect( pHWND, &ClientRect );
+
+			ZeroMemory( &Params, sizeof( Params ) );
+
+			Params.Windowed						= true;
+			Params.SwapEffect					= D3DSWAPEFFECT_COPY;
+			Params.BackBufferWidth				= ClientRect.right;
+			Params.BackBufferHeight				= ClientRect.bottom;
+			Params.FullScreen_RefreshRateInHz	= D3DPRESENT_RATE_DEFAULT;
+			Params.BackBufferFormat				= D3DFMT_UNKNOWN;
+			Params.PresentationInterval			= D3DPRESENT_INTERVAL_DEFAULT;
+
+		}
+
+		bool DirectX9::InitializeContext( Gwen::WindowProvider* pWindow )
+		{
+			HWND pHWND = (HWND)pWindow->GetWindow();
+
+			m_pD3D = Direct3DCreate9( D3D_SDK_VERSION );
+			if ( !m_pD3D ) return false;
+
+			
+
+			D3DCAPS9 D3DCaps;
+			m_pD3D->GetDeviceCaps( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &D3DCaps );
+
+			DWORD BehaviourFlags = D3DCREATE_SOFTWARE_VERTEXPROCESSING;
+			if( D3DCaps.VertexProcessingCaps != 0 ) BehaviourFlags = D3DCREATE_HARDWARE_VERTEXPROCESSING;
+
+			D3DPRESENT_PARAMETERS Params;
+			FillPresentParameters( pWindow, Params );
+
+			HRESULT hr = m_pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, pHWND, D3DCREATE_HARDWARE_VERTEXPROCESSING, &Params, &m_pDevice );
+			if ( FAILED(hr) )
+			{
+				return false;
+			}
+
+			return true;
+		}
+
+		bool DirectX9::ShutdownContext( Gwen::WindowProvider* pWindow )
+		{
+			if ( m_pDevice )
+			{
+				m_pDevice->Release();
+				m_pDevice = NULL;
+			}
+
+			if ( m_pD3D )
+			{
+				m_pD3D->Release();
+				m_pD3D = NULL;
+			}
+
+			return true;
+		}
+
+		bool DirectX9::PresentContext( Gwen::WindowProvider* pWindow )
+		{
+			m_pDevice->Present( NULL, NULL, NULL, NULL );
+			return true;
+		}
+
+		bool DirectX9::ResizedContext( Gwen::WindowProvider* pWindow, int w, int h )
+		{
+			// Force setting the current texture again
+			m_pCurrentTexture = NULL;
+
+			// Free any unmanaged resources (fonts)
+			Release();
+
+			// Get the new window size from the HWND
+			D3DPRESENT_PARAMETERS Params;
+			FillPresentParameters( pWindow, Params );
+
+			// And reset the device!
+			m_pDevice->Reset( &Params );
+
+			return true;
+		}
+
+		bool DirectX9::BeginContext( Gwen::WindowProvider* pWindow )
+		{
+			m_pDevice->BeginScene();
+			m_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_XRGB( 128, 128, 128 ), 1, 0 );
+
+			return true;
+		}
+
+		bool DirectX9::EndContext( Gwen::WindowProvider* pWindow )
+		{
+			m_pDevice->EndScene();
+			return true;
+		}
+
 	}
 }
