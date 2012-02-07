@@ -1,15 +1,10 @@
 
-#include <windows.h>
-#include <d3d9.h>
-#include <D3dx9core.h>
-
 #include "Gwen/Renderers/DirectX9.h"
 #include "Gwen/Utility.h"
 #include "Gwen/Font.h"
 #include "Gwen/Texture.h"
 
-#include <math.h>
-
+#define D3DFVF_VERTEXFORMAT2D ( D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1 )
 
 struct FontData
 {
@@ -70,7 +65,7 @@ namespace Gwen
 			if ( m_iVertNum > 0 )
 			{
 				m_pDevice->SetFVF( D3DFVF_VERTEXFORMAT2D );
-				m_pDevice->DrawPrimitiveUP( D3DPT_TRIANGLELIST, m_iVertNum/3, &m_pVerts[0], sizeof(VERTEXFORMAT2D) );
+				m_pDevice->DrawPrimitiveUP( D3DPT_TRIANGLELIST, m_iVertNum/3, &m_pVerts[0], sizeof(VertexFormat) );
 
 				m_iVertNum = 0;
 			}

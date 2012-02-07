@@ -19,13 +19,6 @@
 #include "Gwen/Input/Windows.h"
 #include "Gwen/Renderers/DirectX9.h"
 
-#pragma comment( lib, "d3dxof.lib" )
-#pragma comment( lib, "dxguid.lib" )
-#pragma comment( lib, "d3d9.lib" )
-#pragma comment( lib, "winmm.lib" )
-#pragma comment( lib, "dxerr.lib" )
-#pragma comment( lib, "d3dx9.lib" )
-
 HWND					g_pHWND = NULL;
 LPDIRECT3D9				g_pD3D = NULL;
 IDirect3DDevice9*		g_pD3DDevice = NULL;
@@ -85,7 +78,7 @@ void CreateD3DDevice()
 	HRESULT hr = g_pD3D->CreateDevice( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, g_pHWND, D3DCREATE_SOFTWARE_VERTEXPROCESSING, &g_D3DParams, &g_pD3DDevice );
 	if ( FAILED(hr) )
 	{
-		OutputDebugString( DXGetErrorDescription( hr ) );
+		OutputDebugString( L"Couldn't create D3D Device for some reason!" );
 		return;
 	}
 }
@@ -112,13 +105,13 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
 	//
 	// Create a GWEN skin
 	//
-	Gwen::Skin::TexturedBase skin( pRenderer );
-	skin.Init( "DefaultSkin.png" );
+	Gwen::Skin::TexturedBase* pSkin = new Gwen::Skin::TexturedBase( pRenderer );
+	pSkin->Init( "DefaultSkin.png" );
 
 	//
 	// Create a Canvas (it's root, on which all other GWEN panels are created)
 	//
-	Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas( &skin );
+	Gwen::Controls::Canvas* pCanvas = new Gwen::Controls::Canvas( pSkin );
 	pCanvas->SetSize( FrameBounds.right, FrameBounds.bottom );
 	pCanvas->SetDrawBackground( true );
 	pCanvas->SetBackgroundColor( Gwen::Color( 150, 170, 170, 255 ) );
@@ -177,6 +170,7 @@ int main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCm
 	}
 
 	delete pCanvas;
+	delete pSkin;
 	delete pRenderer;
 
 	if ( g_pD3DDevice )
