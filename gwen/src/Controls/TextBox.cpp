@@ -408,3 +408,17 @@ void TextBox::OnEnter()
 {
 	onReturnPressed.Call( this );
 }
+
+void TextBox::MoveCaretToEnd()
+{
+	m_iCursorPos = TextLength();
+	m_iCursorEnd = TextLength();
+	RefreshCursorBounds();
+}
+
+void TextBox::MoveCaretToStart()
+{
+	m_iCursorPos = 0;
+	m_iCursorEnd = 0;
+	RefreshCursorBounds();
+}

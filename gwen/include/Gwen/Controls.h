@@ -5,6 +5,7 @@
 #include "Gwen/Controls/Button.h"
 #include "Gwen/Controls/DockBase.h"
 #include "Gwen/Controls/FieldLabel.h"
+#include "Gwen/Controls/FolderPicker.h"
 #include "Gwen/Controls/FilePicker.h"
 #include "Gwen/Controls/GroupBox.h"
 #include "Gwen/Controls/ImagePanel.h"

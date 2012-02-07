@@ -67,6 +67,9 @@ namespace Gwen
 
 				virtual bool NeedsInputChars(){ return true; }
 
+				virtual void MoveCaretToEnd();
+				virtual void MoveCaretToStart();
+
 				Event::Caller	onTextChanged;
 				Event::Caller	onReturnPressed;
 
