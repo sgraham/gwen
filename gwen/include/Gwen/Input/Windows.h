@@ -105,7 +105,7 @@ namespace Gwen
 						case WM_MBUTTONUP:
 							{
 								ReleaseCapture();
-								return m_Canvas->InputMouseButton( 2, true );
+								return m_Canvas->InputMouseButton( 2, false );
 							}
 
 						case WM_LBUTTONDBLCLK:
