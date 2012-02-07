@@ -29,6 +29,9 @@ namespace Gwen
 				
 			protected:
 
+				void CreateDebugFont();
+				void DestroyDebugFont();
+
 				Gwen::Texture*	m_pFontTexture;
 				float			m_fFontScale[2];
 				float			m_fLetterSpacing;

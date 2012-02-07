@@ -332,6 +332,18 @@ void* Gwen::Platform::CreatePlatformWindow( int x, int y, int w, int h, const Gw
 	SetForegroundWindow( hWindow );
 	SetFocus( hWindow );
 
+	/*
+	//
+	// Something to look into for child windows etc...
+	//
+	HRGN hRegion1 = CreateEllipticRgn(20,-20,190,150);
+	HRGN hRegion2 = CreateEllipticRgn(140,100,300,240);
+	CombineRgn(hRegion1, hRegion1, hRegion2, RGN_OR);
+	SetWindowRgn(hWindow, hRegion1, true);
+	DeleteObject(hRegion1);
+	DeleteObject(hRegion2);
+	*/
+
 	return (void*)hWindow;
 }
 

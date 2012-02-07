@@ -24,6 +24,19 @@ namespace Gwen
 
 		void OpenGL_DebugFont::Init()
 		{
+			CreateDebugFont();
+		}
+
+		OpenGL_DebugFont::~OpenGL_DebugFont()
+		{
+			DestroyDebugFont();
+		}
+
+
+		void OpenGL_DebugFont::CreateDebugFont()
+		{
+			if ( m_pFontTexture ) return;
+
 			m_pFontTexture = new Gwen::Texture();
 
 			// Create a little texture pointer..
@@ -49,17 +62,25 @@ namespace Gwen
 				texdata[i*4+2] = sGwenFontData[i];
 				texdata[i*4+3] = sGwenFontData[i];
 			}
+
 			glTexImage2D( GL_TEXTURE_2D, 0, GL_RGBA, m_pFontTexture->width, m_pFontTexture->height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)texdata );
 			delete[]texdata;
 		}
 
-		OpenGL_DebugFont::~OpenGL_DebugFont()
+		void OpenGL_DebugFont::DestroyDebugFont()
 		{
-			if ( m_pFontTexture )
-			{
-				FreeTexture( m_pFontTexture );
-				delete m_pFontTexture;
-			}
+			if ( !m_pFontTexture ) return;
+
+			GLuint* tex = (GLuint*)m_pFontTexture->data;
+			if ( !tex ) return;
+
+			glDeleteTextures( 1, tex );
+			delete tex;
+
+			m_pFontTexture->data = NULL;
+
+			delete m_pFontTexture;
+			m_pFontTexture = NULL;
 		}
 
 		void OpenGL_DebugFont::RenderText( Gwen::Font* pFont, Gwen::Point pos, const Gwen::UnicodeString& text )
