@@ -1160,6 +1160,22 @@ void Base::ShowChild( const Gwen::String& strName )
 	pChild->Show();
 }
 
+void Base::DisableChild( const Gwen::String& strName )
+{
+	Base* pChild = FindChildByName( strName, true );
+	if ( !pChild ) return;
+
+	pChild->SetDisabled( true );
+}
+
+void Base::EnableChild( const Gwen::String& strName )
+{
+	Base* pChild = FindChildByName( strName, true );
+	if ( !pChild ) return;
+
+	pChild->SetDisabled( false );
+}
+
 #ifndef GWEN_NO_ANIMATION
 
 void Base::Anim_WidthIn( float fLength, float fDelay, float fEase )

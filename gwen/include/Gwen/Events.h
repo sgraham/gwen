@@ -11,6 +11,7 @@
 #include <list>
 #include "Gwen/Exports.h"
 #include "Gwen/Structures.h"
+#include "Gwen/TextObject.h"
 
 namespace Gwen 
 {
@@ -45,7 +46,7 @@ namespace Gwen
 				typedef void (Handler::*Function)( Gwen::Controls::Base* pFromPanel );
 				typedef void (Handler::*FunctionWithControl)( Gwen::Controls::Base* pFromPanel, Gwen::Controls::Base* pStoredPanel );
 				typedef void (Handler::*FunctionBlank)();
-				typedef void (Handler::*FunctionWithString)( const Gwen::String& string );
+				typedef void (Handler::*FunctionWithString)( const Gwen::TextObject& string );
 
 		};
 

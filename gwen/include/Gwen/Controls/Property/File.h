@@ -39,7 +39,7 @@ namespace Gwen
 					Gwen::Dialogs::FileOpen( true, m_strDialogName, m_TextBox->GetText().Get(), m_strFileExtension, this, &Folder::EventFilePicked );
 				}
 
-				void EventFilePicked( const Gwen::String& string )
+				void EventFilePicked( const Gwen::TextObject& string )
 				{
 					m_TextBox->SetText( string );
 				}
