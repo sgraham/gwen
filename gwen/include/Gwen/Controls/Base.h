@@ -173,7 +173,7 @@ namespace Gwen
 
 			public:	
 
-				virtual void SetHidden( bool hidden ) { if ( m_bHidden == hidden ) return; m_bHidden = hidden; Invalidate(); }
+				virtual void SetHidden( bool hidden ) { if ( m_bHidden == hidden ) return; m_bHidden = hidden; Invalidate(); Redraw(); }
 				virtual bool Hidden() const; // Returns true only if this control is hidden
 				virtual bool Visible() const; // Returns false if this control or its parents are hidden
 				virtual void Hide(){ SetHidden( true ); }
@@ -456,6 +456,9 @@ namespace Gwen
 				virtual TextObject GetValue();
 				virtual void SetChildValue( const Gwen::String& strName, const TextObject& strValue );
 				virtual void SetValue( const TextObject& strValue );
+
+				virtual void HideChild( const Gwen::String& strName );
+				virtual void ShowChild( const Gwen::String& strName );
 				
 		};
 

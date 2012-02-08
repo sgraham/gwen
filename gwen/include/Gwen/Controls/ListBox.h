@@ -41,7 +41,9 @@ namespace Gwen
 				bool AllowMultiSelect() const { return m_bMultiSelect; }
 
 				const ListBox::Rows& GetSelectedRows(){ return m_SelectedRows; }
-				Layout::TableRow* GetSelectedRow();
+
+				virtual Layout::TableRow* GetSelectedRow();
+				virtual Gwen::String GetSelectedRowName();
 
 				virtual void SetSelectedRow( Gwen::Controls::Base* pRow, bool bClearOthers = true );
 				virtual void SelectByString( const TextObject& string, bool bClearOthers = true );

@@ -36,6 +36,7 @@ class ListBoxRow : public Layout::TableRow
 		{
 			SetSelected( true );
 			onRowSelected.Call( this );
+			Redraw();
 		}
 	}
 
@@ -120,6 +121,14 @@ Layout::TableRow* ListBox::GetSelectedRow()
 	if ( m_SelectedRows.empty() ) return NULL;
 
 	return *m_SelectedRows.begin();
+}
+
+Gwen::String ListBox::GetSelectedRowName()
+{
+	Layout::TableRow* row = GetSelectedRow();
+	if ( !row ) return "";
+
+	return row->GetName();
 }
 
 void ListBox::Clear()

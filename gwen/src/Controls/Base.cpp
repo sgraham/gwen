@@ -1144,6 +1144,22 @@ void Base::SetValue( const TextObject& strValue )
 
 }
 
+void Base::HideChild( const Gwen::String& strName )
+{
+	Base* pChild = FindChildByName( strName, true );
+	if ( !pChild ) return;
+
+	pChild->Hide();
+}
+
+void Base::ShowChild( const Gwen::String& strName )
+{
+	Base* pChild = FindChildByName( strName, true );
+	if ( !pChild ) return;
+
+	pChild->Show();
+}
+
 #ifndef GWEN_NO_ANIMATION
 
 void Base::Anim_WidthIn( float fLength, float fDelay, float fEase )
