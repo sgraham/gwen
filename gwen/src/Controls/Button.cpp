@@ -134,7 +134,7 @@ void Button::SetImage( const TextObject& strName, bool bCenter )
 
 	// Ugh.
 	Padding padding = GetTextPadding();
-	padding.left = m_Image->Right() + 2;
+	padding.left = m_Image->Right();
 	SetTextPadding( padding );
 
 }

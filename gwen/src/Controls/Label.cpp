@@ -40,7 +40,7 @@ void Label::SetText( const TextObject& str, bool bDoEvents )
 
 void Label::SizeToContents()
 {
-	m_Text->SetPos( m_Padding.left, m_Padding.right );
+	m_Text->SetPos( m_Padding.left, m_Padding.top );
 	m_Text->RefreshSize();
 
 	SetSize( m_Text->Width() + m_Padding.left + m_Padding.right, m_Text->Height() + m_Padding.top + m_Padding.bottom );

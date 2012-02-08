@@ -183,4 +183,6 @@ void TabStrip::SetTabPosition( int iPos )
 	{
 		SetPadding( Padding( 5, 0, 0, 0 ) );
 	}
+
+	InvalidateChildren( true );
 }
