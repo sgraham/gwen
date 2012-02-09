@@ -15,6 +15,7 @@
 #include "Gwen/Utility.h"
 #include "Gwen/TextObject.h"
 #include "Gwen/Skin.h"
+#include "Gwen/ControlList.h"
 #include <list>
 #include <map>
 
@@ -334,6 +335,7 @@ namespace Gwen
 
 				Gwen::Rect		m_Bounds;
 				Gwen::Rect		m_RenderBounds;
+
 				Padding		m_Padding;
 				Margin		m_Margin;
 
@@ -454,14 +456,10 @@ namespace Gwen
 
 				virtual TextObject GetChildValue( const Gwen::String& strName );
 				virtual TextObject GetValue();
-				virtual void SetChildValue( const Gwen::String& strName, const TextObject& strValue );
 				virtual void SetValue( const TextObject& strValue );
 
-				virtual void HideChild( const Gwen::String& strName );
-				virtual void ShowChild( const Gwen::String& strName );
-
-				virtual void DisableChild( const Gwen::String& strName );
-				virtual void EnableChild( const Gwen::String& strName );
+				virtual int GetNamedChildren( Gwen::ControlList& list, const Gwen::String& strName, bool bDeep = true );
+				virtual Gwen::ControlList GetNamedChildren( const Gwen::String& strName, bool bDeep = true );
 				
 		};
 

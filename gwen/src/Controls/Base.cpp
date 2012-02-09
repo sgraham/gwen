@@ -195,20 +195,18 @@ void Base::InvalidateChildren( bool bRecursive )
 
 void Base::Position( int pos, int xpadding, int ypadding )
 {
-	int w = GetParent()->Width();
-	int h = GetParent()->Height();
-	const Padding& padding = GetParent()->GetPadding();
+	const Rect& bounds = GetParent()->GetInnerBounds();
 
 	int x = X();
 	int y = Y();
 
-	if ( pos & Pos::Left ) x = padding.left + xpadding;
-	if ( pos & Pos::Right ) x = w - Width() - padding.right - xpadding;
-	if ( pos & Pos::CenterH ) x = padding.left + xpadding + (w - Width() - padding.left - padding.right) * 0.5;
+	if ( pos & Pos::Left ) x = bounds.x + xpadding;
+	if ( pos & Pos::Right ) x = bounds.x + ( bounds.w - Width() - xpadding );
+	if ( pos & Pos::CenterH ) x = bounds.x + ( bounds.w - Width() )  * 0.5;
 
-	if ( pos & Pos::Top ) y = padding.top + ypadding;
-	if ( pos & Pos::Bottom ) y = h - Height() - padding.bottom - ypadding;
-	if ( pos & Pos::CenterV ) y = padding.top + ypadding + (h - Height() - padding.bottom - padding.top) * 0.5;
+	if ( pos & Pos::Top ) y = bounds.y + ypadding;
+	if ( pos & Pos::Bottom ) y = bounds.y + ( bounds.h - Height() - ypadding );
+	if ( pos & Pos::CenterV ) y = bounds.y + ( bounds.h - Height() )  * 0.5;
 
 	SetPos( x, y );
 }
@@ -1131,49 +1129,38 @@ TextObject Base::GetValue()
 	return "";
 }
 
-void Base::SetChildValue( const Gwen::String& strName, const TextObject& strValue )
-{
-	Base* pChild = FindChildByName( strName, true );
-	if ( !pChild ) return;
-
-	return pChild->SetValue( strValue );
-}
-
 void Base::SetValue( const TextObject& strValue )
 {
 
 }
 
-void Base::HideChild( const Gwen::String& strName )
+int Base::GetNamedChildren( Gwen::ControlList& list, const Gwen::String& strName, bool bDeep )
 {
-	Base* pChild = FindChildByName( strName, true );
-	if ( !pChild ) return;
+	int iFound = 0;
 
-	pChild->Hide();
+	Base::List::iterator iter;
+	for ( iter = Children.begin(); iter != Children.end(); ++iter )
+	{
+		Base* pChild = *iter;
+		if ( !pChild->GetName().empty() && pChild->GetName() == strName )
+		{
+			list.Add( pChild );
+			iFound++;
+		}
+
+		if ( !bDeep ) continue;
+
+		iFound += pChild->GetNamedChildren( list, strName, bDeep );
+	}
+
+	return iFound;
 }
 
-void Base::ShowChild( const Gwen::String& strName )
+Gwen::ControlList Base::GetNamedChildren( const Gwen::String& strName, bool bDeep )
 {
-	Base* pChild = FindChildByName( strName, true );
-	if ( !pChild ) return;
-
-	pChild->Show();
-}
-
-void Base::DisableChild( const Gwen::String& strName )
-{
-	Base* pChild = FindChildByName( strName, true );
-	if ( !pChild ) return;
-
-	pChild->SetDisabled( true );
-}
-
-void Base::EnableChild( const Gwen::String& strName )
-{
-	Base* pChild = FindChildByName( strName, true );
-	if ( !pChild ) return;
-
-	pChild->SetDisabled( false );
+	Gwen::ControlList list;
+	GetNamedChildren( list, strName, bDeep );
+	return list;
 }
 
 #ifndef GWEN_NO_ANIMATION
