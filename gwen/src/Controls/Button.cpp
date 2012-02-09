@@ -44,6 +44,8 @@ void Button::Render( Skin::Base* skin )
 
 void Button::OnMouseClickLeft( int /*x*/, int /*y*/, bool bDown )
 {
+	if ( IsDisabled() ) return;
+
 	if ( bDown )
 	{
 		SetDepressed( true );
@@ -65,6 +67,8 @@ void Button::OnMouseClickLeft( int /*x*/, int /*y*/, bool bDown )
 
 void Button::OnMouseClickRight( int /*x*/, int /*y*/, bool bDown )
 {
+	if ( IsDisabled() ) return;
+
 	if ( bDown )
 	{
 		SetDepressed( true );
@@ -212,6 +216,8 @@ void Button::Layout( Skin::Base* pSkin )
 
 void Button::OnMouseDoubleClickLeft( int x, int y )
 { 
+	if ( IsDisabled() ) return;
+
 	OnMouseClickLeft( x, y, true ); 
 	onDoubleClick.Call( this );
 };

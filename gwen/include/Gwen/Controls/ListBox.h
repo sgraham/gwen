@@ -32,10 +32,9 @@ namespace Gwen
 				void RemoveItem( Layout::TableRow * row );
 
 				void Render( Skin::Base* skin );
+				void Layout( Skin::Base* skin );
 
-				void UnselectAll();
-
-				void SetColumnCount( int iCount ) { m_Table->SetColumnCount( iCount ); }
+				void UnselectAll();			
 
 				void SetAllowMultiSelect( bool bMultiSelect ){ m_bMultiSelect = bMultiSelect; }
 				bool AllowMultiSelect() const { return m_bMultiSelect; }
@@ -52,6 +51,10 @@ namespace Gwen
 
 				Controls::Layout::Table* GetTable() { return m_Table; }
 				virtual void Clear();
+
+				// Pass through, to embedded table
+				void SetColumnCount( int iCount ) { m_Table->SetColumnCount( iCount ); }
+				void SetColumnWidth( int iCount, int iSize ) { m_Table->SetColumnWidth( iCount, iSize ); }
 
 			protected:
 

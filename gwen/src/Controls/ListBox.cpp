@@ -62,6 +62,7 @@ GWEN_CONTROL_CONSTRUCTOR( ListBox )
 	SetScroll( false, true );
 	SetAutoHideBars( true );
 	SetMargin( Margin( 1, 1, 1, 1 ) );
+	m_InnerPanel->SetPadding( Padding( 2, 2, 2, 2 ) );
 
 	m_Table = new Controls::Layout::Table( this );
 	m_Table->Dock( Pos::Top );
@@ -79,9 +80,6 @@ Layout::TableRow* ListBox::AddItem( const TextObject& strLabel, const String& st
 	pRow->SetName( strName );
 
 	pRow->onRowSelected.Add( this, &ListBox::OnRowSelected );
-
-	m_Table->SizeToContents();
-
 	return pRow;
 }
 
@@ -94,6 +92,13 @@ void ListBox::RemoveItem( Layout::TableRow * row )
 void ListBox::Render( Skin::Base* skin )
 {
 	skin->DrawListBox( this );
+}
+
+void ListBox::Layout( Skin::Base* skin )
+{
+	BaseClass::Layout( skin );
+
+	m_Table->SizeToChildren( false, true );
 }
 
 void ListBox::UnselectAll()

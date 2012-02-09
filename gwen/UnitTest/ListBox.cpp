@@ -44,19 +44,19 @@ class ListBox : public GUnit
 			{
 				Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Baked Beans" );
 				pRow->SetCellText( 1, L"Heinz" );
-				pRow->SetCellText( 2, L"£3.50" );
+				pRow->SetCellText( 2, "£3.50" );
 			}
 
 			{
 				Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Bananas" );
 				pRow->SetCellText( 1, L"Trees" );
-				pRow->SetCellText( 2, L"£1.27" );
+				pRow->SetCellText( 2, L"$1.27" );
 			}
 
 			{
 				Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Chicken" );
 				pRow->SetCellText( 1, L"\u5355\u5143\u6D4B\u8BD5" );
-				pRow->SetCellText( 2, L"£8.95" );
+				pRow->SetCellText( 2, L"€8.95" );
 			}
 		}
 	}

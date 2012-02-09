@@ -138,7 +138,7 @@ void ScrollControl::UpdateScrollBars()
 	}
 	else 
 	{
-		m_InnerPanel->SetSize( Width() - (m_VerticalScrollBar->Hidden() ? 0 : m_VerticalScrollBar->Width()), Utility::Max( Height(), childrenHeight ) );
+		m_InnerPanel->SetSize( Width() - (m_VerticalScrollBar->Hidden() ? 0 : m_VerticalScrollBar->Width()-1), Utility::Max( Height(), childrenHeight ) );
 	}
  
 	float wPercent = (float)Width()  / (float)(childrenWidth + (m_VerticalScrollBar->Hidden() ? 0 : m_VerticalScrollBar->Width()));
