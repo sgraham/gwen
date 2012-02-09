@@ -15,6 +15,11 @@ namespace ToolTip
 {
 	Base* g_ToolTip = NULL;
 
+	GWEN_EXPORT bool TooltipActive()
+	{
+		return g_ToolTip != NULL;
+	}
+
 	void Enable( Controls::Base* pControl )
 	{
 		if ( !pControl->GetToolTip() )

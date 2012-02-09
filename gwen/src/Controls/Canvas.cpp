@@ -175,6 +175,9 @@ bool Canvas::InputMouseMoved( int x, int y, int deltaX, int deltaY )
 {
 	if ( Hidden() ) return false;
 
+	if ( ToolTip::TooltipActive() )
+		Redraw();
+
 	// Todo: Handle scaling here..
 	//float fScale = 1.0f / Scale();
 
