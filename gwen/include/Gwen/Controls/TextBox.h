@@ -25,6 +25,10 @@ namespace Gwen
 				virtual void RenderFocus( Gwen::Skin::Base* /*skin*/){};
 				virtual void Layout( Skin::Base* skin );
 
+				#ifndef GWEN_NO_ANIMATION
+				virtual void UpdateCaretColor();
+				#endif
+
 				virtual bool OnChar( Gwen::UnicodeChar c );
 
 				virtual void InsertText( const Gwen::UnicodeString& str );
@@ -86,7 +90,8 @@ namespace Gwen
 				Gwen::Rect m_rectSelectionBounds;
 				Gwen::Rect m_rectCaretBounds;
 
-				float	m_fLastInputTime;
+				float m_fNextCaretColorChange;
+				Gwen::Color	m_CaretColor;
 		};
 
 		class GWEN_EXPORT TextBoxNumeric : public TextBox

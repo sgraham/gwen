@@ -25,7 +25,7 @@ namespace Gwen
 				typedef std::map< Gwen::Controls::Base *, ChildList > List;
 
 				virtual void Think() = 0;
-				virtual bool Finished() = 0;
+				virtual bool Finished(){ return false; }
 
 				virtual ~Animation() {}
 

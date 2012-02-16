@@ -8,14 +8,27 @@
 #include "Gwen/Gwen.h"
 #include "Gwen/Controls/TextBox.h"
 #include "Gwen/Skin.h"
+#include "Gwen/Anim.h"
 #include "Gwen/Utility.h"
 #include "Gwen/Platform.h"
 
 #include <math.h>
 
-
 using namespace Gwen;
 using namespace Gwen::Controls;
+
+#ifndef GWEN_NO_ANIMATION
+class ChangeCaretColor : public Gwen::Anim::Animation
+{
+	public:
+
+		virtual void Think()
+		{
+			gwen_cast<TextBox>(m_Control)->UpdateCaretColor();
+		}
+};
+#endif
+
 
 GWEN_CONTROL_CONSTRUCTOR( TextBox )
 {
@@ -39,6 +52,8 @@ GWEN_CONTROL_CONSTRUCTOR( TextBox )
 	AddAccelerator( L"Ctrl + X", &TextBox::OnCut );
 	AddAccelerator( L"Ctrl + V", &TextBox::OnPaste );
 	AddAccelerator( L"Ctrl + A", &TextBox::OnSelectAll );
+
+	Gwen::Anim::Add( this, new ChangeCaretColor() );
 }
 
 bool TextBox::OnChar( Gwen::UnicodeChar c )
@@ -76,6 +91,23 @@ void TextBox::InsertText( const Gwen::UnicodeString& strInsert )
 	RefreshCursorBounds();
 }
 
+#ifndef GWEN_NO_ANIMATION
+void TextBox::UpdateCaretColor()
+{
+	if ( m_fNextCaretColorChange > Gwen::Platform::GetTimeInSeconds() ) return;
+	if ( !HasFocus() ) { m_fNextCaretColorChange = Gwen::Platform::GetTimeInSeconds() + 0.5f; return; }
+
+	Gwen::Color targetcolor = Gwen::Color( 230, 230, 230, 255 );
+
+	if ( m_CaretColor == targetcolor ) 
+		targetcolor = Gwen::Color( 20, 20, 20, 255 );
+
+	m_fNextCaretColorChange = Gwen::Platform::GetTimeInSeconds() + 0.5;
+	m_CaretColor = targetcolor;
+	Redraw();
+}
+#endif
+
 void TextBox::Render( Skin::Base* skin )
 {
 	if ( ShouldDrawBackground() )
@@ -91,17 +123,14 @@ void TextBox::Render( Skin::Base* skin )
 	}
 
 	// Draw caret
-	if ( fmod( Gwen::Platform::GetTimeInSeconds()-m_fLastInputTime, 1.0f ) > 0.5f )
-		skin->GetRender()->SetDrawColor( Gwen::Color( 255, 255, 255, 255 ) );
-	else
-		skin->GetRender()->SetDrawColor( Gwen::Color( 0, 0, 0, 255 ) );
-
+	skin->GetRender()->SetDrawColor( m_CaretColor );
 	skin->GetRender()->DrawFilledRect( m_rectCaretBounds );	
 }
 
 void TextBox::RefreshCursorBounds()
 {
-	m_fLastInputTime = Gwen::Platform::GetTimeInSeconds();
+	m_fNextCaretColorChange = Gwen::Platform::GetTimeInSeconds() + 1.5f;
+	m_CaretColor = Gwen::Color( 30, 30, 30, 255 );
 
 	MakeCaratVisible();
 
