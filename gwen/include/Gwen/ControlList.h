@@ -22,7 +22,8 @@ namespace Gwen
 
 			void Add( const List& list )
 			{
-				for ( std::list<TYPE>::const_iterator it = list.begin(); it != list.end(); ++it )
+				
+				for ( typename List::const_iterator it = list.begin(); it != list.end(); ++it )
 				{
 					Add( *it );
 				}
@@ -30,7 +31,7 @@ namespace Gwen
 
 			bool Contains( TYPE pControl ) const
 			{
-				std::list<TYPE>::const_iterator it = std::find( list.begin(), list.end(), pControl );
+				typename List::const_iterator it = std::find( list.begin(), list.end(), pControl );
 				return it != list.end();
 			}
 
