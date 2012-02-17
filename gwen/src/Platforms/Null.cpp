@@ -56,4 +56,45 @@ bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, cons
 	return false;
 }
 
+bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback )
+{
+	return false;
+}
+
+void* Gwen::Platform::CreatePlatformWindow( int x, int y, int w, int h, const Gwen::String& strWindowTitle )
+{
+	
+}
+
+void Gwen::Platform::DestroyPlatformWindow( void* pPtr )
+{
+	
+}
+
+void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget )
+{
+	
+}
+
+void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, int h )
+{
+	
+}
+
+bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )
+{
+	return true;
+}
+
+void Gwen::Platform::GetDesktopSize( int& w, int &h )
+{
+	w = 1024;
+	h = 768;
+}
+
+void Gwen::Platform::GetCursorPos( Gwen::Point &po )
+{
+
+}
+
 #endif // ndef WIN32
