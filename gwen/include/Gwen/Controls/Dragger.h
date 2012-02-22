@@ -33,8 +33,12 @@ namespace Gwen
 
 				virtual void SetDoMove( bool b ){ m_bDoMove = b; }
 
+				virtual void OnMouseDoubleClickLeft( int x, int y );
+
 				Gwen::Event::Caller	onDragged;
-				Gwen::Event::Caller	OnDragStart;
+				Gwen::Event::Caller	onDragStart;
+
+				Gwen::Event::Caller	onDoubleClickLeft;
 
 			protected:
 

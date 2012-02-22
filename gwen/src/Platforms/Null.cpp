@@ -81,6 +81,11 @@ void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, i
 	
 }
 
+void Gwen::Platform::SetWindowMaximized( void* pPtr, bool bMax, Gwen::Point& pNewPos, Gwen::Point& pNewSize )
+{
+
+}
+
 bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )
 {
 	return true;

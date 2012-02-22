@@ -383,6 +383,29 @@ void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, i
 	SetWindowPos( (HWND)pPtr, HWND_NOTOPMOST, x, y, w, h, SWP_NOOWNERZORDER | SWP_NOACTIVATE | SWP_NOCOPYBITS | SWP_NOSENDCHANGING );
 }
 
+void Gwen::Platform::SetWindowMaximized( void* pPtr, bool bMax, Gwen::Point& pNewPos, Gwen::Point& pNewSize )
+{
+	if ( bMax )
+	{
+		ShowWindow( (HWND)pPtr, SW_SHOWMAXIMIZED );
+
+		RECT rect;
+		SystemParametersInfo( SPI_GETWORKAREA, 0, &rect, 0 ); // size excluding task bar
+		SetWindowPos( (HWND)pPtr, HWND_NOTOPMOST, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SWP_NOOWNERZORDER | SWP_NOACTIVATE | SWP_NOCOPYBITS | SWP_NOSENDCHANGING );
+	}
+	else
+	{
+		ShowWindow( (HWND)pPtr, SW_RESTORE );	
+	}
+
+	RECT r;
+	GetWindowRect( (HWND)pPtr, &r );
+	pNewSize.x = r.right - r.left;
+	pNewSize.y = r.bottom - r.top ;
+	pNewPos.x = r.left;
+	pNewPos.y = r.top;
+}
+
 bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )
 {
 	return GetActiveWindow() == (HWND)pPtr;

@@ -22,6 +22,8 @@ using namespace Gwen::Controls;
 WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin, const Gwen::String& strWindowTitle ) : BaseClass( NULL )
 {
 	m_bQuit = false;
+	m_bCanMaximize = true;
+	m_bIsMaximized = false;
 
 	// Centering the window on the desktop
 	{
@@ -47,8 +49,9 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 		m_TitleBar->SetMargin( Margin( 0, 0, 0, 0 ) );
 		m_TitleBar->Dock( Pos::Top );
 		m_TitleBar->SetDoMove( false );
-		m_TitleBar->onDragged.Add( this, &WindowCanvas::Dragger_Moved );
-		m_TitleBar->OnDragStart.Add( this, &WindowCanvas::Dragger_Start );
+		m_TitleBar->onDragged.Add( this, &ThisClass::Dragger_Moved );
+		m_TitleBar->onDragStart.Add( this, &ThisClass::Dragger_Start );
+		m_TitleBar->onDoubleClickLeft.Add( this, &ThisClass::OnTitleDoubleClicked );
 
 	m_Title = new Gwen::Controls::Label( m_TitleBar );
 		m_Title->SetAlignment( Pos::Left | Pos::CenterV );
@@ -56,6 +59,7 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 		m_Title->Dock( Pos::Fill );
 		m_Title->SetPadding( Padding( 8, 0, 0, 0 ) );
 		m_Title->SetTextColor( GetSkin()->Colors.Window.TitleInactive );
+		
 
 	Gwen::Controls::WindowCloseButton* pButton = new Gwen::Controls::WindowCloseButton( m_TitleBar );
 		pButton->SetText( "" );
@@ -71,7 +75,7 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 		m_Sizer->SetSize( 16, 16 );
 		m_Sizer->SetDoMove( false );
 		m_Sizer->onDragged.Add( this, &WindowCanvas::Sizer_Moved );
-		m_Sizer->OnDragStart.Add( this, &WindowCanvas::Dragger_Start );
+		m_Sizer->onDragStart.Add( this, &WindowCanvas::Dragger_Start );
 		m_Sizer->SetCursor( Gwen::CursorType::SizeNWSE );
 }
 
@@ -201,6 +205,20 @@ void WindowCanvas::Dragger_Moved()
 	Gwen::Point p;
 	Gwen::Platform::GetCursorPos( p );	
 
+	//
+	// Dragged out of maximized
+	//
+	if ( m_bIsMaximized )
+	{
+		float fOldWidth = Width();
+
+		SetMaximize( false );
+
+		// Change the hold pos to be the same distance across the titlebar of the resized window
+		m_HoldPos.x = ((float)m_HoldPos.x) * ( (float)Width() / fOldWidth );
+		m_HoldPos.y = 10;
+	}
+
 	SetPos( p.x - m_HoldPos.x, p.y - m_HoldPos.y );
 }
 
@@ -244,4 +262,24 @@ void WindowCanvas::Sizer_Moved()
 
 	BaseClass::DoThink();
 	RenderCanvas();
+}
+
+void WindowCanvas::OnTitleDoubleClicked()
+{
+	if ( !CanMaximize() ) return;
+
+	SetMaximize( !m_bIsMaximized );
+}
+
+void WindowCanvas::SetMaximize( bool b )
+{
+	m_bIsMaximized = b;
+
+	Gwen::Point pSize, pPos;
+
+	Gwen::Platform::SetWindowMaximized( m_pOSWindow, m_bIsMaximized, pPos, pSize );
+	SetSize( pSize.x, pSize.y );
+	m_WindowPos = pPos;
+
+	GetSkin()->GetRender()->ResizedContext( this, pSize.x, pSize.y );
 }

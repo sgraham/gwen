@@ -519,11 +519,14 @@ T* gwen_cast( Gwen::Controls::Base* p )
 		return BaseClass::DynamicCast( Variable);							\
 	}
 
+#define GWEN_CLASS( ThisName, BaseName )\
+		typedef BaseName BaseClass;\
+		typedef ThisName ThisClass;\
+
 // To be placed in the controls .h definition.
 #define GWEN_CONTROL( ThisName, BaseName )\
 	public:\
-	typedef BaseName BaseClass;\
-	typedef ThisName ThisClass;\
+	GWEN_CLASS( ThisName, BaseName )\
 	GWEN_DYNAMIC( ThisName, BaseName )\
 	ThisName( Gwen::Controls::Base* pParent, const Gwen::String& pName = "" )
 

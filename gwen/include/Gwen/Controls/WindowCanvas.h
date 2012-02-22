@@ -22,7 +22,7 @@ namespace Gwen
 		{
 			public:
 
-				typedef Controls::Canvas BaseClass;
+				GWEN_CLASS( WindowCanvas, Controls::Canvas );
 
 				WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pRenderer, const Gwen::String& strWindowTitle = "" );
 				~WindowCanvas();
@@ -45,6 +45,9 @@ namespace Gwen
 
 				virtual void Layout( Skin::Base* skin );
 
+				virtual bool CanMaximize(){ return m_bCanMaximize; }
+				virtual void SetCanMaximize( bool b ){ m_bCanMaximize = b; }
+				virtual void SetMaximize( bool b );
 
 			protected:
 
@@ -56,6 +59,7 @@ namespace Gwen
 				virtual void Dragger_Start();
 				virtual void Dragger_Moved();
 				virtual void Sizer_Moved();
+				virtual void OnTitleDoubleClicked();
 
 				void*		m_pOSWindow;
 				bool		m_bQuit;
@@ -69,6 +73,9 @@ namespace Gwen
 
 				Gwen::Point		m_WindowPos;
 				Gwen::Point		m_HoldPos;
+
+				bool			m_bCanMaximize;
+				bool			m_bIsMaximized;
 
 		};
 	}
