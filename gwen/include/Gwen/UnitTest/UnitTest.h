@@ -20,15 +20,6 @@
 
 class UnitTest;
 
-#ifdef _MSC_VER
-#	ifdef NDEBUG
-#		pragma comment ( lib, "unittest.lib" )
-#	else
-#		pragma comment ( lib, "unittestd.lib" )
-#	endif
-#endif
-
-
 class GUnit : public Gwen::Controls::Base
 {
 	public:
