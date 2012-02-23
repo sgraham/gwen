@@ -11,7 +11,6 @@
 #include "Gwen/Controls/Menu.h"
 #include "Gwen/DragAndDrop.h"
 #include "Gwen/ToolTip.h"
-#include "Gwen/Controls/WindowCloseButton.h"
 
 #ifndef GWEN_NO_ANIMATION
 #include "Gwen/Anim.h"
@@ -60,23 +59,43 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 		m_Title->SetPadding( Padding( 8, 0, 0, 0 ) );
 		m_Title->SetTextColor( GetSkin()->Colors.Window.TitleInactive );
 		
+		// CLOSE
+		{
+			m_pClose = new Gwen::Controls::WindowCloseButton( m_TitleBar, "Close" );
+			m_pClose->Dock( Pos::Right );
+			m_pClose->SetMargin( Margin( 0, 0, 4, 0 ) );
+			m_pClose->onPress.Add( this, &WindowCanvas::CloseButtonPressed );
+			m_pClose->SetTabable( false );
+			m_pClose->SetWindow( this );
+		}
 
-	Gwen::Controls::WindowCloseButton* pButton = new Gwen::Controls::WindowCloseButton( m_TitleBar );
-		pButton->SetText( "" );
-		pButton->SetSize( 24, 24 );
-		pButton->Dock( Pos::Right );
-		pButton->SetMargin( Margin( 0, 0, 6, 0 ) );
-		pButton->onPress.Add( this, &WindowCanvas::CloseButtonPressed );
-		pButton->SetTabable( false );
-		pButton->SetName( "closeButton" );
-		pButton->SetWindow( this );
+		// MAXIMIZE
+		{
+			m_pMaximize = new Gwen::Controls::WindowMaximizeButton( m_TitleBar, "Maximize" );
+			m_pMaximize->Dock( Pos::Right );
+			m_pMaximize->onPress.Add( this, &WindowCanvas::MaximizeButtonPressed );
+			m_pMaximize->SetTabable( false );
+			m_pMaximize->SetWindow( this );
+		}
 
-	m_Sizer = new Gwen::ControlsInternal::Dragger( this );
-		m_Sizer->SetSize( 16, 16 );
-		m_Sizer->SetDoMove( false );
-		m_Sizer->onDragged.Add( this, &WindowCanvas::Sizer_Moved );
-		m_Sizer->onDragStart.Add( this, &WindowCanvas::Dragger_Start );
-		m_Sizer->SetCursor( Gwen::CursorType::SizeNWSE );
+		// MINIMiZE
+		{
+			m_pMinimize = new Gwen::Controls::WindowMinimizeButton( m_TitleBar, "Minimize" );
+			m_pMinimize->Dock( Pos::Right );
+			m_pMinimize->onPress.Add( this, &WindowCanvas::MinimizeButtonPressed );
+			m_pMinimize->SetTabable( false );
+			m_pMinimize->SetWindow( this );
+		}
+
+		// Bottom Right Corner Sizer
+		{
+			m_Sizer = new Gwen::ControlsInternal::Dragger( this );
+			m_Sizer->SetSize( 16, 16 );
+			m_Sizer->SetDoMove( false );
+			m_Sizer->onDragged.Add( this, &WindowCanvas::Sizer_Moved );
+			m_Sizer->onDragStart.Add( this, &WindowCanvas::Dragger_Start );
+			m_Sizer->SetCursor( Gwen::CursorType::SizeNWSE );
+		}
 }
 
 WindowCanvas::~WindowCanvas()
@@ -274,6 +293,7 @@ void WindowCanvas::OnTitleDoubleClicked()
 void WindowCanvas::SetMaximize( bool b )
 {
 	m_bIsMaximized = b;
+	m_pMaximize->SetMaximized( m_bIsMaximized );
 
 	Gwen::Point pSize, pPos;
 
@@ -282,4 +302,19 @@ void WindowCanvas::SetMaximize( bool b )
 	m_WindowPos = pPos;
 
 	GetSkin()->GetRender()->ResizedContext( this, pSize.x, pSize.y );
+
+	BaseClass::DoThink();
+	RenderCanvas();
+}
+
+void WindowCanvas::MaximizeButtonPressed()
+{
+	if ( !CanMaximize() ) return;
+
+	SetMaximize( !m_bIsMaximized );
+}
+
+void WindowCanvas::MinimizeButtonPressed()
+{
+
 }

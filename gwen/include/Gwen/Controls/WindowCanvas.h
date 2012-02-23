@@ -13,6 +13,7 @@
 #include "Gwen/WindowProvider.h"
 #include "Gwen/Controls/Dragger.h"
 #include "Gwen/Controls/Label.h"
+#include "Gwen/Controls/WindowButtons.h"
 
 namespace Gwen 
 {
@@ -55,6 +56,8 @@ namespace Gwen
 				virtual void DestroyWindow();
 
 				virtual void CloseButtonPressed();
+				virtual void MaximizeButtonPressed();
+				virtual void MinimizeButtonPressed();
 
 				virtual void Dragger_Start();
 				virtual void Dragger_Moved();
@@ -76,6 +79,10 @@ namespace Gwen
 
 				bool			m_bCanMaximize;
 				bool			m_bIsMaximized;
+
+				Gwen::Controls::WindowCloseButton*		m_pClose;
+				Gwen::Controls::WindowMaximizeButton*	m_pMaximize;
+				Gwen::Controls::WindowMinimizeButton*	m_pMinimize;
 
 		};
 	}

@@ -37,7 +37,6 @@ GWEN_CONTROL_CONSTRUCTOR( WindowControl )
 
 	m_CloseButton = new Gwen::Controls::WindowCloseButton( m_TitleBar );
 	m_CloseButton->SetText( "" );
-	m_CloseButton->SetSize( 24, 24 );
 	m_CloseButton->Dock( Pos::Right );
 	m_CloseButton->onPress.Add( this, &WindowControl::CloseButtonPressed );
 	m_CloseButton->SetTabable( false );

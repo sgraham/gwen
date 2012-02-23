@@ -51,7 +51,15 @@ namespace Gwen
 						Texturing::Single Close;
 						Texturing::Single Close_Hover;
 						Texturing::Single Close_Down;
-						Texturing::Single Close_Disabled;
+						Texturing::Single Maxi;
+						Texturing::Single Maxi_Hover;
+						Texturing::Single Maxi_Down;
+						Texturing::Single Mini;
+						Texturing::Single Mini_Hover;
+						Texturing::Single Mini_Down;
+						Texturing::Single Restore;
+						Texturing::Single Restore_Hover;
+						Texturing::Single Restore_Down;
 
 					} Window;
 
@@ -363,12 +371,12 @@ namespace Gwen
 
 					Textures.Checkbox.Active.Checked.Init		( &m_Texture, 448, 32, 15, 15 );
 					Textures.Checkbox.Active.Normal.Init		( &m_Texture, 464, 32, 15, 15 );
-					Textures.Checkbox.Disabled.Normal.Init		( &m_Texture, 448, 48, 15, 15 );
+					Textures.Checkbox.Disabled.Checked.Init		( &m_Texture, 448, 48, 15, 15 );
 					Textures.Checkbox.Disabled.Normal.Init		( &m_Texture, 464, 48, 15, 15 );
 
 					Textures.RadioButton.Active.Checked.Init	( &m_Texture, 448, 64, 15, 15 );
 					Textures.RadioButton.Active.Normal.Init		( &m_Texture, 464, 64, 15, 15 );
-					Textures.RadioButton.Disabled.Normal.Init	( &m_Texture, 448, 80, 15, 15 );
+					Textures.RadioButton.Disabled.Checked.Init	( &m_Texture, 448, 80, 15, 15 );
 					Textures.RadioButton.Disabled.Normal.Init	( &m_Texture, 464, 80, 15, 15 );
 					
 					Textures.TextBox.Normal.Init		( &m_Texture, 0, 150, 127, 21, Margin( 4, 4, 4, 4 ) );
@@ -393,10 +401,21 @@ namespace Gwen
 					Textures.Tab.Right.Inactive.Init			( &m_Texture, 96+128,	384, 31, 63, Margin( 8, 8, 8, 8 ) );
 					Textures.Tab.HeaderBar.Init				( &m_Texture, 128, 352, 127, 31, Margin( 4, 4, 4, 4 ) );
 
-					Textures.Window.Close.Init			( &m_Texture, 0, 224, 24, 24 );
-					Textures.Window.Close_Hover.Init	( &m_Texture, 32, 224, 24, 24 );
-					Textures.Window.Close_Down.Init		( &m_Texture, 64, 224, 24, 24 );
-					Textures.Window.Close_Disabled.Init	( &m_Texture, 96, 224, 24, 24 );
+					Textures.Window.Close.Init			( &m_Texture, 32, 448, 31, 31 );
+					Textures.Window.Close_Hover.Init	( &m_Texture, 64, 448, 31, 31 );
+					Textures.Window.Close_Down.Init		( &m_Texture, 96, 448, 31, 31 );
+
+					Textures.Window.Maxi.Init			( &m_Texture, 32 + 96*2, 448, 31, 31 );
+					Textures.Window.Maxi_Hover.Init		( &m_Texture, 64 + 96*2, 448, 31, 31 );
+					Textures.Window.Maxi_Down.Init		( &m_Texture, 96 + 96*2, 448, 31, 31 );
+
+					Textures.Window.Restore.Init		( &m_Texture, 32 + 96*2, 448+32, 31, 31 );
+					Textures.Window.Restore_Hover.Init	( &m_Texture, 64 + 96*2, 448+32, 31, 31 );
+					Textures.Window.Restore_Down.Init	( &m_Texture, 96 + 96*2, 448+32, 31, 31 );
+
+					Textures.Window.Mini.Init			( &m_Texture, 32 + 96, 448, 31, 31 );
+					Textures.Window.Mini_Hover.Init		( &m_Texture, 64 + 96, 448, 31, 31 );
+					Textures.Window.Mini_Down.Init		( &m_Texture, 96 + 96, 448, 31, 31 );
 
 					Textures.Tree.Background.Init			( &m_Texture, 256, 128, 127,	127,	Margin( 16, 16, 16, 16 ) );
 					Textures.Tree.Plus.Init					( &m_Texture, 448, 96, 15, 15 );
@@ -925,17 +944,47 @@ namespace Gwen
 
 				virtual void DrawWindowCloseButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
 				{
-					if ( bDisabled )
-						return Textures.Window.Close_Disabled.Draw( GetRender(), control->GetRenderBounds() );
+					Gwen::Rect r = Gwen::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
 
-					if ( bDepressed )
-						return Textures.Window.Close_Down.Draw( GetRender(), control->GetRenderBounds() );
+					if ( bDisabled )	return Textures.Window.Close.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 100 ) );
+					if ( bDepressed )	return Textures.Window.Close_Down.Draw( GetRender(), r );
+					if ( bHovered )		return Textures.Window.Close_Hover.Draw( GetRender(), r );
 
-					if ( bHovered )
-						return Textures.Window.Close_Hover.Draw( GetRender(), control->GetRenderBounds() );
-
-					Textures.Window.Close.Draw( GetRender(), control->GetRenderBounds() );
+					Textures.Window.Close.Draw( GetRender(), r );
 				}
+
+				virtual void DrawWindowMaximizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled, bool bMaximized )
+				{
+					Gwen::Rect r = Gwen::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
+
+					if ( !bMaximized )
+					{
+						if ( bDisabled )	return Textures.Window.Maxi.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 100 ) );
+						if ( bDepressed )	return Textures.Window.Maxi_Down.Draw( GetRender(), r );
+						if ( bHovered )		return Textures.Window.Maxi_Hover.Draw( GetRender(), r );
+
+						return Textures.Window.Maxi.Draw( GetRender(), r );
+					}
+
+					if ( bDisabled )	return Textures.Window.Restore.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 100 ) );
+					if ( bDepressed )	return Textures.Window.Restore_Down.Draw( GetRender(), r );
+					if ( bHovered )		return Textures.Window.Restore_Hover.Draw( GetRender(), r );
+
+					return Textures.Window.Restore.Draw( GetRender(), r );
+
+				}
+
+				virtual void DrawWindowMinimizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
+				{
+					Gwen::Rect r = Gwen::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
+
+					if ( bDisabled )	return Textures.Window.Mini.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 100 ) );
+					if ( bDepressed )	return Textures.Window.Mini_Down.Draw( GetRender(), r );
+					if ( bHovered )		return Textures.Window.Mini_Hover.Draw( GetRender(), r);
+
+					Textures.Window.Mini.Draw( GetRender(), r );
+				}
+				
 
 				virtual void DrawSlideButton( Gwen::Controls::Base* control, bool bDepressed, bool bHorizontal )
 				{

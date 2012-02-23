@@ -16,7 +16,7 @@
 #include "Gwen/Controls/Label.h"
 #include "Gwen/Controls/ResizableControl.h"
 #include "Gwen/Controls/Modal.h"
-#include "Gwen/Controls/WindowCloseButton.h"
+#include "Gwen/Controls/WindowButtons.h"
 #include "Gwen/Skin.h"
 
 

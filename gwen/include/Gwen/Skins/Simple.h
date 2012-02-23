@@ -78,6 +78,18 @@ namespace Gwen
 					DrawButton( control, bDepressed, bHovered, bDisabled );
 				}
 
+				virtual void DrawWindowMaximizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled, bool bMaximized )
+				{
+					// TODO.
+					DrawButton( control, bDepressed, bHovered, bDisabled );
+				}
+
+				virtual void DrawWindowMinimizeButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
+				{
+					// TODO.
+					DrawButton( control, bDepressed, bHovered, bDisabled );
+				}
+
 				virtual void DrawMenuItem( Gwen::Controls::Base* control, bool bSubmenuOpen, bool bChecked )
 				{
 					if ( bSubmenuOpen || control->IsHovered() )

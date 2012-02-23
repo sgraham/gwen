@@ -38,8 +38,7 @@ namespace Gwen
 				{
 					if ( !texture ) return;
 
-					render->SetDrawColor( col );	
-
+					render->SetDrawColor( col );
 					render->DrawTexturedRect( texture, r, uv[0], uv[1],uv[2], uv[3]  );
 				}
 
