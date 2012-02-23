@@ -118,9 +118,9 @@ void WindowCanvas::Layout( Skin::Base* skin )
 
 void WindowCanvas::DoThink()
 {
-	RenderCanvas();
 	Platform::MessagePump( m_pOSWindow, this );
 	BaseClass::DoThink();
+	RenderCanvas();
 }
 
 void WindowCanvas::RenderCanvas()
@@ -132,7 +132,7 @@ void WindowCanvas::RenderCanvas()
 	//
 	if  ( !NeedsRedraw() )
 	{
-		Platform::Sleep( 40 );
+		Platform::Sleep( 20 );
 		return;
 	}
 
@@ -316,5 +316,5 @@ void WindowCanvas::MaximizeButtonPressed()
 
 void WindowCanvas::MinimizeButtonPressed()
 {
-
+	Gwen::Platform::SetWindowMinimized( m_pOSWindow, true );
 }

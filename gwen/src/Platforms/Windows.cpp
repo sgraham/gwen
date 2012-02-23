@@ -318,7 +318,7 @@ void* Gwen::Platform::CreatePlatformWindow( int x, int y, int w, int h, const Gw
 	WNDCLASSA	wc;
 	ZeroMemory( &wc, sizeof( wc ) );
 
-	wc.style			= CS_OWNDC;
+	wc.style			= CS_OWNDC | CS_DROPSHADOW;
 	wc.lpfnWndProc		= DefWindowProc;
 	wc.hInstance		= GetModuleHandle(NULL);
 	wc.lpszClassName	= "GWEN_Window_Class";
@@ -326,23 +326,11 @@ void* Gwen::Platform::CreatePlatformWindow( int x, int y, int w, int h, const Gw
 
 	RegisterClassA( &wc );
 
-	HWND hWindow = CreateWindowExA( WS_EX_APPWINDOW, wc.lpszClassName, strWindowTitle.c_str(), WS_POPUP | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, x, y, w, h, NULL, NULL, GetModuleHandle(NULL), NULL );
+	HWND hWindow = CreateWindowExA( WS_EX_APPWINDOW | WS_EX_ACCEPTFILES, wc.lpszClassName, strWindowTitle.c_str(), WS_POPUP | WS_VISIBLE, x, y, w, h, NULL, NULL, GetModuleHandle(NULL), NULL );
 
 	ShowWindow( hWindow, SW_SHOW );
 	SetForegroundWindow( hWindow );
 	SetFocus( hWindow );
-
-	/*
-	//
-	// Something to look into for child windows etc...
-	//
-	HRGN hRegion1 = CreateEllipticRgn(20,-20,190,150);
-	HRGN hRegion2 = CreateEllipticRgn(140,100,300,240);
-	CombineRgn(hRegion1, hRegion1, hRegion2, RGN_OR);
-	SetWindowRgn(hWindow, hRegion1, true);
-	DeleteObject(hRegion1);
-	DeleteObject(hRegion2);
-	*/
 
 	return (void*)hWindow;
 }
@@ -362,9 +350,15 @@ void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget
 		if ( GwenInput.ProcessMessage( msg ) )
 			continue;
 
+		if ( msg.message == WM_PAINT )
+		{
+			ptarget->Redraw();
+		}
+
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
+
 
 	// If the active window has changed then force a redraw of our canvas
 	// since we might paint ourselves a different colour if we're inactive etc
@@ -374,8 +368,10 @@ void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget
 		{
 			g_LastFocus = GetActiveWindow();
 			ptarget->Redraw();
+
 		}
 	}
+
 }
 
 void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, int h )
@@ -404,6 +400,18 @@ void Gwen::Platform::SetWindowMaximized( void* pPtr, bool bMax, Gwen::Point& pNe
 	pNewSize.y = r.bottom - r.top ;
 	pNewPos.x = r.left;
 	pNewPos.y = r.top;
+}
+
+void Gwen::Platform::SetWindowMinimized( void* pPtr, bool bMinimized )
+{
+	if ( bMinimized )
+	{
+		ShowWindow( (HWND)pPtr, SW_SHOWMINIMIZED );
+	}
+	else
+	{
+		ShowWindow( (HWND)pPtr, SW_RESTORE );	
+	}
 }
 
 bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )

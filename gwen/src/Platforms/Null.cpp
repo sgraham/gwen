@@ -86,6 +86,11 @@ void Gwen::Platform::SetWindowMaximized( void* pPtr, bool bMax, Gwen::Point& pNe
 
 }
 
+void Gwen::Platform::SetWindowMinimized( void* pPtr, bool bMinimized )
+{
+
+}
+
 bool Gwen::Platform::HasFocusPlatformWindow( void* pPtr )
 {
 	return true;
