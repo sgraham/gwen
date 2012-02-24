@@ -946,7 +946,7 @@ namespace Gwen
 				{
 					Gwen::Rect r = Gwen::Rect( control->GetRenderBounds().x, control->GetRenderBounds().y, 31, 31 );
 
-					if ( bDisabled )	return Textures.Window.Close.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 100 ) );
+					if ( bDisabled )	return Textures.Window.Close.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 50 ) );
 					if ( bDepressed )	return Textures.Window.Close_Down.Draw( GetRender(), r );
 					if ( bHovered )		return Textures.Window.Close_Hover.Draw( GetRender(), r );
 
@@ -959,14 +959,14 @@ namespace Gwen
 
 					if ( !bMaximized )
 					{
-						if ( bDisabled )	return Textures.Window.Maxi.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 100 ) );
+						if ( bDisabled )	return Textures.Window.Maxi.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 50 ) );
 						if ( bDepressed )	return Textures.Window.Maxi_Down.Draw( GetRender(), r );
 						if ( bHovered )		return Textures.Window.Maxi_Hover.Draw( GetRender(), r );
 
 						return Textures.Window.Maxi.Draw( GetRender(), r );
 					}
 
-					if ( bDisabled )	return Textures.Window.Restore.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 100 ) );
+					if ( bDisabled )	return Textures.Window.Restore.Draw( GetRender(), r, Gwen::Color( 255, 255, 255, 50 ) );
 					if ( bDepressed )	return Textures.Window.Restore_Down.Draw( GetRender(), r );
 					if ( bHovered )		return Textures.Window.Restore_Hover.Draw( GetRender(), r );
 

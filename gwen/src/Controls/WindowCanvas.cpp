@@ -318,3 +318,11 @@ void WindowCanvas::MinimizeButtonPressed()
 {
 	Gwen::Platform::SetWindowMinimized( m_pOSWindow, true );
 }
+
+void WindowCanvas::SetCanMaximize( bool b )
+{
+	if ( m_bCanMaximize == b ) return;
+
+	m_bCanMaximize = b;
+	m_pMaximize->SetDisabled( !b );
+}

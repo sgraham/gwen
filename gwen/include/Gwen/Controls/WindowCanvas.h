@@ -47,7 +47,7 @@ namespace Gwen
 				virtual void Layout( Skin::Base* skin );
 
 				virtual bool CanMaximize(){ return m_bCanMaximize; }
-				virtual void SetCanMaximize( bool b ){ m_bCanMaximize = b; }
+				virtual void SetCanMaximize( bool b );
 				virtual void SetMaximize( bool b );
 
 			protected:

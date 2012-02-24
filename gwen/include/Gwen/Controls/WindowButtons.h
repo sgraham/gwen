@@ -30,7 +30,7 @@ namespace Gwen
 				{
 					if ( !m_pWindow ) return;
 
-					skin->DrawWindowCloseButton( this, IsDepressed() && IsHovered(), IsHovered() && ShouldDrawHover(), !m_pWindow->IsOnTop() );
+					skin->DrawWindowCloseButton( this, IsDepressed() && IsHovered(), IsHovered() && ShouldDrawHover(), IsDisabled() );
 				}
 
 				void SetWindow( Gwen::Controls::Base* p ) 
@@ -50,7 +50,7 @@ namespace Gwen
 				virtual void Render( Skin::Base* skin )
 				{
 					if ( !m_pWindow ) return;
-					skin->DrawWindowMaximizeButton( this, IsDepressed() && IsHovered(), IsHovered() && ShouldDrawHover(), !m_pWindow->IsOnTop(), m_bMaximized );
+					skin->DrawWindowMaximizeButton( this, IsDepressed() && IsHovered(), IsHovered() && ShouldDrawHover(), IsDisabled(), m_bMaximized );
 				}
 
 				virtual void SetMaximized( bool b )
@@ -70,7 +70,7 @@ namespace Gwen
 				virtual void Render( Skin::Base* skin )
 				{
 					if ( !m_pWindow ) return;
-					skin->DrawWindowMinimizeButton( this, IsDepressed() && IsHovered(), IsHovered() && ShouldDrawHover(), !m_pWindow->IsOnTop() );
+					skin->DrawWindowMinimizeButton( this, IsDepressed() && IsHovered(), IsHovered() && ShouldDrawHover(), IsDisabled() );
 				}
 
 		};
