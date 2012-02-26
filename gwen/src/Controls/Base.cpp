@@ -729,7 +729,7 @@ void Base::OnChildTouched( Controls::Base* /*pChild*/ )
 	Touch();
 }
 
-Base* Base::GetControlAt( int x, int y )
+Base* Base::GetControlAt( int x, int y, bool bOnlyIfMouseEnabled )
 {
 	if ( Hidden() ) 
 		return NULL;
@@ -742,11 +742,11 @@ Base* Base::GetControlAt( int x, int y )
 	{
 		Base* pChild = *iter;
 		Base* pFound = NULL;
-		pFound = pChild->GetControlAt( x - pChild->X(), y - pChild->Y() );
+		pFound = pChild->GetControlAt( x - pChild->X(), y - pChild->Y(), bOnlyIfMouseEnabled );
 		if ( pFound ) return pFound;
 	}
 
-	if ( !GetMouseInputEnabled() )
+	if ( bOnlyIfMouseEnabled && !GetMouseInputEnabled() )
 		return NULL;
 
 	return this;

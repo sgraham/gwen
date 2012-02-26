@@ -93,7 +93,7 @@ namespace Gwen
 				virtual void BringToFront( void );
 				virtual void BringNextToControl( Controls::Base* pChild, bool bBehind );
 
-				virtual Gwen::Point LocalPosToCanvas( const Gwen::Point& in );
+				virtual Gwen::Point LocalPosToCanvas( const Gwen::Point& in = Point( 0, 0 ) );
 				virtual Gwen::Point CanvasPosToLocal( const Gwen::Point& in );
 
 				virtual void Dock( int iDock );
@@ -131,7 +131,7 @@ namespace Gwen
 
 				virtual const Gwen::Rect& GetBounds() const { return m_Bounds; }
 
-				virtual Controls::Base* GetControlAt( int x, int y );
+				virtual Controls::Base* GetControlAt( int x, int y, bool bOnlyIfMouseEnabled = true );
 
 
 

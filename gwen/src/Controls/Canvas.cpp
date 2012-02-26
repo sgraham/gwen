@@ -156,6 +156,7 @@ void Canvas::ProcessDelayedDeletes()
 		{
 			Gwen::Controls::Base* pControl = *it;
 			delete pControl;
+			Redraw();
 		}
 	}
 }
