@@ -29,5 +29,6 @@
 #include "Gwen/Anim.h"
 
 #include "Gwen/Controls/Layout/Position.h"
+#include "Gwen/Controls/Layout/Tile.h"
 
 #endif

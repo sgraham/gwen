@@ -68,6 +68,7 @@ bool OnDrop( int x, int y )
 
 	// Report back to the source control, to tell it if we've been successful.
 	DragAndDrop::SourceControl->DragAndDrop_EndDragging( bSuccess, x, y );
+	DragAndDrop::SourceControl->Redraw();
 
 	DragAndDrop::CurrentPackage = NULL;
 	DragAndDrop::SourceControl = NULL;
@@ -207,6 +208,10 @@ void DragAndDrop::OnMouseMoved( Gwen::Controls::Base* pHoveredControl, int x, in
 	// pick up from a control that we're holding down. If not, then forget it.
 	if ( !CurrentPackage && !ShouldStartDraggingControl( x, y ) )
 		return;
+
+	// Make sure the canvas redraws when we move
+	if ( CurrentPackage && CurrentPackage->drawcontrol )
+		CurrentPackage->drawcontrol->Redraw();
 
 	// Swap to this new hovered control and notify them of the change.
 	UpdateHoveredControl( pHoveredControl, x, y );

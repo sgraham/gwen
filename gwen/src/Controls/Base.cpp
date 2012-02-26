@@ -97,6 +97,9 @@ Base::~Base()
 
 	if ( m_DragAndDrop_Package )
 	{
+		if ( m_DragAndDrop_Package->userdata && m_DragAndDrop_Package->userdata_free )
+			delete m_DragAndDrop_Package->userdata;
+
 		delete m_DragAndDrop_Package;
 		m_DragAndDrop_Package = NULL;
 	}
@@ -971,8 +974,13 @@ bool Base::DragAndDrop_Draggable()
 	return m_DragAndDrop_Package->draggable; 
 }
 
-void Base::DragAndDrop_SetPackage( bool bDraggable, const String& strName, void* pUserData )
+void Base::DragAndDrop_SetPackage( bool bDraggable, const String& strName, void* pUserData, bool bFreeUserData )
 {
+	if ( m_DragAndDrop_Package && m_DragAndDrop_Package->userdata && m_DragAndDrop_Package->userdata_free )
+	{
+		delete m_DragAndDrop_Package->userdata;
+	}
+
 	if ( !m_DragAndDrop_Package )
 	{
 		m_DragAndDrop_Package = new Gwen::DragAndDrop::Package();
@@ -981,6 +989,7 @@ void Base::DragAndDrop_SetPackage( bool bDraggable, const String& strName, void*
 	m_DragAndDrop_Package->draggable = bDraggable;
 	m_DragAndDrop_Package->name = strName;
 	m_DragAndDrop_Package->userdata = pUserData;
+	m_DragAndDrop_Package->userdata_free = bFreeUserData;
 }
 
 void Base::DragAndDrop_StartDragging( Gwen::DragAndDrop::Package* pPackage, int x, int y )

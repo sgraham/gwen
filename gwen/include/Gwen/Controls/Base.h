@@ -113,6 +113,7 @@ namespace Gwen
 				virtual const Padding& GetPadding() const { return m_Padding; }
 
 				virtual void SetPos( int x, int y );
+				virtual void SetPos( const Point& p ){ return SetPos( p.x, p.y ); }
 				virtual void SetWidth( int w ) { SetSize( w, Height()); }
 				virtual void SetHeight( int h ) { SetSize( Width(), h); }
 				virtual bool SetSize( int w, int h );
@@ -381,7 +382,7 @@ namespace Gwen
 
 				// Giver
 				
-				virtual void DragAndDrop_SetPackage( bool bDraggable, const String& strName = "", void* pUserData = NULL );
+				virtual void DragAndDrop_SetPackage( bool bDraggable, const String& strName = "", void* pUserData = NULL, bool bFreeUserData = false );
 				virtual bool DragAndDrop_Draggable();
 				virtual bool DragAndDrop_ShouldStartDrag(){ return true; }
 				virtual void DragAndDrop_StartDragging( Gwen::DragAndDrop::Package* pPackage, int x, int y );
