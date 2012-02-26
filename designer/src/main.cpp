@@ -2,6 +2,7 @@
 #include "Gwen/Controls.h"
 #include "Gwen/Skins/TexturedBase.h"
 #include "Gwen/Renderers/DirectX9.h"
+#include "DesignerBase.h"
 
 int main()
 {
@@ -9,8 +10,9 @@ int main()
 	Gwen::Skin::TexturedBase	skin( &renderer );
 
 	Gwen::Controls::WindowCanvas window_canvas( -1, -1, 700, 500, &skin, "GWEN Designer" );
-
 	skin.Init( "img/DesignerSkin.png" );
+
+	DesignerBase* pDesignerBase = new DesignerBase( &window_canvas );
 
 	while ( !window_canvas.WantsQuit() )
 	{
