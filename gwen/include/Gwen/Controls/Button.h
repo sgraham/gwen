@@ -57,6 +57,8 @@ namespace Gwen
 				virtual void Layout( Skin::Base* pSkin );
 				virtual void UpdateColours();
 
+				virtual void SetImageAlpha( float fMultiply );
+
 			public:
 
 				Gwen::Event::Caller	onPress;

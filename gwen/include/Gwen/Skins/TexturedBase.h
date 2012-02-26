@@ -636,6 +636,11 @@ namespace Gwen
 					Textures.Tab.HeaderBar.Draw( GetRender(), control->GetRenderBounds() );
 				}
 
+				virtual void DrawGenericPanel( Controls::Base* control )
+				{
+					Textures.Panel.Normal.Draw( GetRender(), control->GetRenderBounds() );
+				}
+
 				virtual void DrawWindow( Gwen::Controls::Base* control, int topHeight, bool inFocus )
 				{
 					Gwen::Rect rect = control->GetRenderBounds();

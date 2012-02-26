@@ -63,6 +63,10 @@ namespace Gwen
 					m_DefaultFont.size		= 11;
 				}
 
+				virtual void DrawGenericPanel( Controls::Base* control )
+				{
+					// TODO.
+				}
 
 				virtual void DrawButton( Gwen::Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled )
 				{

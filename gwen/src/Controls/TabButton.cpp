@@ -109,12 +109,16 @@ void TabButton::UpdateColours()
 {
 	if ( !IsActive() )
 	{
+		SetImageAlpha( 0.5 );
+
 		if ( IsDisabled() )		return SetTextColor( GetSkin()->Colors.Tab.Inactive.Disabled );
 		if ( IsDepressed() )	return SetTextColor( GetSkin()->Colors.Tab.Inactive.Down );
 		if ( IsHovered() )		return SetTextColor( GetSkin()->Colors.Tab.Inactive.Hover );
 
 		return SetTextColor( GetSkin()->Colors.Tab.Inactive.Normal );
 	}
+
+	SetImageAlpha( 1.0 );
 
 	if ( IsDisabled() )		return SetTextColor( GetSkin()->Colors.Tab.Active.Disabled );
 	if ( IsDepressed() )	return SetTextColor( GetSkin()->Colors.Tab.Active.Down );

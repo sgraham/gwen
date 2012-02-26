@@ -78,6 +78,12 @@ TabButton* TabControl::AddPage( TextObject strText, Controls::Base* pPage )
 	return pButton;
 }
 
+void TabControl::RemovePage( TabButton* pButton )
+{
+	pButton->SetParent( GetCanvas() );
+	OnLoseTab( pButton );
+}
+
 void TabControl::AddPage( TabButton* pButton )
 {
 	Base* pPage = pButton->GetPage();
@@ -92,8 +98,6 @@ void TabControl::AddPage( TabButton* pButton )
 	if ( pButton->GetTabControl() ) pButton->onPress.RemoveHandler( pButton->GetTabControl() );
 	pButton->SetTabControl( this );
 	pButton->onPress.Add( this, &TabControl::OnTabPressed );
-
-
 
 	if ( !m_pCurrentButton )
 	{
@@ -158,6 +162,11 @@ void TabControl::OnLoseTab( TabButton* pButton )
 int TabControl::TabCount( void )
 {
 	return m_TabStrip->NumChildren();
+}
+
+TabButton* TabControl::GetTab( int iNum )
+{
+	return gwen_cast<TabButton>( m_TabStrip->GetChild( iNum ) );
 }
 
 void TabControl::SetTabStripPosition( int iDock )

@@ -220,4 +220,11 @@ void Button::OnMouseDoubleClickLeft( int x, int y )
 
 	OnMouseClickLeft( x, y, true ); 
 	onDoubleClick.Call( this );
-};
+}
+
+void Button::SetImageAlpha( float f )
+{
+	if ( !m_Image ) return;
+
+	m_Image->SetDrawColor( Color( 255, 255, 255, 255.0f * f ) );
+}

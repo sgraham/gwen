@@ -52,6 +52,8 @@ namespace Gwen
 					m_Render->FreeFont( fnt );
 				}
 				
+				virtual void DrawGenericPanel( Controls::Base* control ) = 0;
+
 				virtual void DrawButton( Controls::Base* control, bool bDepressed, bool bHovered, bool bDisabled ) = 0;
 				virtual void DrawTabButton( Controls::Base* control, bool bActive, int dir ) = 0;
 				virtual void DrawTabControl( Controls::Base* control ) = 0;
