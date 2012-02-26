@@ -409,6 +409,14 @@ void Gwen::Platform::SetWindowMaximized( void* pPtr, bool bMax, Gwen::Point& pNe
 	else
 	{
 		ShowWindow( (HWND)pPtr, SW_RESTORE );	
+
+		// Curve the corners
+		{
+			RECT r;
+			GetWindowRect( (HWND)pPtr, &r );
+			HRGN rgn = CreateRoundRectRgn( 0, 0, (r.right-r.left)+1, (r.bottom-r.top)+1, 4, 4 );
+			SetWindowRgn( (HWND)pPtr, rgn, false );
+		}
 	}
 
 	RECT r;
