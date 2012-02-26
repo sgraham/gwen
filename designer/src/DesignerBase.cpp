@@ -1,5 +1,6 @@
 #include "DesignerBase.h"
 #include "Document.h"
+#include "ControlToolbox.h"
 
 GWEN_CONTROL_CONSTRUCTOR( DesignerBase )
 {
@@ -7,6 +8,7 @@ GWEN_CONTROL_CONSTRUCTOR( DesignerBase )
 
 	CreateMenu();
 	CreateToolBar();
+	CreateControlToolbox();
 	CreateDocumentHolder();
 
 	new Controls::StatusBar( this, "StatusBar" );
@@ -35,6 +37,12 @@ void DesignerBase::CreateToolBar()
 	pStrip->Dock( Pos::Top );
 
 	pStrip->Add( "New Document", "img/menu/new.png" )->onPress.Add( this, &ThisClass::NewDocument );
+}
+
+void DesignerBase::CreateControlToolbox()
+{
+	ControlToolbox* pControlBox = new ControlToolbox( this );
+	pControlBox->Dock( Pos::Left );
 }
 
 void DesignerBase::CreateDocumentHolder()

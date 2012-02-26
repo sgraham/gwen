@@ -21,6 +21,7 @@ class DesignerBase : public Controls::Base
 		void CreateMenu();
 		void CreateToolBar();
 		void CreateDocumentHolder();
+		void CreateControlToolbox();
 
 		void NewDocument();
 		void CloseDocument();
