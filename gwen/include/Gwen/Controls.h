@@ -22,6 +22,7 @@
 #include "Gwen/Controls/TextBox.h"
 #include "Gwen/Controls/WindowCanvas.h"
 #include "Gwen/Controls/MenuStrip.h"
+#include "Gwen/Controls/ToolBar.h"
 
 #include "Gwen/Controls/Dialogs/FileOpen.h"
 

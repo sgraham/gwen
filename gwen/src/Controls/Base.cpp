@@ -196,12 +196,13 @@ void Base::InvalidateChildren( bool bRecursive )
 void Base::Position( int pos, int xpadding, int ypadding )
 {
 	const Rect& bounds = GetParent()->GetInnerBounds();
+	const Margin& margin = GetMargin();
 
 	int x = X();
 	int y = Y();
 
-	if ( pos & Pos::Left ) x = bounds.x + xpadding;
-	if ( pos & Pos::Right ) x = bounds.x + ( bounds.w - Width() - xpadding );
+	if ( pos & Pos::Left ) x = bounds.x + xpadding + margin.left;
+	if ( pos & Pos::Right ) x = bounds.x + ( bounds.w - Width() - xpadding - margin.right );
 	if ( pos & Pos::CenterH ) x = bounds.x + ( bounds.w - Width() )  * 0.5;
 
 	if ( pos & Pos::Top ) y = bounds.y + ypadding;

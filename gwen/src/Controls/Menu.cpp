@@ -64,7 +64,7 @@ MenuItem* Menu::AddItem( const TextObject& strName, const TextObject& strIconNam
 {
 	MenuItem* pItem = new MenuItem( this );
 
-		pItem->SetPadding( Padding( 4, 4, 4, 4 ) );
+		pItem->SetPadding( Padding( 2, 4, 4, 4 ) );
 		pItem->SetText( strName );
 		pItem->SetImage( strIconName );
 		pItem->SetAccelerator( strAccelerator );

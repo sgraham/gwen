@@ -133,12 +133,12 @@ void Button::SetImage( const TextObject& strName, bool bCenter )
 
 	m_Image->SetImage( strName );
 	m_Image->SizeToContents();
-	m_Image->SetPos( GwenUtil_Max( m_Padding.left, 2 ), 2 );
+	m_Image->SetMargin( Margin( 2, 0, 2, 0 ) );
 	m_bCenterImage = bCenter;
 
 	// Ugh.
 	Padding padding = GetTextPadding();
-	padding.left = m_Image->Right();
+	padding.left = m_Image->Right() + 2;
 	SetTextPadding( padding );
 
 }
