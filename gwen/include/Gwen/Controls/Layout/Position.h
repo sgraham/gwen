@@ -42,7 +42,10 @@ namespace Gwen
 
 					void SetPosition( int p )
 					{
+						if ( m_iPosition == p ) return;
+
 						m_iPosition = p;
+						Invalidate();
 					}
 
 				private:

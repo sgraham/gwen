@@ -28,11 +28,11 @@ namespace Gwen
 
 				virtual void Render( Skin::Base* /*skin*/ ){}
 
-				virtual void Layout( Skin::Base* skin );
+				virtual void PostLayout( Skin::Base* skin );
 
 				virtual void SizeToContents();
 
-				virtual void SetAlignment( int iAlign ){ m_iAlign = iAlign; Invalidate(); }
+				virtual void SetAlignment( int iAlign );
 
 				virtual void SetFont( Gwen::Font* pFont ){ m_Text->SetFont( pFont ); }
 				virtual Gwen::Font* GetFont(){ return m_Text->GetFont(); }

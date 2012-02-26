@@ -22,9 +22,17 @@ GWEN_CONTROL_CONSTRUCTOR( Label )
 	SetAlignment( Gwen::Pos::Left | Gwen::Pos::Top );
 }
 
-void Label::Layout( Skin::Base* /*skin*/ )
+void Label::PostLayout( Skin::Base* /*skin*/ )
 {
 	m_Text->Position( m_iAlign );
+}
+
+void Label::SetAlignment( int iAlign )
+{ 
+	if ( m_iAlign == iAlign ) return;
+
+	m_iAlign = iAlign;
+	Invalidate();
 }
 
 void Label::SetText( const TextObject& str, bool bDoEvents )

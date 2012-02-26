@@ -60,8 +60,19 @@ Gwen::Font* Text::GetFont()
 	return m_Font;
 }
 
+void Text::SetFont( Gwen::Font* pFont )
+{
+	if ( m_Font == pFont ) return;
 
-void Text::SetString( const TextObject& str ){ m_String = str.GetUnicode(); Invalidate(); }
+	m_Font = pFont;
+	RefreshSize();
+}
+
+void Text::SetString( const TextObject& str )
+{ 
+	m_String = str.GetUnicode(); 
+	RefreshSize();
+}
 
 void Text::Render( Skin::Base* skin )
 {
@@ -73,11 +84,6 @@ void Text::Render( Skin::Base* skin )
 		skin->GetRender()->SetDrawColor( m_ColorOverride );
 
 	skin->GetRender()->RenderText( GetFont(), Gwen::Point( GetPadding().left, GetPadding().top ), m_String.GetUnicode() );
-}
-
-void Text::Layout( Skin::Base* /*skin*/ )
-{
-	RefreshSize();
 }
 
 Gwen::Point Text::GetCharacterPosition( int iChar )

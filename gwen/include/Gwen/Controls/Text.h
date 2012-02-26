@@ -27,11 +27,10 @@ namespace Gwen
 				void SetString( const TextObject& str );
 
 				void Render( Skin::Base* skin );
-				void Layout( Skin::Base* skin );
 
 				void RefreshSize();
 
-				void SetFont( Gwen::Font* pFont ){ m_Font = pFont; }
+				void SetFont( Gwen::Font* pFont );
 
 				const TextObject& GetText() const { return m_String; }
 
@@ -42,8 +41,6 @@ namespace Gwen
 
 				virtual void SetTextColor( const Gwen::Color& col ){ m_Color = col; }
 				virtual void SetTextColorOverride( const Gwen::Color& col ){ m_ColorOverride = col; }
-
-				
 
 				virtual void OnScaleChanged();
 

@@ -46,6 +46,12 @@ MenuItem::~MenuItem()
 void MenuItem::Render( Skin::Base* skin )
 {
 	skin->DrawMenuItem( this, IsMenuOpen(), m_bCheckable ? m_bChecked : false );
+
+	// HACK!
+	if ( m_Accelerator )
+	{
+		m_Accelerator->SetTextColorOverride( TextColor() );
+	}
 }
 
 void MenuItem::Layout( Skin::Base* skin )

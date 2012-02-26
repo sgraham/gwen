@@ -45,6 +45,7 @@ void TreeControl::Render( Skin::Base* skin )
 void TreeControl::OnChildBoundsChanged( Gwen::Rect /*oldChildBounds*/, Base* /*pChild*/ )
 {
 	m_ScrollControl->UpdateScrollBars();
+	Invalidate();
 }
 
 void TreeControl::Clear()

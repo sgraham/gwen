@@ -16,6 +16,7 @@
 #include "Gwen/Anim.h"
 #endif
 
+using namespace Gwen;
 using namespace Gwen::Controls;
 
 WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin, const Gwen::String& strWindowTitle ) : BaseClass( NULL )
@@ -23,6 +24,8 @@ WindowCanvas::WindowCanvas( int x, int y, int w, int h, Gwen::Skin::Base* pSkin,
 	m_bQuit = false;
 	m_bCanMaximize = true;
 	m_bIsMaximized = false;
+
+	SetPadding( Padding( 1, 0, 1, 1 ) );
 
 	// Centering the window on the desktop
 	{

@@ -781,6 +781,7 @@ void Base::RecurseLayout( Skin::Base* skin )
 		if ( iDock & Pos::Fill )
 			continue;
 
+			
 		if ( iDock & Pos::Top )
 		{
 			const Margin& margin = pChild->GetMargin();
@@ -845,7 +846,11 @@ void Base::RecurseLayout( Skin::Base* skin )
 		pChild->RecurseLayout( skin );
 	}
 
+
+
 	PostLayout( skin );
+
+	
 
 	if ( IsTabable() )
 	{

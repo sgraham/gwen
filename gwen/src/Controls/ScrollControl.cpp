@@ -66,6 +66,7 @@ void ScrollControl::HBarMoved( Controls::Base * /*control*/ )
 void ScrollControl::OnChildBoundsChanged( Gwen::Rect /*oldChildBounds*/, Base* /*pChild*/ )
 {
 	UpdateScrollBars();
+	Invalidate();
 }
 
 void ScrollControl::Layout( Skin::Base* skin )
