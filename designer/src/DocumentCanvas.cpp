@@ -21,10 +21,16 @@ bool DocumentCanvas::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackag
 {
 	Gwen::Point pPos = CanvasPosToLocal( Gwen::Point( x, y ) );
 
+	Controls::Base* pDroppedOn = GetControlAt( pPos.x, pPos.y );
+	if ( !pDroppedOn ) pDroppedOn = this;
+
+	pPos = pDroppedOn->CanvasPosToLocal( Gwen::Point( x, y ) );
+	
+
 	if ( pPackage->name == "ControlButton" )
 	{
 		ControlFactory::Base* pControlFactory = static_cast<ControlFactory::Base*>(pPackage->userdata);
-		Controls::Base* pControl = pControlFactory->CreateInstance( this );
+		Controls::Base* pControl = pControlFactory->CreateInstance( pDroppedOn );
 		pControl->SetPos( pPos );
 
 		return true;
