@@ -40,9 +40,9 @@ namespace Gwen
 
 				void SetFileType( const Gwen::String& string ) { m_FileType = string; }
 
-				void SetFileName( const TextObject& str )
+				void SetFileName( const TextObject& strValue )
 				{
-					m_TextBox->SetText( str );
+					m_TextBox->SetText( strValue );
 					m_TextBox->MoveCaretToEnd();
 					onFileChanged.Call( this );
 				}
@@ -54,7 +54,7 @@ namespace Gwen
 
 				void OnBrowse()
 				{
-					Gwen::Dialogs::FileOpen( true, "Name", "Start Path", m_FileType, this, &FilePicker::SetFileName );
+					Gwen::Dialogs::FileOpen( true, "Name", "Start Path", m_FileType, this, &FilePicker::SetFileNameEvent );
 				}
 
 				virtual TextObject GetValue(){ return GetFileName(); }
@@ -63,6 +63,11 @@ namespace Gwen
 				Event::Caller	onFileChanged;
 
 			private:
+
+				void SetFileNameEvent( Event::Info info )
+				{
+					SetFileName( info.String );
+				}
 
 				Controls::TextBox*	m_TextBox;
 				Controls::Button*	m_Button;

@@ -58,7 +58,7 @@ class UnitTest : public Gwen::Controls::DockBase
 
 	private:
 
-		void OnCategorySelect( Gwen::Controls::Base* pBase, Gwen::Controls::Base* pControl );
+		void OnCategorySelect( Gwen::Event::Info info );
 
 		Gwen::Controls::TabControl*	m_TabControl;
 		Gwen::Controls::ListBox*	m_TextOutput;

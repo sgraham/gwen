@@ -50,6 +50,8 @@ namespace Gwen
 
 			Gwen::TextObject GetValue();
 			void SetValue( const Gwen::TextObject& value );
+
+			void MoveBy( const Gwen::Point& point );
 	};
 
 };

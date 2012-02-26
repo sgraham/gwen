@@ -67,18 +67,31 @@ void Caller::CleanLinks()
 	m_Handlers.clear();
 }
 
-void Caller::Call( Controls::Base* pThis )
+void Caller::Call( Controls::Base* pThis  )
 {
+	static Gwen::Event::Information info;
+	info.Control = pThis;
+	Call( pThis, info );
+}
+
+void Caller::Call( Controls::Base* pThis, Gwen::Event::Info information )
+{
+	Gwen::Event::Information info;
+	info = information;
+	info.ControlCaller	= pThis;
+
 	std::list<handler>::iterator iter;
 	for (iter = m_Handlers.begin(); iter != m_Handlers.end(); ++iter)
 	{
 		handler& h = *iter;
 
+		info.Packet = &h.Packet;
+
 		if ( h.fnFunction )
 			(h.pObject->*h.fnFunction)( pThis );
 
-		if ( h.fnFunctionWithPanel )
-			(h.pObject->*h.fnFunctionWithPanel)( pThis, h.pControl );
+		if ( h.fnFunctionInfo )
+			(h.pObject->*h.fnFunctionInfo)( info );
 
 		if ( h.fnFunctionBlank )
 			(h.pObject->*h.fnFunctionBlank)();
@@ -97,12 +110,17 @@ void Caller::AddInternal( Event::Handler* pObject, Event::Handler::Function pFun
 	pObject->RegisterCaller( this );
 }
 
-void Caller::AddInternal( Event::Handler* pObject, Handler::FunctionWithControl pFunction, Gwen::Controls::Base* pControl )
+void Caller::AddInternal( Event::Handler* pObject, Handler::FunctionWithInformation pFunction )
+{
+	AddInternal( pObject, pFunction, Gwen::Event::Packet() );
+}
+
+void Caller::AddInternal( Event::Handler* pObject, Handler::FunctionWithInformation pFunction, const Gwen::Event::Packet& packet )
 {
 	handler h;
-	h.fnFunctionWithPanel = pFunction;
-	h.pObject = pObject;
-	h.pControl = pControl;
+	h.fnFunctionInfo	= pFunction;
+	h.pObject			= pObject;
+	h.Packet			= packet;
 
 	m_Handlers.push_back( h );
 

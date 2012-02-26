@@ -20,7 +20,7 @@ using namespace Gwen;
 		GUnit* test = RegisterUnitTest_##name( pCenter );\
 		test->Hide();\
 		test->SetUnitTest( this );\
-		pButton->onPress.Add( this, &ThisClass::OnCategorySelect, test );\
+		pButton->onPress.Add( this, &ThisClass::OnCategorySelect, Gwen::Event::Packet( test ) );\
 	}\
 
 Gwen::Controls::TabButton* pButton = NULL;
@@ -105,15 +105,16 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 	m_iFrames = 0;
 }
 
-void UnitTest::OnCategorySelect( Controls::Base* pBase, Gwen::Controls::Base* pControl )
+void UnitTest::OnCategorySelect( Gwen::Event::Info info )
 {
 	if ( m_pLastControl )
 	{
 		m_pLastControl->Hide();
 	}
 
-	pControl->Show();
-	m_pLastControl = pControl;
+
+	info.Packet->Control->Show();
+	m_pLastControl = info.Packet->Control;
 }
 
 void UnitTest::PrintText( const Gwen::UnicodeString& str )

@@ -142,7 +142,7 @@ float Gwen::Platform::GetTimeInSeconds()
 
 
 
-bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback )
+bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithInformation fnCallback )
 {
 #ifndef __MINGW32__  
 	char Filestring[256];
@@ -184,7 +184,12 @@ bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, cons
 	{
 		if ( pHandler && fnCallback )
 		{
-			(pHandler->*fnCallback)( opf.lpstrFile );
+			Gwen::Event::Information info;
+				info.Control		= NULL;
+				info.ControlCaller	= NULL;
+				info.String			= opf.lpstrFile;
+
+			(pHandler->*fnCallback)( info );
 		}
 	}
 
@@ -226,7 +231,7 @@ INT CALLBACK FolderBrowseCallback( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM pData
 
 #endif 
 
-bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback )
+bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithInformation fnCallback )
 {
 #ifndef __MINGW32__  
 
@@ -250,7 +255,12 @@ bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gw
 
 	if ( pHandler && fnCallback )
 	{
-		(pHandler->*fnCallback)( szPathName );
+		Gwen::Event::Information info;
+		info.Control		= NULL;
+		info.ControlCaller	= NULL;
+		info.String			= szPathName;
+
+		(pHandler->*fnCallback)( info );
 	}
 
 	return true;
@@ -259,7 +269,7 @@ bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gw
 #endif 
 }
 
-bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Gwen::Event::Handler::FunctionWithString fnCallback )
+bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Gwen::Event::Handler::FunctionWithInformation fnCallback )
 {
 #ifndef __MINGW32__  
 
@@ -302,7 +312,12 @@ bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, cons
 	{
 		if ( pHandler && fnCallback )
 		{
-			(pHandler->*fnCallback)( opf.lpstrFile );
+			Gwen::Event::Information info;
+			info.Control		= NULL;
+			info.ControlCaller	= NULL;
+			info.String			= opf.lpstrFile;
+
+			(pHandler->*fnCallback)( info );
 		}
 	}
 

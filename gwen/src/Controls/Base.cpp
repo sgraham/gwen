@@ -390,6 +390,11 @@ bool Base::SetSize( int w, int h )
 	return SetBounds( X(), Y(), w, h );
 }
 
+bool Base::SetSize( const Point& p )
+{ 
+	return SetSize( p.x, p.y ); 
+}
+
 bool Base::SetBounds( const Gwen::Rect& bounds )
 {
 	return SetBounds( bounds.x, bounds.y, bounds.w, bounds.h );

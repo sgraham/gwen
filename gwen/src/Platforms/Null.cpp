@@ -40,7 +40,7 @@ float Gwen::Platform::GetTimeInSeconds()
 	return fSeconds;
 }
 
-bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback )
+bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithInformation fnCallback )
 {
 	// No platform independent way to do this.
 	// Ideally you would open a system dialog here
@@ -48,7 +48,7 @@ bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, cons
 	return false;
 }
 
-bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Gwen::Event::Handler::FunctionWithString fnCallback )
+bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Gwen::Event::Handler::FunctionWithInformation fnCallback )
 {
 	// No platform independent way to do this.
 	// Ideally you would open a system dialog here
@@ -56,7 +56,7 @@ bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, cons
 	return false;
 }
 
-bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithString fnCallback )
+bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithInformation fnCallback )
 {
 	return false;
 }

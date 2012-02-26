@@ -51,6 +51,12 @@ namespace Gwen
 			operator const Gwen::String&(){ return m_String; }
 			operator const Gwen::UnicodeString&(){ return m_Unicode; }
 		
+			void operator = ( const char* str )
+			{
+				m_String = str;
+				m_Unicode = Gwen::Utility::StringToUnicode( m_String );
+			}
+
 			void operator = ( const Gwen::String& str )
 			{
 				m_String = str;

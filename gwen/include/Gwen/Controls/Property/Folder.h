@@ -32,9 +32,9 @@ namespace Gwen
 					Gwen::Dialogs::FolderOpen( true, m_strDialogName, m_TextBox->GetText().Get(), this, &Folder::EventFilePicked );
 				}
 
-				void EventFilePicked( const Gwen::TextObject& string )
+				void EventFilePicked( Event::Info info )
 				{
-					m_TextBox->SetText( string );
+					m_TextBox->SetText( info.String );
 				}
 
 

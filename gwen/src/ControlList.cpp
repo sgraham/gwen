@@ -60,3 +60,11 @@ void ControlList::SetValue( const Gwen::TextObject& value )
 		(*it)->SetValue( value );
 	}
 }
+
+void ControlList::MoveBy( const Gwen::Point& point )
+{
+	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	{
+		(*it)->MoveBy( point.x, point.y );
+	}
+}

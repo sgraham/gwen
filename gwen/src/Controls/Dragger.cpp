@@ -53,8 +53,10 @@ void Dragger::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	 
 		m_pTarget->MoveTo( p.x, p.y );
 	}
-	
-	onDragged.Call( this );
+
+	Gwen::Event::Information info;
+		info.Point = Gwen::Point( deltaX, deltaY );
+	onDragged.Call( this, info );
 }
 
 void Dragger::Render( Skin::Base* skin )

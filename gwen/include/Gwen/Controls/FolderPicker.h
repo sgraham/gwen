@@ -38,12 +38,15 @@ namespace Gwen
 					m_BrowseName = "Find Folder";
 				}
 
-				void SetFolder( const TextObject& str )
+
+
+				void SetFolder( const TextObject& strValue )
 				{
-					m_TextBox->SetText( str );
+					m_TextBox->SetText( strValue );
 					m_TextBox->MoveCaretToEnd();
 					onFolderChanged.Call( this );
 				}
+
 
 				const Gwen::TextObject& GetFolder()
 				{
@@ -52,7 +55,7 @@ namespace Gwen
 
 				void OnBrowse()
 				{
-					Gwen::Dialogs::FolderOpen( true, "Name", GetFolder().Get(), this, &FolderPicker::SetFolder );
+					Gwen::Dialogs::FolderOpen( true, "Name", GetFolder().Get(), this, &FolderPicker::SetFolderCallback );
 				}
 
 				virtual TextObject GetValue(){ return GetFolder(); }
@@ -61,6 +64,11 @@ namespace Gwen
 				Event::Caller	onFolderChanged;
 
 			private:
+
+				void SetFolderCallback( Gwen::Event::Info info )
+				{
+					SetFolder( info.String );
+				}
 
 				Controls::TextBox*	m_TextBox;
 				Controls::Button*	m_Button;

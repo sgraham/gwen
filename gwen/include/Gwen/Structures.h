@@ -106,6 +106,12 @@ namespace Gwen
 			this->y = y_;
 		}
 
+		void operator +=( const Point& p )
+		{
+			x += p.x;
+			y += p.y;
+		}
+
 		int x, y;
 	};
 
