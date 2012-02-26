@@ -1,4 +1,5 @@
 #include "DesignerBase.h"
+#include "Document.h"
 
 GWEN_CONTROL_CONSTRUCTOR( DesignerBase )
 {
@@ -38,7 +39,9 @@ void DesignerBase::NewDocument()
 {
 	Controls::TabButton* pButton = m_DocumentHolder->AddPage( L"Untitled Design" );
 	pButton->SetImage( "img/document_normal.png" );
-	Base* pPage = pButton->GetPage();
+
+	Document* doc = new Document( pButton->GetPage() );
+	doc->Initialize( pButton );
 
 	pButton->OnPress();
 }
