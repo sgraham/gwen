@@ -12,6 +12,9 @@ class SelectionLayer : public Controls::Base
 
 	virtual void OnMouseClickLeft( int x, int y, bool bDown );
 
+	virtual void ClearSelection();
+	virtual void AddSelection( Controls::Base* pControl );
+
 	protected:
 
 };

@@ -1,8 +1,20 @@
 #include "SelectionLayer.h"
+#include "Cage.h"
 
 GWEN_CONTROL_CONSTRUCTOR( SelectionLayer )
 {
 	SetShouldDrawBackground( true );
+}
+
+void SelectionLayer::ClearSelection()
+{
+	RemoveAllChildren();
+}
+
+void SelectionLayer::AddSelection( Controls::Base* pControl )
+{
+	Cage* pCage = new Cage( this );
+	pCage->Setup( pControl );
 }
 
 void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
@@ -15,8 +27,12 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 	Controls::Base* pCtrl = GetParent()->GetControlAt( pPos.x, pPos.y );
 	SetMouseInputEnabled( true );
 
-
 	if ( !pCtrl || pCtrl == GetParent() ) return;
 
-	pCtrl->DelayedDelete();
+	if ( !Gwen::Input::IsShiftDown() )
+	{
+		ClearSelection();
+	}
+
+	AddSelection( pCtrl );
 }
