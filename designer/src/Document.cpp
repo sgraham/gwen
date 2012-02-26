@@ -20,8 +20,6 @@ void Document::Render( Gwen::Skin::Base* skin )
 {
 	skin->GetRender()->SetDrawColor( Color( 255, 255, 255, 255 ) );
 	skin->GetRender()->DrawFilledRect( GetRenderBounds() );
-
-
 }
 
 void Document::RenderOver( Gwen::Skin::Base* skin )

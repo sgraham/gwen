@@ -1,4 +1,5 @@
 #include "DocumentCanvas.h"
+#include "DragBox.h"
 
 GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )
 {

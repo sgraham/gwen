@@ -19,6 +19,7 @@ class DesignerBase : public Controls::Base
 	protected:
 
 		void CreateMenu();
+		void CreateToolBar();
 		void CreateDocumentHolder();
 
 		void NewDocument();

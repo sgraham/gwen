@@ -6,6 +6,7 @@ GWEN_CONTROL_CONSTRUCTOR( DesignerBase )
 	Dock( Pos::Fill );
 
 	CreateMenu();
+	CreateToolBar();
 	CreateDocumentHolder();
 
 	new Controls::StatusBar( this, "StatusBar" );
@@ -26,6 +27,14 @@ void DesignerBase::CreateMenu()
 		pRoot->GetMenu()->AddItem( "New", "img/menu/new.png", "Ctrl + N" )->SetAction( this, &ThisClass::NewDocument );
 		pRoot->GetMenu()->AddItem( "Close", "img/menu/close.png" )->SetAction( this, &ThisClass::CloseDocument );
 	}
+}
+
+void DesignerBase::CreateToolBar()
+{
+	Controls::ToolBarStrip* pStrip = new Controls::ToolBarStrip( this );
+	pStrip->Dock( Pos::Top );
+
+	pStrip->Add( "New Document", "img/menu/new.png" )->onPress.Add( this, &ThisClass::NewDocument );
 }
 
 void DesignerBase::CreateDocumentHolder()
