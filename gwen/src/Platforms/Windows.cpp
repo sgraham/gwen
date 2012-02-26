@@ -332,6 +332,12 @@ void* Gwen::Platform::CreatePlatformWindow( int x, int y, int w, int h, const Gw
 	SetForegroundWindow( hWindow );
 	SetFocus( hWindow );
 
+	// Curve the corners
+	{
+		HRGN rgn = CreateRoundRectRgn( 0, 0, w+1, h+1, 4, 4 );
+		SetWindowRgn( hWindow, rgn, false );
+	}
+
 	return (void*)hWindow;
 }
 
@@ -377,6 +383,12 @@ void Gwen::Platform::MessagePump( void* pWindow, Gwen::Controls::Canvas* ptarget
 void Gwen::Platform::SetBoundsPlatformWindow( void* pPtr, int x, int y, int w, int h )
 {
 	SetWindowPos( (HWND)pPtr, HWND_NOTOPMOST, x, y, w, h, SWP_NOOWNERZORDER | SWP_NOACTIVATE | SWP_NOCOPYBITS | SWP_NOSENDCHANGING );
+
+	// Curve the corners
+	{
+		HRGN rgn = CreateRoundRectRgn( 0, 0, w+1, h+1, 4, 4 );
+		SetWindowRgn( (HWND)pPtr, rgn, false );
+	}
 }
 
 void Gwen::Platform::SetWindowMaximized( void* pPtr, bool bMax, Gwen::Point& pNewPos, Gwen::Point& pNewSize )
@@ -388,6 +400,11 @@ void Gwen::Platform::SetWindowMaximized( void* pPtr, bool bMax, Gwen::Point& pNe
 		RECT rect;
 		SystemParametersInfo( SPI_GETWORKAREA, 0, &rect, 0 ); // size excluding task bar
 		SetWindowPos( (HWND)pPtr, HWND_NOTOPMOST, rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top, SWP_NOOWNERZORDER | SWP_NOACTIVATE | SWP_NOCOPYBITS | SWP_NOSENDCHANGING );
+
+		// Remove the corner curves
+		{
+			SetWindowRgn( (HWND)pPtr, NULL, false );
+		}
 	}
 	else
 	{

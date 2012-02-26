@@ -53,7 +53,13 @@ void Text::RefreshSize()
 	Invalidate();
 }
 
-
+void Text::Layout( Skin::Base* skin )
+{
+	if ( m_bTextChanged )
+	{
+		RefreshSize();
+	}
+}
 
 Gwen::Font* Text::GetFont()
 {
@@ -65,13 +71,17 @@ void Text::SetFont( Gwen::Font* pFont )
 	if ( m_Font == pFont ) return;
 
 	m_Font = pFont;
-	RefreshSize();
+	m_bTextChanged = true;
+	Invalidate();
 }
 
 void Text::SetString( const TextObject& str )
 { 
+	if ( m_String == str ) return;
+
 	m_String = str.GetUnicode(); 
-	RefreshSize();
+	m_bTextChanged = true;
+	Invalidate();
 }
 
 void Text::Render( Skin::Base* skin )

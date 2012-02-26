@@ -25,8 +25,10 @@ namespace Gwen
 				Gwen::Font* GetFont();
 
 				void SetString( const TextObject& str );
+				
 
 				void Render( Skin::Base* skin );
+				void Layout( Skin::Base* skin );
 
 				void RefreshSize();
 
@@ -52,6 +54,8 @@ namespace Gwen
 				Gwen::Font*			m_Font;
 				Gwen::Color			m_Color;
 				Gwen::Color			m_ColorOverride;
+
+				bool				m_bTextChanged;
 		};
 	}
 
