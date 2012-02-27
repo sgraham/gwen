@@ -6,13 +6,13 @@ if [ "$UNAME" == "Darwin" ]; then
  
     chmod 777 ./premake4-osx
     ./premake4-osx clean
-    ./premake4-osx --platform=universal32 gmake
-    ./premake4-osx --platform=universal32 xcode3
-    ./premake4-osx --platform=universal32 xcode4
+    ./premake4-osx gmake
+    ./premake4-osx xcode3
+    ./premake4-osx xcode4
     
     cd macosx/gmake/
-    make config=releaseuniv32
-    make config=debuguniv32
+    make config=release
+    make config=debug
     
 fi
 	

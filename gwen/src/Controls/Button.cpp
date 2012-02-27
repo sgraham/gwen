@@ -226,5 +226,5 @@ void Button::SetImageAlpha( float f )
 {
 	if ( !m_Image ) return;
 
-	m_Image->SetDrawColor( Color( 255, 255, 255, 255.0f * f ) );
+	m_Image->SetDrawColor( Gwen::Color( 255, 255, 255, 255.0f * f ) );
 }

@@ -72,7 +72,7 @@ namespace Gwen
 					SetSize( m_Texture.width, m_Texture.height );
 				}
 
-				virtual void SetDrawColor( Gwen::Color& color )
+				virtual void SetDrawColor( Gwen::Color color )
 				{
 					m_DrawColor = color;
 				}

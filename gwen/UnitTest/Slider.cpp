@@ -56,7 +56,7 @@ class Slider : public GUnit
 	{
 		Gwen::Controls::Slider* pSlider = (Gwen::Controls::Slider*)pControl;
 
-		UnitPrint( Utility::Format( L"Slider Value: %.2f", pSlider->GetValue() ) );
+		UnitPrint( Utility::Format( L"Slider Value: %.2f", (float)pSlider->GetFloatValue() ) );
 	}
 
 };

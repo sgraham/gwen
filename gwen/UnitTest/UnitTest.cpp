@@ -139,12 +139,12 @@ void UnitTest::Render( Gwen::Skin::Base* skin )
 
 }
 
-void GUnit::UnitPrint( const Gwen::UnicodeString& str )
+void GUnit::UnitPrint( Gwen::UnicodeString str )
 {
 	m_pUnitTest->PrintText( str );
 }
 
-void GUnit::UnitPrint( const Gwen::String& str )
+void GUnit::UnitPrint( Gwen::String str )
 {
 	UnitPrint( Utility::StringToUnicode( str ) );
 }
