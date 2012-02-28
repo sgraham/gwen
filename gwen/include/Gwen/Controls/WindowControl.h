@@ -45,12 +45,14 @@ namespace Gwen
 
 				virtual void SetHidden(bool hidden);
 
-				void CloseButtonPressed( Gwen::Controls::Base* pFromPanel );
+				void CloseButtonPressed();
 				void RenderFocus( Gwen::Skin::Base* skin );
 				void SetDeleteOnClose( bool b ){ m_bDeleteOnClose = b; }
 
 				void MakeModal( bool bDrawBackground = true );
 				void DestroyModal();
+
+				Gwen::Event::Caller	onWindowClosed;
 
 			protected:
 

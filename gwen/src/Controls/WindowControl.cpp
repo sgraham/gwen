@@ -148,9 +148,11 @@ void WindowControl::Touch()
 	BringToFront();
 }
 
-void WindowControl::CloseButtonPressed( Gwen::Controls::Base* /*pFromPanel*/ )
+void WindowControl::CloseButtonPressed()
 {
 	DestroyModal();
+
+	onWindowClosed.Call( this );
 
 	SetHidden( true );
 

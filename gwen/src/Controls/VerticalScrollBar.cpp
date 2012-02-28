@@ -39,7 +39,7 @@ void VerticalScrollBar::Layout( Skin::Base* skin )
 	m_Bar->SetPadding( Padding(0, GetButtonSize(), 0, GetButtonSize() ) );
 
 	//Calculate bar sizes
-	float barHeight = (m_fViewableContentSize / m_fContentSize) * (Height() - (GetButtonSize() * 2));
+	float barHeight = (m_fViewableContentSize / m_fContentSize) * (Height() - GetButtonSize());
 
 	if ( barHeight < GetButtonSize() * 0.5 )
 		barHeight = GetButtonSize() * 0.5;

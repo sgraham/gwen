@@ -42,10 +42,29 @@ namespace Gwen
 		*/
 		struct Information
 		{
-			Gwen::Controls::Base*	ControlCaller;
-			Gwen::Controls::Base*	Control;
+			Information(){ Init(); }
+			Information( Gwen::Controls::Base* pctrl ){ Init(); Control = pctrl; }
 
+			void Init()
+			{
+				ControlCaller	= NULL;
+				Packet			= NULL;
+				Control			= NULL;
+			}
+
+			// This is set by the event caller, it will always be
+			// the control which is calling the event.
+			Gwen::Controls::Base*	ControlCaller;
+
+			// This is set by the event hook 
+			// ie onDoSomething.Add( this, &ThisClass::MyFunction, Gwen::Event::Packet( "Something" )
 			Gwen::Event::Packet*	Packet;
+
+			//
+			// These are set by the event and may or may not be set.
+			//
+			Gwen::Controls::Base*	Control;
+			
 			Gwen::TextObject		String;
 			Gwen::Point				Point;
 			

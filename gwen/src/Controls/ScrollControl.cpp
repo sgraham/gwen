@@ -37,7 +37,7 @@ GWEN_CONTROL_CONSTRUCTOR( ScrollControl )
 	m_InnerPanel->SendToBack();
 	m_InnerPanel->SetMouseInputEnabled( false );
 
-	m_bAutoHideBars = false;
+	m_bAutoHideBars = true;
 }
 
 void ScrollControl::SetScroll( bool h, bool v )

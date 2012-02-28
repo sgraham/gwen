@@ -59,6 +59,8 @@ namespace Gwen
 				Base( Base* pParent, const Gwen::String& Name = "" );
 				virtual ~Base();
 
+				virtual const char* GetTypeName(){ return "Base"; }
+
 				virtual void DelayedDelete();
 
 				virtual void SetParent( Controls::Base* pParent );
@@ -531,6 +533,8 @@ T* gwen_cast( Gwen::Controls::Base* p )
 	public:\
 	GWEN_CLASS( ThisName, BaseName )\
 	GWEN_DYNAMIC( ThisName, BaseName )\
+	virtual const char* GetTypeName(){ return #ThisName; }\
+	virtual const char* GetBaseTypeName(){ return BaseClass::GetTypeName(); }\
 	ThisName( Gwen::Controls::Base* pParent, const Gwen::String& pName = "" )
 
 #define GWEN_CONTROL_INLINE( ThisName, BaseName )\
