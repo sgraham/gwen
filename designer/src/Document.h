@@ -14,9 +14,6 @@ class Document : public Controls::Base
 
 		virtual void Initialize( Controls::TabButton* pTab );
 
-		virtual void Render( Gwen::Skin::Base* skin );
-		virtual void RenderOver( Gwen::Skin::Base* skin );
-
 	protected:
 
 		Controls::TabButton*	m_pTab;

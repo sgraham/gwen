@@ -9,7 +9,7 @@ int main()
 	Gwen::Renderer::DirectX9	renderer;
 	Gwen::Skin::TexturedBase	skin( &renderer );
 
-	Gwen::Controls::WindowCanvas window_canvas( -1, -1, 700, 500, &skin, "GWEN Designer" );
+	Gwen::Controls::WindowCanvas window_canvas( -1, -1, 960, 600, &skin, "GWEN Designer" );
 	skin.Init( "img/DesignerSkin.png" );
 
 	DesignerBase* pDesignerBase = new DesignerBase( &window_canvas );

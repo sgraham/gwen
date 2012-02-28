@@ -9,12 +9,16 @@ GWEN_CONTROL_CONSTRUCTOR( SelectionLayer )
 void SelectionLayer::ClearSelection()
 {
 	RemoveAllChildren();
+
+	Redraw();
 }
 
 void SelectionLayer::AddSelection( Controls::Base* pControl )
 {
 	Cage* pCage = new Cage( this );
 	pCage->Setup( pControl );
+
+	Redraw();
 }
 
 void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
@@ -27,12 +31,14 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 	Controls::Base* pCtrl = GetParent()->GetControlAt( pPos.x, pPos.y );
 	SetMouseInputEnabled( true );
 
-	if ( !pCtrl || pCtrl == GetParent() ) return;
-
 	if ( !Gwen::Input::IsShiftDown() )
 	{
 		ClearSelection();
 	}
+
+	if ( !pCtrl || pCtrl == GetParent() ) return;
+
+
 
 	AddSelection( pCtrl );
 }

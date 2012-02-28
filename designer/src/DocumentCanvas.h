@@ -18,6 +18,9 @@ class DocumentCanvas : public Controls::Base
 	virtual bool DragAndDrop_CanAcceptPackage( Gwen::DragAndDrop::Package* pPackage );
 	virtual bool DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackage, int x, int y );
 
+	Event::Caller	onChildAdded;
+	Event::Caller	onChildRemoved;
+
 	protected:
 
 		SelectionLayer*	m_SelectionLayer;
