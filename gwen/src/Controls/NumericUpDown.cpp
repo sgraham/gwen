@@ -111,4 +111,6 @@ void NumericUpDown::OnEnter()
 {
 	SyncNumberFromText();
 	SyncTextFromNumber();
+
+	BaseClass::OnEnter();
 }

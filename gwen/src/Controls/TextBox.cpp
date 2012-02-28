@@ -198,8 +198,6 @@ UnicodeString TextBox::GetSelection()
 bool TextBox::OnKeyReturn( bool bDown )
 {
 	if ( bDown ) return true;
-	
-	OnEnter();
 
 	// Try to move to the next control, as if tab had been pressed
 	OnKeyTab( true );
@@ -209,6 +207,10 @@ bool TextBox::OnKeyReturn( bool bDown )
 	{
 		Blur();
 	}
+
+	// This is called AFTER the blurring so you can
+	// refocus in your onReturnPressed hook.
+	OnEnter();
 
 	return true;
 }

@@ -87,7 +87,7 @@ void TreeNode::Render( Skin::Base* skin )
 	skin->DrawTreeNode( this, m_InnerPanel->Visible(), IsSelected(), m_Title->Height(), m_Title->TextRight(), m_ToggleButton->Y() + m_ToggleButton->Height() * 0.5, iBottom, GetParent() == m_TreeControl );
 }
 
-TreeNode* TreeNode::AddNode( const UnicodeString& strLabel )
+TreeNode* TreeNode::AddNode( const TextObject& strLabel )
 {
 	TreeNode* node = new TreeNode( this );
 	node->SetText( strLabel );
@@ -103,10 +103,6 @@ TreeNode* TreeNode::AddNode( const UnicodeString& strLabel )
 	return node;
 }
 
-TreeNode* TreeNode::AddNode( const String& strLabel )
-{
-	return AddNode( Utility::StringToUnicode( strLabel ) );
-}
 
 
 void TreeNode::Layout( Skin::Base* skin )
@@ -142,7 +138,15 @@ void TreeNode::PostLayout( Skin::Base* /*skin*/ )
 	}
 }
 
-void TreeNode::SetText( const TextObject& text ){ m_Title->SetText( text ); };
+void TreeNode::SetText( const TextObject& text )
+{ 
+	m_Title->SetText( text ); 
+}
+
+void TreeNode::SetImage( const TextObject& text )
+{ 
+	m_Title->SetImage( text ); 
+}
 
 void TreeNode::Open()
 {
