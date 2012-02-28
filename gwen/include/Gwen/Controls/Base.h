@@ -8,6 +8,9 @@
 #ifndef GWEN_CONTROLS_BASE_H
 #define GWEN_CONTROLS_BASE_H
 
+#include <list>
+#include <map>
+
 #include "Gwen/Exports.h"
 #include "Gwen/Structures.h"
 #include "Gwen/BaseRender.h"
@@ -16,8 +19,8 @@
 #include "Gwen/TextObject.h"
 #include "Gwen/Skin.h"
 #include "Gwen/ControlList.h"
-#include <list>
-#include <map>
+#include "Gwen/UserData.h"
+
 
 namespace Gwen 
 {
@@ -406,19 +409,6 @@ namespace Gwen
 
 
 			//
-			// This is to be used by the client implementation
-			// NOT HOOKS ETC.
-			//
-			public:
-
-				void* GetUserData(){ return m_pUserData; }
-				void SetUserData( void* pData ){ m_pUserData = pData; }
-
-			private:
-
-				void* m_pUserData;
-
-			//
 			// Useful anim shortcuts
 			//
 			public:
@@ -465,6 +455,10 @@ namespace Gwen
 
 				virtual int GetNamedChildren( Gwen::ControlList& list, const Gwen::String& strName, bool bDeep = true );
 				virtual Gwen::ControlList GetNamedChildren( const Gwen::String& strName, bool bDeep = true );
+
+			public:
+
+				UserDataStorage	UserData;
 				
 		};
 

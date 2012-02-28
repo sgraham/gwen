@@ -40,7 +40,6 @@ Base::Base( Base* pParent, const Gwen::String& Name )
 
 	m_iDock = 0;
 	m_DragAndDrop_Package = NULL;
-	m_pUserData = NULL;
 
 	RestrictToParent( false );
 
