@@ -143,6 +143,11 @@ void TreeNode::SetText( const TextObject& text )
 	m_Title->SetText( text ); 
 }
 
+const TextObject& TreeNode::GetText()
+{
+	return m_Title->GetText();
+}
+
 void TreeNode::SetImage( const TextObject& text )
 { 
 	m_Title->SetImage( text ); 

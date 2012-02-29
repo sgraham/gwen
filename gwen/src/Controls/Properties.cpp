@@ -61,9 +61,23 @@ PropertyRow* Properties::Add( const TextObject& text, Property::Base* pProp, con
 	return row;
 }
 
+PropertyRow* Properties::Find( const TextObject& text )
+{
+	for ( Base::List::iterator it = GetChildren().begin(); it != GetChildren().end(); ++it )
+	{
+		PropertyRow* row = gwen_cast<PropertyRow>(*it);
+		if ( !row ) continue;
+
+		if ( row->GetLabel()->GetText() == text )
+			return row;
+	}
+
+	return NULL;
+}
+
 void Properties::Clear()
 {
-	Base::List ChildListCopy = Children;
+	Base::List ChildListCopy = GetChildren();
 	for ( Base::List::iterator it = ChildListCopy.begin(); it != ChildListCopy.end(); ++it )
 	{
 		PropertyRow* row = gwen_cast<PropertyRow>(*it);
