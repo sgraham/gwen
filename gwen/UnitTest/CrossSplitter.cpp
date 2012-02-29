@@ -70,13 +70,6 @@ class CrossSplitter : public GUnit
 			pButton->onPress.Add( this, &CrossSplitter::CenterPanels );
 			pStatus->AddControl( pButton, true );
 		}
-
-		{
-			Gwen::Controls::Button* pButton = new Gwen::Controls::Button( pStatus );
-			pButton->SetText( "Splitters" );
-			pButton->onPress.Add( this, &CrossSplitter::ToggleSplitters );
-			pStatus->AddControl( pButton, true );
-		}
 	}
 
 	void ZoomTest( Gwen::Controls::Base* pFromPanel )
@@ -96,12 +89,6 @@ class CrossSplitter : public GUnit
 	{
 		m_Splitter->CenterPanels();
 		m_Splitter->UnZoom();
-	}
-
-	void ToggleSplitters( Gwen::Controls::Base* pFromPanel )
-	{
-		m_Splitter->SetSplittersVisible( !m_bSplittersVisible );
-		m_bSplittersVisible = !m_bSplittersVisible;
 	}
 
 	void Layout( Gwen::Skin::Base* skin ){}

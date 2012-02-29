@@ -32,7 +32,6 @@ GWEN_CONTROL_CONSTRUCTOR( CrossSplitter )
 	SetPanel( 3, NULL );
 
 	SetSplitterSize( 5 );
-	SetSplittersVisible( false );
 
 	m_iZoomedSection = -1;
 }
