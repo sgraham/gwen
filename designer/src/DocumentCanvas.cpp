@@ -46,10 +46,10 @@ bool DocumentCanvas::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackag
 		pControl->SetPos( pPos );
 		pControl->SetMouseInputEnabled( true );
 
-		pControl->UserData.Set( pControlFactory );
+		pControl->UserData.Set( "ControlFactory", pControlFactory );
 		onChildAdded.Call( this, Event::Information( pControl ) );
 
-		ControlFactory::Base* pCF = pControl->UserData.Get<ControlFactory::Base*>();
+		ControlFactory::Base* pCF = pControl->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
 
 		return true;
 	}

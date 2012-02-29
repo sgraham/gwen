@@ -34,8 +34,9 @@ void Hierarchy::UpdateNode( Controls::TreeNode* pNode, Controls::Base* pControl 
 	if ( m_pCanvas == pControl )
 	{
 		pChildNode = pNode->AddNode( "Canvas" );
+		pChildNode->SetImage( "img/document_normal.png" );
 	}
-	else if ( !pControl->UserData.Exists<ControlFactory::Base*>() )
+	else if ( !pControl->UserData.Exists( "ControlFactory" ) )
 	{
 		pChildNode = pNode;
 	}
@@ -45,6 +46,7 @@ void Hierarchy::UpdateNode( Controls::TreeNode* pNode, Controls::Base* pControl 
 		if ( strName == "" ) strName = "[" + Gwen::String( pControl->GetTypeName() ) + "]";
 
 		pChildNode = pNode->AddNode( strName );
+		pChildNode->SetImage( "img/controls/" + Gwen::String(pControl->GetTypeName()) + ".png" );
 	}
 
 

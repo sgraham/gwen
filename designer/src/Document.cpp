@@ -1,6 +1,7 @@
 #include "Document.h"
 #include "DocumentCanvas.h"
 #include "Hierarchy.h"
+#include "Properties.h"
 
 class DocumentInner : public Gwen::Controls::ScrollControl
 {
@@ -27,18 +28,45 @@ GWEN_CONTROL_CONSTRUCTOR( Document )
 	Dock( Pos::Fill );
 	SetPadding( Padding( 1, 1, 1, 1 ) );
 
+	// The main horizontal splitter separates the document from the tree/properties
+	Controls::SplitterHorizontal* pSplitter = new Controls::SplitterHorizontal( this );
+	pSplitter->Dock( Pos::Fill );
+	pSplitter->SetScaling( true, 200 );
+
+	// The white background
 	DocumentInner* pInner = new DocumentInner( this );
 	pInner->Dock( Pos::Fill );
 
-	m_pCanvas = new DocumentCanvas( pInner );
-	m_pCanvas->SetSize( 400, 300 );
-	m_pCanvas->SetPos( 5, 5 );
+	// The vertical splitter on the right containing the tree/properties
+	Controls::SplitterVertical* pRightSplitter = new Controls::SplitterVertical( this );
+	pRightSplitter->Dock( Pos::Fill );
+	pRightSplitter->SetSize( 200, 200 );
+	pRightSplitter->SetScaling( false, 200 );
 
-	Hierarchy* pHierarchy = new Hierarchy( this );
-	pHierarchy->Dock( Pos::Right );
-	pHierarchy->SetMargin( Margin( 4, 0, 0, 0 ) );
-	pHierarchy->WatchCanvas( m_pCanvas );
+	pSplitter->SetPanels( pInner, pRightSplitter );
+
 	
+	// The actual canvas onto which we drop controls
+	{
+		m_pCanvas = new DocumentCanvas( pInner );
+		m_pCanvas->SetSize( 400, 300 );
+		m_pCanvas->SetPos( 5, 5 );
+	}
+
+
+	// The controls on the right
+	{
+		Hierarchy* pHierarchy = new Hierarchy( pRightSplitter );
+		pHierarchy->WatchCanvas( m_pCanvas );
+		pHierarchy->Dock( Pos::Fill );
+
+		Properties* pProperties = new Properties( pRightSplitter );
+		pProperties->WatchCanvas( m_pCanvas );
+		pProperties->Dock( Pos::Fill );
+
+		pRightSplitter->SetPanels( pHierarchy, pProperties );
+	}
+
 }
 
 void Document::Initialize( Controls::TabButton* pTab )
