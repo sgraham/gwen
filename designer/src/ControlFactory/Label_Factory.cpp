@@ -2,13 +2,34 @@
 #include "ControlFactory.h"
 #include "Gwen/Controls.h"
 
+using namespace Gwen;
+
+namespace Property 
+{
+	class Text: public ControlFactory::Property 
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( Text, "The text, or label of the control" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			return gwen_cast<Controls::Label>(ctrl)->GetText().GetUnicode();
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			gwen_cast<Controls::Label>(ctrl)->SetText( str );
+		}
+
+	};
+}
+
 class Label_Factory : public ControlFactory::Base
 {
 	public:
 
 		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Label_Factory, ControlFactory::Base )
 		{
-
+			AddProperty( new Property::Text() );
 		}
 
 		virtual Gwen::String Name(){ return "Label"; }
