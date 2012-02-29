@@ -64,8 +64,8 @@ namespace Gwen
 
 			~UserDataStorage()
 			{
-				std::map< size_t, void*>::iterator it = m_List.begin();
-				std::map< size_t, void*>::iterator itEnd = m_List.end();
+				std::map< Gwen::String, void*>::iterator it = m_List.begin();
+				std::map< Gwen::String, void*>::iterator itEnd = m_List.end();
 
 				while( it != itEnd )
 				{
@@ -75,38 +75,36 @@ namespace Gwen
 			}
 
 			template<typename T>
-			void Set( const T& var )
+			void Set( const Gwen::String& str, const T& var )
 			{
 				Value<T>* val = NULL;
 
-				if ( Exists<T>() )
+				std::map< Gwen::String, void*>::iterator it = m_List.find( str );
+				if ( it != m_List.end() )
 				{
-					val = (Value<T>*) m_List[ (size_t) typeid( T ).name() ];
-					val->val = var;
+					((Value<T>*)it->second)->val = var;
 				}
 				else
 				{
 					val = new Value<T>( var );
+					m_List[ str ] = (void*) val;
 				}
-
-				m_List[ (size_t) typeid( var ).name() ] = (void*) val;
+				
 			};
 			
-
-			template<typename T>
-			bool Exists()
+			bool Exists( const Gwen::String& str )
 			{
-				return m_List.find( (size_t) typeid( T ).name() ) != m_List.end();
+				return m_List.find( str ) != m_List.end();
 			};
 
 			template <typename T>
-			T& Get()
+			T& Get( const Gwen::String& str )
 			{
-				Value<T>* v = (Value<T>*) m_List[ (size_t) typeid( T ).name() ];
+				Value<T>* v = (Value<T>*) m_List[ str ];
 				return v->val;
 			}
 
-			std::map< size_t, void*>	m_List;
+			std::map< Gwen::String, void*>	m_List;
 	};
 
 };
