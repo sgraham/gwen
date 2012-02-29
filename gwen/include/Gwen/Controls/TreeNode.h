@@ -46,9 +46,11 @@ namespace Gwen
 
 				virtual void SetSelectable( bool b ){ m_bSelectable = b; }
 				virtual bool IsSelected(){ return m_bSelected; }
-				virtual void SetSelected( bool b );
+				virtual void SetSelected( bool b, bool FireEvents = true );
 
 				virtual void DeselectAll();
+
+				virtual Controls::Base::List& GetChildNodes();
 
 				Event::Caller	onNamePress;
 				Event::Caller	onRightPress;

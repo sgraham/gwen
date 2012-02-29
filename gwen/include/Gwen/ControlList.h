@@ -2,10 +2,16 @@
 #ifndef GWEN_CONTROLLIST_H
 #define GWEN_CONTROLLIST_H
 
-#include "Gwen/Controls/Base.h"
-
 namespace Gwen
 {
+	struct Point;
+	class TextObject;
+
+	namespace Controls 
+	{
+		class Base;
+	}
+
 	template < typename TYPE >
 	class TEasyList
 	{
@@ -33,6 +39,11 @@ namespace Gwen
 			{
 				typename List::const_iterator it = std::find( list.begin(), list.end(), pControl );
 				return it != list.end();
+			}
+
+			inline void Clear()
+			{
+				list.clear();
 			}
 
 			List list;

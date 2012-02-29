@@ -12,9 +12,11 @@
 #include "Gwen/Exports.h"
 #include "Gwen/Structures.h"
 #include "Gwen/TextObject.h"
+#include "Gwen/ControlList.h"
 
 namespace Gwen 
 {
+
 	namespace Controls
 	{
 		class Base;
@@ -64,7 +66,8 @@ namespace Gwen
 			// These are set by the event and may or may not be set.
 			//
 			Gwen::Controls::Base*	Control;
-			
+
+			Gwen::ControlList		ControlList;
 			Gwen::TextObject		String;
 			Gwen::Point				Point;
 			

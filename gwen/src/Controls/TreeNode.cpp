@@ -166,7 +166,7 @@ void TreeNode::ExpandAll()
 {
 	Open();
 
-	Base::List& children = m_InnerPanel->GetChildren();
+	Base::List& children = GetChildNodes();
 	for ( Base::List::iterator iter = children.begin(); iter != children.end(); ++iter )
 	{
 		TreeNode* pChild = gwen_cast<TreeNode>(*iter);
@@ -210,7 +210,7 @@ void TreeNode::OnRightPress( Base* control )
 	onRightPress.Call( this );
 }
 
-void TreeNode::SetSelected( bool b )
+void TreeNode::SetSelected( bool b, bool FireEvents )
 { 
 	if ( !m_bSelectable ) return;
 	if ( m_bSelected == b ) return;
@@ -220,15 +220,18 @@ void TreeNode::SetSelected( bool b )
 	if ( m_Title )
 		m_Title->SetToggleState( m_bSelected );
 
-	onSelectChange.Call( this );
+	if ( FireEvents )
+	{
+		onSelectChange.Call( this );
 
-	if ( m_bSelected )
-	{
-		onSelect.Call( this );
-	}
-	else
-	{
-		onUnselect.Call( this );
+		if ( m_bSelected )
+		{
+			onSelect.Call( this );
+		}
+		else
+		{
+			onUnselect.Call( this );
+		}
 	}
 
 	Redraw();
@@ -241,7 +244,7 @@ void TreeNode::DeselectAll()
 	if ( m_Title )
 		m_Title->SetToggleState( m_bSelected );
 
-	Base::List& children = m_InnerPanel->GetChildren();
+	Base::List& children = GetChildNodes();
 	for ( Base::List::iterator iter = children.begin(); iter != children.end(); ++iter )
 	{
 		TreeNode* pChild = gwen_cast<TreeNode>(*iter);
@@ -251,3 +254,7 @@ void TreeNode::DeselectAll()
 	}
 }
 
+Controls::Base::List& TreeNode::GetChildNodes()
+{
+	return m_InnerPanel->GetChildren();
+}
