@@ -7,6 +7,7 @@ GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )
 	SetShouldDrawBackground( true );
 
 	m_SelectionLayer = new SelectionLayer( this );
+	m_SelectionLayer->onSelectionChanged.Add( this, &ThisClass::OnSelectionChanged );
 }
 
 
@@ -55,4 +56,19 @@ bool DocumentCanvas::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackag
 	}
 
 	return false;
+}
+
+void DocumentCanvas::SelectControls( ControlList& CtrlList )
+{
+	m_SelectionLayer->ClearSelection();
+
+	for ( ControlList::List::const_iterator it = CtrlList.list.begin(); it != CtrlList.list.end(); ++it )
+	{
+		m_SelectionLayer->AddSelection( (*it) );
+	}
+}
+
+void DocumentCanvas::OnSelectionChanged( Event::Info info )
+{
+	onSelectionChanged.Call( this, info );
 }

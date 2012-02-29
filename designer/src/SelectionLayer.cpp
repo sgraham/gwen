@@ -8,8 +8,8 @@ GWEN_CONTROL_CONSTRUCTOR( SelectionLayer )
 
 void SelectionLayer::ClearSelection()
 {
+	m_Selected.Clear();
 	RemoveAllChildren();
-
 	Redraw();
 }
 
@@ -17,6 +17,8 @@ void SelectionLayer::AddSelection( Controls::Base* pControl )
 {
 	Cage* pCage = new Cage( this );
 	pCage->Setup( pControl );
+
+	m_Selected.Add( pControl );
 
 	Redraw();
 }
@@ -36,9 +38,13 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 		ClearSelection();
 	}
 
-	if ( !pCtrl || pCtrl == GetParent() ) return;
+	if ( pCtrl && pCtrl != GetParent() )
+	{
+		AddSelection( pCtrl );
+	}
 
+	Event::Information info;
+	info.ControlList = m_Selected;
 
-
-	AddSelection( pCtrl );
+	onSelectionChanged.Call( this, info );
 }

@@ -14,6 +14,7 @@ void Hierarchy::WatchCanvas( DocumentCanvas* pCanvas )
 {
 	m_pCanvas = pCanvas;
 	m_pCanvas->onChildAdded.Add( this, &ThisClass::OnCanvasChildAdded );
+	m_pCanvas->onSelectionChanged.Add( this, &ThisClass::OnCanvasSelectionChanged );
 
 	CompleteRefresh();
 }
@@ -47,6 +48,8 @@ void Hierarchy::UpdateNode( Controls::TreeNode* pNode, Controls::Base* pControl 
 
 		pChildNode = pNode->AddNode( strName );
 		pChildNode->SetImage( "img/controls/" + Gwen::String(pControl->GetTypeName()) + ".png" );
+		pChildNode->onSelect.Add( this, &ThisClass::OnNodeSelected );
+		pChildNode->UserData.Set<Controls::Base*>( "TargetControl", pControl );
 	}
 
 
@@ -64,4 +67,48 @@ void Hierarchy::OnCanvasChildAdded( Event::Info info )
 	Debug::Msg( "Document Added\n" );
 
 	CompleteRefresh();
+}
+
+void Hierarchy::OnNodeSelected( Event::Info info )
+{
+	if ( !info.ControlCaller->UserData.Exists( "TargetControl" ) ) return;
+
+	Controls::Base* ctrl = info.ControlCaller->UserData.Get<Controls::Base*>( "TargetControl" );
+	Debug::Msg( "Selected %s\n", ctrl->GetTypeName() );
+
+	ControlList list;
+	list.Add( ctrl );
+
+	m_pCanvas->SelectControls( list );
+}
+
+void Hierarchy::OnCanvasSelectionChanged( Event::Info info )
+{
+	m_Tree->DeselectAll();
+
+	info.ControlList;
+
+	for ( ControlList::List::const_iterator it = info.ControlList.list.begin(); it != info.ControlList.list.end(); ++it )
+	{
+		SelectNodeRepresentingControl( (*it), m_Tree );
+	}
+}
+
+void Hierarchy::SelectNodeRepresentingControl( Controls::Base* pControl, Controls::TreeNode* pNode )
+{
+	if ( pNode == NULL ) pNode = m_Tree;
+
+	if ( pNode->UserData.Exists( "TargetControl" ) && pNode->UserData.Get<Controls::Base*>( "TargetControl" ) == pControl )
+	{
+		pNode->SetSelected( true, false );
+	}
+	
+	Base::List& children = pNode->GetChildNodes();
+	for ( Base::List::iterator iter = children.begin(); iter != children.end(); ++iter )
+	{
+		Controls::TreeNode* pChildNode = gwen_cast<Controls::TreeNode>( *iter );
+		if ( !pChildNode ) continue;
+
+		SelectNodeRepresentingControl( pControl, pChildNode );
+	}
 }

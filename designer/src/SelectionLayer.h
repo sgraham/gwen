@@ -15,6 +15,10 @@ class SelectionLayer : public Controls::Base
 	virtual void ClearSelection();
 	virtual void AddSelection( Controls::Base* pControl );
 
+	Event::Caller onSelectionChanged;
+
 	protected:
+
+		ControlList	m_Selected;
 
 };
