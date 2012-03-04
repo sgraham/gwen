@@ -107,6 +107,16 @@ namespace Gwen
 				virtual bool IsTextAllowed( const Gwen::UnicodeString& str, int iPos );
 			
 		};
+
+		class GWEN_EXPORT TextBoxMultiline : public TextBox
+		{
+			public:
+
+				GWEN_CONTROL( TextBoxMultiline, TextBox );
+
+				bool OnKeyReturn( bool bDown );
+
+		};
 	}
 }
 #endif

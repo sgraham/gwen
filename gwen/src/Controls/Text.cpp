@@ -91,6 +91,29 @@ Gwen::Point Text::GetCharacterPosition( int iChar )
 
 int Text::GetClosestCharacter( Gwen::Point p )
 {
+	if ( !m_Lines.empty() )
+	{
+		TextLines::iterator it = m_Lines.begin();
+		TextLines::iterator itEnd = m_Lines.end();
+		int iChars = 0;
+
+		while ( it != itEnd )
+		{
+			Text* pLine = *it;
+			++it;
+
+			iChars += pLine->Length();
+
+			if ( p.y < pLine->Y() ) continue;
+			if ( p.y > pLine->Bottom() ) continue;
+
+			iChars -= pLine->Length();
+
+			return iChars + pLine->GetClosestCharacter( Gwen::Point( p.x - pLine->X(), p.y - pLine->Y() ) );
+		}
+	}
+
+
 	int iDistance = 4096;
 	int iChar = 0;
 
@@ -166,14 +189,21 @@ void SplitWords(const Gwen::UnicodeString &s, wchar_t delim, std::vector<Gwen::U
 
 		str += s[i];
 	}
+
+	if ( !str.empty() ) elems.push_back( str );
 }
 
 void Text::RefreshSizeWrap()
 {
 	RemoveAllChildren();
+	m_Lines.clear();
 
 	std::vector<Gwen::UnicodeString> words;
 	SplitWords( GetText().GetUnicode(), L' ', words );
+
+	// Adding a bullshit word to the end simplifies the code below
+	// which is anything but simple.
+	words.push_back( L"" );
 
 	if ( !GetFont() )
 	{
@@ -186,30 +216,48 @@ void Text::RefreshSizeWrap()
 	int w = GetParent()->Width();
 	int x = 0, y = 0;
 
+	Gwen::UnicodeString strLine;
+
 	std::vector<Gwen::UnicodeString>::iterator it = words.begin();
 	for ( it; it != words.end(); ++it )
 	{
-		if ( (*it)[0] == L'\n' )
+		bool bFinishLine = false;
+
+		// If this word is a newline - make a newline (we still add it to the text)
+		if ( (*it)[0] == L'\n' ) bFinishLine = true;
+
+		// Does adding this word drive us over the width?
 		{
+			strLine += *it;
+			Gwen::Point p = GetSkin()->GetRender()->MeasureText( GetFont(), strLine );
+			if ( p.x > Width() ) bFinishLine = true;
+		}
+
+		// If this is the last word then finish the line
+		if ( --words.end() == it )
+		{
+			bFinishLine = true;
+		}
+
+		if ( bFinishLine )
+		{
+			Text* t = new Text( this );
+				t->SetFont( GetFont() );
+				t->SetString( strLine.substr( 0, strLine.length() - (*it).length() ) );
+				t->RefreshSize();
+				t->SetPos( x, y );
+			m_Lines.push_back( t );
+
+			// newline should start with the word that was too big
+			strLine = *it;
+
+			// Position the newline
 			y += pFontSize.y;
 			x = 0;
-			continue;
+
+			if ( strLine[0] == L' ' ) x -= pFontSize.x;
 		}
 
-		Text* t = new Text( this );
-		t->SetFont( GetFont() );
-		t->SetString( *it );
-		t->RefreshSize();
-
-		if ( x + t->Width() > w )
-		{
-			y += pFontSize.y;
-			x = 0 - pFontSize.x;
-		}
-
-		t->SetPos( x, y );
-
-		x += t->Width();
 	}
 
 	// Size to children height and parent width

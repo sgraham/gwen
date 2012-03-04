@@ -56,6 +56,12 @@ class TextBox : public GUnit
 			label->SetSize( 200, 55 );
 		}
 
+		{
+			Gwen::Controls::TextBoxMultiline* label = new Gwen::Controls::TextBoxMultiline( this );
+			label->SetText( "I think we're losing sight of the real issue here, which is: what are we gonna call ourselves?\n\nErm, and I think it comes down to a choice between \"The League Against Salivating Monsters\" or my own personal preference, which is \"The Committee for the Liberation and Integration of Terrifying Organisms and their Rehabilitation Into Society.\" Erm, one drawback with that: the abbreviation is \"CLITORIS.\"" );
+			label->SetPos( 220, 10 );
+			label->SetSize( 200, 180 );
+		}
 
 	}
 

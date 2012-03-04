@@ -63,6 +63,9 @@ namespace Gwen
 
 				bool				m_bWrap;
 				bool				m_bTextChanged;
+
+				typedef std::list<Text*> TextLines;
+				TextLines		m_Lines;
 		};
 	}
 

@@ -453,3 +453,20 @@ void TextBox::MoveCaretToStart()
 	m_iCursorEnd = 0;
 	RefreshCursorBounds();
 }
+
+
+GWEN_CONTROL_CONSTRUCTOR( TextBoxMultiline )
+{
+	SetWrap( true );
+	SetAlignment( Pos::Left | Pos::Top );
+}
+
+bool TextBoxMultiline::OnKeyReturn( bool bDown )
+{
+	if ( bDown )
+	{
+		InsertText( L"\n" );
+	}
+
+	return true;
+}

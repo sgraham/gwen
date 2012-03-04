@@ -106,7 +106,7 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 	m_fLastSecond = Gwen::Platform::GetTimeInSeconds();
 	m_iFrames = 0;
 
-	pList->GetNamedChildren( "Button" ).DoAction();
+	pList->GetNamedChildren( "TextBox" ).DoAction();
 }
 
 void UnitTest::OnCategorySelect( Gwen::Event::Info info )
