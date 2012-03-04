@@ -212,7 +212,6 @@ namespace Gwen
 			Package()
 			{
 				userdata = NULL;
-				userdata_free = false;
 				draggable = false;
 				drawcontrol = NULL;
 				holdoffset = Gwen::Point( 0, 0 );
@@ -220,7 +219,6 @@ namespace Gwen
 
 			String	name;
 			void*	userdata;
-			bool	userdata_free;
 			bool	draggable;
 
 			Gwen::Controls::Base*	drawcontrol;

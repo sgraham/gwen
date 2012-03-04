@@ -62,3 +62,14 @@ Gwen::Point Label::GetCharacterPosition( int iChar )
 
 	return p;
 }
+
+void Label::OnBoundsChanged( Gwen::Rect oldChildBounds )
+{
+	BaseClass::OnBoundsChanged( oldChildBounds );
+
+	if ( m_Text->Wrap() )
+	{
+		m_Text->RefreshSize();
+		Invalidate();
+	}
+}

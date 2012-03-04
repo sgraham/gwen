@@ -387,7 +387,7 @@ namespace Gwen
 
 				// Giver
 				
-				virtual void DragAndDrop_SetPackage( bool bDraggable, const String& strName = "", void* pUserData = NULL, bool bFreeUserData = false );
+				virtual void DragAndDrop_SetPackage( bool bDraggable, const String& strName = "", void* pUserData = NULL );
 				virtual bool DragAndDrop_Draggable();
 				virtual bool DragAndDrop_ShouldStartDrag(){ return true; }
 				virtual void DragAndDrop_StartDragging( Gwen::DragAndDrop::Package* pPackage, int x, int y );
@@ -452,6 +452,7 @@ namespace Gwen
 				virtual TextObject GetChildValue( const Gwen::String& strName );
 				virtual TextObject GetValue();
 				virtual void SetValue( const TextObject& strValue );
+				virtual void DoAction(){};
 
 				virtual int GetNamedChildren( Gwen::ControlList& list, const Gwen::String& strName, bool bDeep = true );
 				virtual Gwen::ControlList GetNamedChildren( const Gwen::String& strName, bool bDeep = true );

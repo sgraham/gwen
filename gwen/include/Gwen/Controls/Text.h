@@ -48,13 +48,20 @@ namespace Gwen
 
 				inline const Gwen::Color &TextColor() const { return m_Color; }
 
+				virtual void TextChanged(){ m_bTextChanged = true; }
+				virtual bool Wrap(){ return m_bWrap; }
+				virtual void SetWrap( bool b ){ if ( m_bWrap == b ) return; m_bWrap = b; m_bTextChanged = true; Invalidate(); }
+
 			private:
+
+				virtual void RefreshSizeWrap();
 
 				Gwen::TextObject	m_String;
 				Gwen::Font*			m_Font;
 				Gwen::Color			m_Color;
 				Gwen::Color			m_ColorOverride;
 
+				bool				m_bWrap;
 				bool				m_bTextChanged;
 		};
 	}

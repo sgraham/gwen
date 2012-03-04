@@ -17,6 +17,7 @@ using namespace Gwen;
 	GUnit* RegisterUnitTest_##name( Gwen::Controls::Base* tab );\
 	{\
 		Controls::Button* pButton = cat->Add( #name );\
+		pButton->SetName( #name );\
 		GUnit* test = RegisterUnitTest_##name( pCenter );\
 		test->Hide();\
 		test->SetUnitTest( this );\
@@ -52,6 +53,7 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 
 		ADD_UNIT_TEST( Button );
 		ADD_UNIT_TEST( Label );
+		ADD_UNIT_TEST( LabelMultiline );
 	}
 
 	{	
@@ -103,6 +105,8 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 
 	m_fLastSecond = Gwen::Platform::GetTimeInSeconds();
 	m_iFrames = 0;
+
+	pList->GetNamedChildren( "Button" ).DoAction();
 }
 
 void UnitTest::OnCategorySelect( Gwen::Event::Info info )

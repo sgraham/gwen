@@ -68,3 +68,11 @@ void ControlList::MoveBy( const Gwen::Point& point )
 		(*it)->MoveBy( point.x, point.y );
 	}
 }
+
+void ControlList::DoAction()
+{
+	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	{
+		(*it)->DoAction();
+	}
+}

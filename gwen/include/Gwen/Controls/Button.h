@@ -50,14 +50,13 @@ namespace Gwen
 
 				virtual void SetImage( const TextObject& strName, bool bCenter = false );
 
-				// You can use this to trigger OnPress directly from other controls using GWEN_CALL_EX
-				virtual void ReceiveEventPress( Base* /*pControl*/ ){ OnPress(); }
-
 				virtual void SizeToContents();
 				virtual void Layout( Skin::Base* pSkin );
 				virtual void UpdateColours();
 
 				virtual void SetImageAlpha( float fMultiply );
+
+				virtual void DoAction(){ OnPress(); }
 
 			public:
 
