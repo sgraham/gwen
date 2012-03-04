@@ -36,7 +36,7 @@ namespace Gwen
 
 				const TextObject& GetText() const { return m_String; }
 
-				Gwen::Point GetCharacterPosition( int iChar );
+				Gwen::Rect GetCharacterPosition( int iChar );
 				int GetClosestCharacter( Gwen::Point p );
 
 				int Length() const { return (int)m_String.GetUnicode().size(); }

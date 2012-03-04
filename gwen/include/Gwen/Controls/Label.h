@@ -47,7 +47,7 @@ namespace Gwen
 				virtual int TextY() { return m_Text->Y(); }
 				virtual int TextLength() { return m_Text->Length(); }
 
-				Gwen::Point GetCharacterPosition( int iChar );
+				Gwen::Rect GetCharacterPosition( int iChar );
 
 				virtual void SetTextPadding( const Padding& padding ){ m_Text->SetPadding( padding ); Invalidate(); InvalidateParent(); }
 				virtual const Padding& GetTextPadding(){ return m_Text->GetPadding(); }

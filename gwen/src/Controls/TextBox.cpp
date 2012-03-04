@@ -134,8 +134,8 @@ void TextBox::RefreshCursorBounds()
 
 	MakeCaratVisible();
 
-	Gwen::Point pA = GetCharacterPosition( m_iCursorPos );
-	Gwen::Point pB = GetCharacterPosition( m_iCursorEnd );
+	Gwen::Rect pA = GetCharacterPosition( m_iCursorPos );
+	Gwen::Rect pB = GetCharacterPosition( m_iCursorEnd );
 
 	m_rectSelectionBounds.x = Utility::Min( pA.x, pB.x );
 	m_rectSelectionBounds.y = m_Text->Y() - 1;
@@ -143,9 +143,9 @@ void TextBox::RefreshCursorBounds()
 	m_rectSelectionBounds.h = m_Text->Height() + 2;
 
 	m_rectCaretBounds.x = pA.x;
-	m_rectCaretBounds.y = m_Text->Y() - 1;
+	m_rectCaretBounds.y = pA.y;
 	m_rectCaretBounds.w = 1;
-	m_rectCaretBounds.h = m_Text->Height() + 2;
+	m_rectCaretBounds.h = pA.h;
 	
 	Redraw();
 }
@@ -469,4 +469,9 @@ bool TextBoxMultiline::OnKeyReturn( bool bDown )
 	}
 
 	return true;
+}
+
+void TextBoxMultiline::MakeCaratVisible()
+{
+	// TODO. scroll vertically
 }

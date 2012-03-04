@@ -112,6 +112,11 @@ namespace Gwen
 			y += p.y;
 		}
 
+		Point operator +( const Point& p ) const
+		{
+			return Point( x + p.x, p.y + y );
+		}
+
 		int x, y;
 	};
 

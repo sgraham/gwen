@@ -114,7 +114,8 @@ namespace Gwen
 
 				GWEN_CONTROL( TextBoxMultiline, TextBox );
 
-				bool OnKeyReturn( bool bDown );
+				virtual bool OnKeyReturn( bool bDown );
+				virtual void MakeCaratVisible();
 
 		};
 	}

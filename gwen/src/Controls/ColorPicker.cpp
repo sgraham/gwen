@@ -48,7 +48,7 @@ void ColorPicker::CreateColorControl( Gwen::String name, int y )
 	HorizontalSlider* slider = new HorizontalSlider( colorGroup );
 	slider->SetPos( colorSize + 5 , 8 );
 	slider->SetRange( 0, 255 );
-	slider->SetSize( 80, max( colorSize, 15 ) );
+	slider->SetSize( 80, Gwen::Utility::Max( colorSize, 15 ) );
 	slider->SetName( name + "Slider");
 	slider->onValueChanged.Add( this, &ColorPicker::SlidersMoved );
 }
