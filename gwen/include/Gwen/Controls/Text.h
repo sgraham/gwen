@@ -55,6 +55,8 @@ namespace Gwen
 				virtual int GetLineFromChar( int i );
 				virtual int GetStartCharFromLine( int i );
 				virtual int GetEndCharFromLine( int i );
+				virtual int GetCharPosOnLine( int i );
+				virtual int NumLines();
 
 			private:
 

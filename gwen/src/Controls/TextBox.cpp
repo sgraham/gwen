@@ -42,6 +42,7 @@ GWEN_CONTROL_CONSTRUCTOR( TextBox )
 
 	m_iCursorPos = 0;
 	m_iCursorEnd = 0;
+	m_iCursorLine = 0;
 	m_bSelectAll = false;
 
 	SetTextColor( Gwen::Color( 50, 50, 50, 255 ) ); // TODO: From Skin
@@ -87,6 +88,7 @@ void TextBox::InsertText( const Gwen::UnicodeString& strInsert )
 
 	m_iCursorPos += (int) strInsert.size();
 	m_iCursorEnd = m_iCursorPos;
+	m_iCursorLine = 0;
 
 	RefreshCursorBounds();
 }
@@ -175,6 +177,7 @@ void TextBox::OnSelectAll( Gwen::Controls::Base* /*pCtrl*/ )
 {
 	m_iCursorEnd = 0;
 	m_iCursorPos = TextLength();
+	m_iCursorLine = 0;
 
 	RefreshCursorBounds();
 }
@@ -311,6 +314,7 @@ void TextBox::SetCursorPos( int i )
 	if ( m_iCursorPos == i ) return;
 
 	m_iCursorPos = i;
+	m_iCursorLine = 0;
 	RefreshCursorBounds();
 }
 
@@ -488,6 +492,7 @@ bool TextBoxMultiline::OnKeyHome( bool bDown )
 	int iCurrentLine = GetCurrentLine();	
 	int iChar = m_Text->GetStartCharFromLine( iCurrentLine );
 
+	m_iCursorLine = 0;
 	m_iCursorPos = iChar;
 
 	if ( !Gwen::Input::IsShiftDown() )
@@ -506,7 +511,52 @@ bool TextBoxMultiline::OnKeyEnd( bool bDown )
 	int iCurrentLine = GetCurrentLine();	
 	int iChar = m_Text->GetEndCharFromLine( iCurrentLine );
 
-	m_iCursorPos = iChar;
+	m_iCursorLine = 0;
+	m_iCursorPos = iChar-1; // NAUGHTY
+
+	if ( !Gwen::Input::IsShiftDown() )
+	{
+		m_iCursorEnd = m_iCursorPos;
+	}
+
+	RefreshCursorBounds();
+	return true;
+}
+
+bool TextBoxMultiline::OnKeyUp( bool bDown )
+{
+	if ( !bDown ) return true;
+
+	if ( m_iCursorLine == 0 ) m_iCursorLine = m_Text->GetCharPosOnLine( m_iCursorPos );
+
+	int iLine = m_Text->GetLineFromChar( m_iCursorPos );
+	if ( iLine == 0 ) return true;
+
+	m_iCursorPos = m_Text->GetStartCharFromLine( iLine - 1 );
+	m_iCursorPos += Clamp( m_iCursorLine, 0, m_Text->GetLine( iLine - 1)->Length() );
+	m_iCursorPos = Clamp( m_iCursorPos, 0, m_Text->Length() );
+
+	if ( !Gwen::Input::IsShiftDown() )
+	{
+		m_iCursorEnd = m_iCursorPos;
+	}
+
+	RefreshCursorBounds();
+	return true;
+}
+
+bool TextBoxMultiline::OnKeyDown( bool bDown )
+{
+	if ( !bDown ) return true;
+
+	if ( m_iCursorLine == 0 ) m_iCursorLine = m_Text->GetCharPosOnLine( m_iCursorPos );
+
+	int iLine = m_Text->GetLineFromChar( m_iCursorPos );
+	if ( iLine >= m_Text->NumLines()-1 ) return true;
+
+	m_iCursorPos = m_Text->GetStartCharFromLine( iLine + 1 );
+	m_iCursorPos += Clamp( m_iCursorLine, 0, m_Text->GetLine( iLine + 1)->Length() );
+	m_iCursorPos = Clamp( m_iCursorPos, 0, m_Text->Length() );
 
 	if ( !Gwen::Input::IsShiftDown() )
 	{

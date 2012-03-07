@@ -77,7 +77,7 @@ Gwen::Rect Text::GetCharacterPosition( int iChar )
 {
 	if ( !m_Lines.empty() )
 	{
-		TextLines::iterator it = m_Lines.begin();
+		TextLines::iterator it = m_Lines.begin(); 
 		TextLines::iterator itEnd = m_Lines.end();
 		int iChars = 0;
 
@@ -87,7 +87,7 @@ Gwen::Rect Text::GetCharacterPosition( int iChar )
 			++it;
 			iChars += pLine->Length();
 
-			if ( iChars < iChar ) continue;
+			if ( iChars <= iChar ) continue;
 
 			iChars -= pLine->Length();
 
@@ -131,7 +131,11 @@ int Text::GetClosestCharacter( Gwen::Point p )
 
 			iChars -= pLine->Length();
 
-			return iChars + pLine->GetClosestCharacter( Gwen::Point( p.x - pLine->X(), p.y - pLine->Y() ) );
+			int iLinePos = pLine->GetClosestCharacter( Gwen::Point( p.x - pLine->X(), p.y - pLine->Y() ) );
+			//if ( iLinePos > 0 && iLinePos == pLine->Length() ) iLinePos--;
+			iLinePos--;
+
+			return iChars + iLinePos;
 		}
 	}
 
@@ -207,8 +211,10 @@ void SplitWords(const Gwen::UnicodeString &s, wchar_t delim, std::vector<Gwen::U
 
 		if ( s[i] == L' ' )
 		{
+			str += s[i];
 			elems.push_back( str );
 			str.clear();
+			continue;
 		}
 
 		str += s[i];
@@ -246,15 +252,16 @@ void Text::RefreshSizeWrap()
 	for ( it; it != words.end(); ++it )
 	{
 		bool bFinishLine = false;
+		bool bWrapped = false;
 
 		// If this word is a newline - make a newline (we still add it to the text)
 		if ( (*it)[0] == L'\n' ) bFinishLine = true;
 
 		// Does adding this word drive us over the width?
 		{
-			strLine += *it;
+			strLine += (*it);
 			Gwen::Point p = GetSkin()->GetRender()->MeasureText( GetFont(), strLine );
-			if ( p.x > Width() ) bFinishLine = true;
+			if ( p.x > Width() ) { bFinishLine = true; bWrapped = true; }
 		}
 
 		// If this is the last word then finish the line
@@ -279,7 +286,7 @@ void Text::RefreshSizeWrap()
 			y += pFontSize.y;
 			x = 0;
 
-			if ( strLine[0] == L' ' ) x -= pFontSize.x;
+			//if ( strLine[0] == L' ' ) x -= pFontSize.x;
 		}
 
 	}
@@ -292,6 +299,11 @@ void Text::RefreshSizeWrap()
 
 	InvalidateParent();
 	Invalidate();
+}
+
+int Text::NumLines()
+{
+	return m_Lines.size();
 }
 
 Text* Text::GetLine( int i )
@@ -323,7 +335,7 @@ int Text::GetLineFromChar( int i )
 
 		iChars += pLine->Length();
 
-		if ( iChars >= i ) return iLine;
+		if ( iChars > i ) return iLine;
 		iLine++;
 	}
 
@@ -340,7 +352,7 @@ int Text::GetStartCharFromLine( int i )
 	{
 		Text* pLine = *it;
 		++it;
-		if ( i == 0 ) return  Gwen::Clamp( iChars + 1, 0, Length() );
+		if ( i == 0 ) return Gwen::Clamp( iChars, 0, Length() );
 
 		iChars += pLine->Length();
 		i--;
@@ -359,5 +371,16 @@ int Text::GetEndCharFromLine( int i )
 		iStart += iLine->Length();
 	}
 
-	return Gwen::Clamp( iStart - 1, 0, Length() );
+	return Gwen::Clamp( iStart, 0, Length() );
+}
+
+int Text::GetCharPosOnLine( int i )
+{
+	int iLine = GetLineFromChar( i );
+	Text* line = GetLine( iLine );
+	if ( !line ) return 0;
+
+	int iStart = GetStartCharFromLine( iLine );
+
+	return i - iStart;
 }

@@ -86,7 +86,8 @@ namespace Gwen
 
 				int m_iCursorPos;
 				int m_iCursorEnd;
-
+				int m_iCursorLine;
+				
 				Gwen::Rect m_rectSelectionBounds;
 				Gwen::Rect m_rectCaretBounds;
 
@@ -119,8 +120,12 @@ namespace Gwen
 
 				virtual bool OnKeyHome( bool bDown );
 				virtual bool OnKeyEnd( bool bDown );
+				virtual bool OnKeyUp( bool bDown );
+				virtual bool OnKeyDown( bool bDown );
 
 				virtual int GetCurrentLine();
+
+			protected:
 
 		};
 	}
