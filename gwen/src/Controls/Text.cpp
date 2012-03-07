@@ -293,3 +293,71 @@ void Text::RefreshSizeWrap()
 	InvalidateParent();
 	Invalidate();
 }
+
+Text* Text::GetLine( int i )
+{
+	TextLines::iterator it = m_Lines.begin();
+	TextLines::iterator itEnd = m_Lines.end();
+
+	while ( it != itEnd )
+	{
+		if ( i == 0 ) return *it;
+		++it;
+		i--;
+	}
+
+	return NULL;
+}
+
+int Text::GetLineFromChar( int i )
+{
+	TextLines::iterator it = m_Lines.begin();
+	TextLines::iterator itEnd = m_Lines.end();
+	int iChars = 0;
+	int iLine = 0;
+
+	while ( it != itEnd )
+	{
+		Text* pLine = *it;
+		++it;
+
+		iChars += pLine->Length();
+
+		if ( iChars >= i ) return iLine;
+		iLine++;
+	}
+
+	return iLine;
+}
+
+int Text::GetStartCharFromLine( int i )
+{
+	TextLines::iterator it = m_Lines.begin();
+	TextLines::iterator itEnd = m_Lines.end();
+	int iChars = 0;
+
+	while ( it != itEnd )
+	{
+		Text* pLine = *it;
+		++it;
+		if ( i == 0 ) return  Gwen::Clamp( iChars + 1, 0, Length() );
+
+		iChars += pLine->Length();
+		i--;
+	}
+
+	return Gwen::Clamp( iChars, 0, Length() );
+}
+
+int Text::GetEndCharFromLine( int i )
+{
+	int iStart = GetStartCharFromLine( i );
+	Text* iLine = GetLine( i );
+
+	if ( iLine )
+	{
+		iStart += iLine->Length();
+	}
+
+	return Gwen::Clamp( iStart - 1, 0, Length() );
+}

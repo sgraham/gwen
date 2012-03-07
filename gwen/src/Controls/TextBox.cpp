@@ -475,3 +475,44 @@ void TextBoxMultiline::MakeCaratVisible()
 {
 	// TODO. scroll vertically
 }
+
+int TextBoxMultiline::GetCurrentLine()
+{
+	return m_Text->GetLineFromChar( m_iCursorPos );
+}
+
+bool TextBoxMultiline::OnKeyHome( bool bDown )
+{
+	if ( !bDown ) return true;
+
+	int iCurrentLine = GetCurrentLine();	
+	int iChar = m_Text->GetStartCharFromLine( iCurrentLine );
+
+	m_iCursorPos = iChar;
+
+	if ( !Gwen::Input::IsShiftDown() )
+	{
+		m_iCursorEnd = m_iCursorPos;
+	}
+
+	RefreshCursorBounds();
+	return true;
+}
+
+bool TextBoxMultiline::OnKeyEnd( bool bDown )
+{
+	if ( !bDown ) return true;
+
+	int iCurrentLine = GetCurrentLine();	
+	int iChar = m_Text->GetEndCharFromLine( iCurrentLine );
+
+	m_iCursorPos = iChar;
+
+	if ( !Gwen::Input::IsShiftDown() )
+	{
+		m_iCursorEnd = m_iCursorPos;
+	}
+
+	RefreshCursorBounds();
+	return true;
+}

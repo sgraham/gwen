@@ -26,7 +26,6 @@ namespace Gwen
 
 				void SetString( const TextObject& str );
 				
-
 				void Render( Skin::Base* skin );
 				void Layout( Skin::Base* skin );
 
@@ -51,6 +50,11 @@ namespace Gwen
 				virtual void TextChanged(){ m_bTextChanged = true; }
 				virtual bool Wrap(){ return m_bWrap; }
 				virtual void SetWrap( bool b ){ if ( m_bWrap == b ) return; m_bWrap = b; m_bTextChanged = true; Invalidate(); }
+
+				virtual Text* GetLine( int i );
+				virtual int GetLineFromChar( int i );
+				virtual int GetStartCharFromLine( int i );
+				virtual int GetEndCharFromLine( int i );
 
 			private:
 

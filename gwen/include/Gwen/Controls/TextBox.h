@@ -117,6 +117,11 @@ namespace Gwen
 				virtual bool OnKeyReturn( bool bDown );
 				virtual void MakeCaratVisible();
 
+				virtual bool OnKeyHome( bool bDown );
+				virtual bool OnKeyEnd( bool bDown );
+
+				virtual int GetCurrentLine();
+
 		};
 	}
 }
