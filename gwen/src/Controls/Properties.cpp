@@ -166,7 +166,10 @@ void PropertyRow::SetProperty( Property::Base* prop )
 
 void PropertyRow::OnPropertyValueChanged( Gwen::Controls::Base* /*control*/ )
 {
-	onChange.Call( this );
+	Event::Information info;
+	info.String = GetProperty()->GetPropertyValue();
+
+	onChange.Call( this, info );
 }
 
 void PropertyRow::OnEditingChanged()

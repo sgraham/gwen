@@ -34,6 +34,9 @@ namespace ControlFactory
 			Base* GetBaseFactory();
 			void AddProperty( Property* pProp );
 
+			Property* GetProperty( const Gwen::String& name );
+			void SetControlValue( Gwen::Controls::Base* ctrl, const Gwen::String& name, const Gwen::UnicodeString& str );
+
 			const Property::List& Properties(){ return m_Properties; }
 
 		protected:

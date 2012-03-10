@@ -37,7 +37,10 @@ namespace Gwen
 
 					virtual void DoChanged()
 					{
-						onChange.Call( this );
+						Event::Information info;
+						info.String = GetPropertyValue();
+
+						onChange.Call( this, info );
 					}
 
 					void OnPropertyValueChanged( Gwen::Controls::Base* /*control*/ )

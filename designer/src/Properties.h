@@ -17,10 +17,12 @@ class Properties : public Controls::Base
 	protected:
 
 		void OnCanvasSelectionChanged( Event::Info info );
+		void OnPropertyChanged( Event::Info info );
 		void AddPropertiesFromControl( Controls::Base* pControl );
 
 		DocumentCanvas*				m_pCanvas;
 		Controls::PropertyTree*		m_Props;
+		ControlList					m_SelectedControls;
 
 
 };

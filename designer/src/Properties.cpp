@@ -25,7 +25,9 @@ void Properties::OnCanvasSelectionChanged( Event::Info info )
 {
 	m_Props->Clear();
 
-	for ( ControlList::List::const_iterator it = info.ControlList.list.begin(); it != info.ControlList.list.end(); ++it )
+	m_SelectedControls = info.ControlList;
+
+	for ( ControlList::List::const_iterator it = m_SelectedControls.list.begin(); it != m_SelectedControls.list.end(); ++it )
 	{
 		AddPropertiesFromControl( *it );
 	}
@@ -50,7 +52,9 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl )
 			Controls::PropertyRow* row = properties->Find( (*it)->Name() );
 			if ( !row )
 			{
-				properties->Add( (*it)->Name(), (*it)->GetValue( pControl ) );
+				row = properties->Add( (*it)->Name(), (*it)->GetValue( pControl ) );
+				row->SetName( (*it)->Name() );
+				row->onChange.Add( this, &ThisClass::OnPropertyChanged );
 			}
 			else
 			{
@@ -64,5 +68,20 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl )
 
 
 		cf = cf->GetBaseFactory();
+	}
+}
+
+void Properties::OnPropertyChanged( Event::Info info )
+{
+	for ( ControlList::List::const_iterator it = m_SelectedControls.list.begin(); it != m_SelectedControls.list.end(); ++it )
+	{
+		Controls::Base* pControl = (*it);
+		ControlFactory::Base* cf = pControl->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
+
+		while ( cf )
+		{
+			cf->SetControlValue( pControl, info.ControlCaller->GetName(), info.String.GetUnicode() );
+			cf = cf->GetBaseFactory();
+		}
 	}
 }
