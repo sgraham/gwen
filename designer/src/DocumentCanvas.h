@@ -23,10 +23,12 @@ class DocumentCanvas : public Controls::Base
 	Event::Caller	onChildAdded;
 	Event::Caller	onChildRemoved;
 	Event::Caller	onSelectionChanged;
+	Event::Caller	onPropertiesChanged;
 
 	protected:
 
 		void OnSelectionChanged( Event::Info info );
+		void OnPropertiesChanged( Event::Info info );
 
 		SelectionLayer*	m_SelectionLayer;
 };

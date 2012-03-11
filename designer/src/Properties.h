@@ -17,8 +17,11 @@ class Properties : public Controls::Base
 	protected:
 
 		void OnCanvasSelectionChanged( Event::Info info );
+		void OnPropertiesChanged( Event::Info info );
+
 		void OnPropertyChanged( Event::Info info );
-		void AddPropertiesFromControl( Controls::Base* pControl );
+
+		void AddPropertiesFromControl( Controls::Base* pControl, bool bAllowDifferent );
 
 		DocumentCanvas*				m_pCanvas;
 		Controls::PropertyTree*		m_Props;

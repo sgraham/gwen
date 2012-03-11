@@ -8,6 +8,8 @@ GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )
 
 	m_SelectionLayer = new SelectionLayer( this );
 	m_SelectionLayer->onSelectionChanged.Add( this, &ThisClass::OnSelectionChanged );
+	m_SelectionLayer->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
+	
 }
 
 
@@ -71,4 +73,9 @@ void DocumentCanvas::SelectControls( ControlList& CtrlList )
 void DocumentCanvas::OnSelectionChanged( Event::Info info )
 {
 	onSelectionChanged.Call( this, info );
+}
+
+void DocumentCanvas::OnPropertiesChanged( Event::Info info )
+{
+	onPropertiesChanged.Call( this, info );
 }

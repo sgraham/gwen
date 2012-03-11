@@ -16,8 +16,11 @@ class SelectionLayer : public Controls::Base
 	virtual void AddSelection( Controls::Base* pControl );
 
 	Event::Caller onSelectionChanged;
+	Event::Caller onPropertiesChanged;
 
 	protected:
+
+		void OnControlDragged( Event::Info info );
 
 		ControlList	m_Selected;
 

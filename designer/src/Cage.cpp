@@ -48,3 +48,28 @@ void Cage::Setup( Controls::Base* pControl )
 {
 	m_Control = pControl;
 }
+
+void Cage::SetDepressed( bool b )
+{
+	BaseClass::SetDepressed( b );
+
+	m_DragPoint = m_Control->GetPos();
+}
+
+void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
+{
+	if ( !IsDepressed() ) return;
+
+	m_DragPoint += Point( deltaX, deltaY );
+
+	Point pos = m_DragPoint;
+
+	pos.x = ((int)((float)pos.x / 10.0f)) * 10;
+	pos.y = ((int)((float)pos.y / 10.0f)) * 10;
+
+	pos -= m_Control->GetPos();
+
+	Event::Information info;
+	info.Point = pos;
+	onMoved.Call( this, info );
+}

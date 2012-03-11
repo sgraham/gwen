@@ -16,6 +16,9 @@ void Properties::WatchCanvas( DocumentCanvas* pCanvas )
 {
 	m_pCanvas = pCanvas;
 	m_pCanvas->onSelectionChanged.Add( this, &ThisClass::OnCanvasSelectionChanged );
+	m_pCanvas->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
+
+	
 	//m_pCanvas->onChildAdded.Add( this, &ThisClass::OnCanvasChildAdded );
 
 }
@@ -29,26 +32,35 @@ void Properties::OnCanvasSelectionChanged( Event::Info info )
 
 	for ( ControlList::List::const_iterator it = m_SelectedControls.list.begin(); it != m_SelectedControls.list.end(); ++it )
 	{
-		AddPropertiesFromControl( *it );
+		AddPropertiesFromControl( *it, true );
 	}
 
 	m_Props->ExpandAll();
 }
 
-void Properties::AddPropertiesFromControl( Controls::Base* pControl )
+void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllowDifferent )
 {
 	ControlFactory::Base* cf = pControl->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
 
+	//
+	// Foreach control control factory on this control
+	//
 	while ( cf )
 	{
 		Controls::Properties* properties = m_Props->Find( cf->Name() );
 
 		if ( !properties ) properties = m_Props->Add( cf->Name() );
 
+		//
+		// And foreach property in that control factory
+		//
 		ControlFactory::Property::List::const_iterator it = cf->Properties().begin();
 		ControlFactory::Property::List::const_iterator itEnd = cf->Properties().end();
 		for ( it; it != itEnd; ++it )
 		{
+			//
+			// Add a property row to our control
+			//
 			Controls::PropertyRow* row = properties->Find( (*it)->Name() );
 			if ( !row )
 			{
@@ -58,14 +70,16 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl )
 			}
 			else
 			{
-				if ( row->GetProperty()->GetPropertyValue().GetUnicode() != (*it)->GetValue( pControl ) )
+				if ( bAllowDifferent && row->GetProperty()->GetPropertyValue().GetUnicode() != (*it)->GetValue( pControl ) )
 				{
 					row->GetProperty()->SetPropertyValue( "different" );
 				}
+				else 
+				{
+					row->GetProperty()->SetPropertyValue( (*it)->GetValue( pControl ) );
+				}
 			}
-			
 		}
-
 
 		cf = cf->GetBaseFactory();
 	}
@@ -84,4 +98,16 @@ void Properties::OnPropertyChanged( Event::Info info )
 			cf = cf->GetBaseFactory();
 		}
 	}
+}
+
+void Properties::OnPropertiesChanged( Event::Info info )
+{
+	m_SelectedControls = info.ControlList;
+	
+	for ( ControlList::List::const_iterator it = m_SelectedControls.list.begin(); it != m_SelectedControls.list.end(); ++it )
+	{
+		AddPropertiesFromControl( *it, it != m_SelectedControls.list.begin() );
+	}
+
+	m_Props->ExpandAll();
 }
