@@ -6,6 +6,21 @@ using namespace Gwen;
 
 namespace Property
 {
+	class ControlName : public ControlFactory::Property 
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( ControlName, "The control's name" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			return Utility::Format( L"%S", ctrl->GetName().c_str() );
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			ctrl->SetName( Gwen::Utility::UnicodeToString( str ) );
+		}
+	};
+
 	class Position : public ControlFactory::Property 
 	{
 		GWEN_CONTROL_FACTORY_PROPERTY( Position, "Sets the position of the control" );
@@ -50,6 +65,7 @@ class Base_Factory : public ControlFactory::Base
 		{
 			AddProperty( new Property::Position() );
 			AddProperty( new Property::Size() );
+			AddProperty( new Property::ControlName() );
 		}
 
 		virtual Gwen::String Name(){ return "Base"; }

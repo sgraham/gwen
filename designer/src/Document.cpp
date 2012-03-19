@@ -85,7 +85,7 @@ void Document::DoSaveFromDialog( Event::Info info )
 	m_Exporter = NULL;
 }
 
-void Document::DoSave( ImportExport::BaseImportExport* exporter )
+void Document::DoSave( ImportExport::Base* exporter )
 {
 	// We don't have a previous filename.. do save as
 	if ( m_strFilename == "" )
@@ -96,9 +96,9 @@ void Document::DoSave( ImportExport::BaseImportExport* exporter )
 	exporter->Export( m_pCanvas, m_strFilename );
 }
 
-void Document::DoSaveAs( ImportExport::BaseImportExport* exporter )
+void Document::DoSaveAs( ImportExport::Base* exporter )
 {
 	m_Exporter = exporter;
 
-	Gwen::Dialogs::FileSave( true, m_strFilename, "", "Gwen Designer File|.gwen", this, &ThisClass::DoSaveFromDialog );
+	Gwen::Dialogs::FileSave( true, m_strFilename, "", "Gwen Designer File|*.gwen", this, &ThisClass::DoSaveFromDialog );
 }

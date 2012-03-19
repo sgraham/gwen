@@ -6,7 +6,7 @@ solution "Designer"
 	targetdir ( "../bin" )
 	debugdir ( "../bin" )
 	libdirs { "../../gwen/lib/", "../../gwen/lib/" .. os.get() .. "/" .. _ACTION }
-	includedirs { "../../gwen/include/" }
+	includedirs { "../../gwen/include/", "../src/" }
 	configurations { "Release", "Debug" }
 	
 configuration "Release"
@@ -20,4 +20,4 @@ configuration "Debug"
 project "Designer"
 	files { "../src/**.*" }
 	kind "WindowedApp"
-	links { "GWEN-Renderer-DirectX9", "gwen_static" }
+	links { "GWEN-Renderer-DirectX9", "gwen_static", "bootil_static" }

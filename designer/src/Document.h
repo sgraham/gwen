@@ -15,8 +15,8 @@ class Document : public Controls::Base
 
 		virtual void Initialize( Controls::TabButton* pTab );
 
-		virtual void DoSaveAs( ImportExport::BaseImportExport* exporter );
-		virtual void DoSave( ImportExport::BaseImportExport* exporter );
+		virtual void DoSaveAs( ImportExport::Base* exporter );
+		virtual void DoSave( ImportExport::Base* exporter );
 		
 
 	protected:
@@ -28,6 +28,6 @@ class Document : public Controls::Base
 
 		Gwen::String			m_strFilename;
 
-		ImportExport::BaseImportExport*		m_Exporter;
-		ImportExport::BaseImportExport*		m_Importer;
+		ImportExport::Base*		m_Exporter;
+		ImportExport::Base*		m_Importer;
 };

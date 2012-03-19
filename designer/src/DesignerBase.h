@@ -35,7 +35,4 @@ class DesignerBase : public Controls::Base
 
 
 		Controls::TabControl*			m_DocumentHolder;
-
-		ImportExport::BaseImportExport	m_DefaultImportExport;
-
 };

@@ -91,7 +91,7 @@ void DesignerBase::SaveDocument()
 	Document* doc = CurrentDocument();
 	if ( !doc ) return;
 
-	doc->DoSave( &m_DefaultImportExport );
+	doc->DoSave( ImportExport::Base::Find( "Designer" ) );
 }
 
 Document* DesignerBase::CurrentDocument()
