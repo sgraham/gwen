@@ -26,6 +26,7 @@
 #include "Gwen/Controls/Splitters.h"
 
 #include "Gwen/Controls/Dialogs/FileOpen.h"
+#include "Gwen/Controls/Dialogs/FileSave.h"
 
 #include "Gwen/Anim.h"
 

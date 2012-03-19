@@ -3,8 +3,11 @@
 
 #include "Gwen/Gwen.h"
 #include "Gwen/Controls.h"
+#include "ImportExport/Base.h"
 
 using namespace Gwen;
+
+class Document;
 
 /*
 
@@ -25,8 +28,14 @@ class DesignerBase : public Controls::Base
 
 		void NewDocument();
 		void CloseDocument();
+		void OpenDocument();
+		void SaveDocument();
+
+		Document* CurrentDocument();
 
 
-		Controls::TabControl*		m_DocumentHolder;
+		Controls::TabControl*			m_DocumentHolder;
+
+		ImportExport::BaseImportExport	m_DefaultImportExport;
 
 };

@@ -74,3 +74,31 @@ void Document::Initialize( Controls::TabButton* pTab )
 
 }
 
+void Document::DoSaveFromDialog( Event::Info info )
+{
+	if ( info.String.Get() == "" ) return;
+	if ( !m_Exporter ) return;
+
+	m_strFilename = info.String.Get();
+	
+	m_Exporter->Export( m_pCanvas, m_strFilename );
+	m_Exporter = NULL;
+}
+
+void Document::DoSave( ImportExport::BaseImportExport* exporter )
+{
+	// We don't have a previous filename.. do save as
+	if ( m_strFilename == "" )
+	{
+		return DoSaveAs( exporter );
+	}
+
+	exporter->Export( m_pCanvas, m_strFilename );
+}
+
+void Document::DoSaveAs( ImportExport::BaseImportExport* exporter )
+{
+	m_Exporter = exporter;
+
+	Gwen::Dialogs::FileSave( true, m_strFilename, "", "Gwen Designer File|.gwen", this, &ThisClass::DoSaveFromDialog );
+}
