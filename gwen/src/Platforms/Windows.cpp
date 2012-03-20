@@ -6,6 +6,14 @@
 
 #ifdef _WIN32
 
+#ifndef _WIN32_WINNT
+#	define _WIN32_WINNT 0x0501
+#else
+#	if _WIN32_WINNT < 0x0501
+#		error Unsupported platform
+#	endif
+#endif
+
 #include "Gwen/Macros.h"
 #include "Gwen/Platform.h"
 #include "Gwen/Input/Windows.h"
@@ -13,19 +21,12 @@
 #include <windows.h>
 #include <ShlObj.h>
 
-#include <mmsystem.h>
-#pragma comment( lib, "winmm.lib" )
-
 using namespace Gwen;
 using namespace Gwen::Platform;
 
 static Gwen::Input::Windows GwenInput;
 
-#ifdef UNICODE
-static LPWSTR iCursorConvertion[] = 
-#else
-static LPSTR iCursorConvertion[] = 
-#endif
+static LPCTSTR iCursorConversion[] =
 {
 	IDC_ARROW, 
 	IDC_IBEAM,
@@ -42,7 +43,7 @@ static LPSTR iCursorConvertion[] =
 void Gwen::Platform::SetCursor( unsigned char iCursor )
 {
 	// Todo.. Properly.
-	::SetCursor( LoadCursor( NULL, iCursorConvertion[iCursor] ) );
+	::SetCursor( LoadCursor( NULL, iCursorConversion[iCursor] ) );
 }
 
 void Gwen::Platform::GetCursorPos( Gwen::Point &po )
@@ -116,8 +117,6 @@ double GetPerformanceFrequency()
 
 float Gwen::Platform::GetTimeInSeconds()
 {
-#if 1
-
 	static float fCurrentTime = 0.0f;
 	static __int64 iLastTime = 0;
 
@@ -132,19 +131,12 @@ float Gwen::Platform::GetTimeInSeconds()
 	iLastTime = thistime;
 
 	return fCurrentTime;
-
-#else
-	
-	return timeGetTime() / 1000.0;
-
-#endif
 }
 
 
 
 bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithInformation fnCallback )
 {
-#ifndef __MINGW32__  
 	char Filestring[256];
 	String returnstring;
 
@@ -194,13 +186,7 @@ bool Gwen::Platform::FileOpen( const String& Name, const String& StartPath, cons
 	}
 
 	return true;
-
-#else 
-	return false;
-#endif 
 }
-
-#ifndef __MINGW32__
 
 // An annoying function just to change the folder that we start in, in the folder browser.
 static String g_InitialFolder;
@@ -211,7 +197,7 @@ INT CALLBACK FolderBrowseCallback( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM pData
 	{
 		case BFFM_INITIALIZED: 
 			{
-				TCHAR szDir[MAX_PATH];
+				WCHAR szDir[MAX_PATH];
 
 				if ( g_InitialFolder.empty() && GetCurrentDirectoryW( MAX_PATH, szDir) )
 				{
@@ -229,12 +215,8 @@ INT CALLBACK FolderBrowseCallback( HWND hwnd, UINT uMsg, LPARAM lp, LPARAM pData
 	return 0;
 }
 
-#endif 
-
 bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gwen::Event::Handler* pHandler, Event::Handler::FunctionWithInformation fnCallback )
 {
-#ifndef __MINGW32__  
-
 	g_InitialFolder = StartPath;
 
 	BROWSEINFOA   bi; 
@@ -264,15 +246,10 @@ bool Gwen::Platform::FolderOpen( const String& Name, const String& StartPath, Gw
 	}
 
 	return true;
-#else 
-	return false;
-#endif 
 }
 
 bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, const String& Extension, Gwen::Event::Handler* pHandler, Gwen::Event::Handler::FunctionWithInformation fnCallback )
 {
-#ifndef __MINGW32__  
-
 	char Filestring[256];
 	String returnstring;
 
@@ -322,9 +299,6 @@ bool Gwen::Platform::FileSave( const String& Name, const String& StartPath, cons
 	}
 
 	return true;
-#else 
-	return false;
-#endif 
 }
 
 

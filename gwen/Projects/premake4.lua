@@ -27,7 +27,7 @@ configuration "Debug"
 	defines { "_DEBUG" }
 	includedirs { "../include/" }
 
-project "GWEN DLL"
+project "GWEN-DLL"
 	defines { "GWEN_COMPILE_DLL" }
 	files { "../src/**.*", "../include/Gwen/**.*" }
 	kind "SharedLib"
@@ -38,7 +38,7 @@ project "GWEN DLL"
 	configuration "Debug"
 		targetname( "gwend" )
 
-project "GWEN Static"
+project "GWEN-Static"
 	defines { "GWEN_COMPILE_STATIC" }
 	files { "../src/**.*", "../include/Gwen/**.*" }
 	flags { "Symbols" }
@@ -81,19 +81,18 @@ end
 -- Samples
 --
 
-DefineSample( "CrossPlatform", { "../Samples/CrossPlatform/CrossPlatform.cpp" }, { "Renderer-OpenGL_DebugFont", "GWEN Static", "UnitTest", "opengl32", "FreeImage" }, nil, { "USE_DEBUG_FONT" } )
+DefineSample( "CrossPlatform", { "../Samples/CrossPlatform/CrossPlatform.cpp" }, { "UnitTest", "Renderer-OpenGL_DebugFont", "GWEN-Static", "FreeImage", "opengl32" }, nil, { "USE_DEBUG_FONT" } )
 
 DefineSample( "SFML", { "../Samples/SFML/SFML.cpp" }, SFML_LIBS, SFML_LIBS_D )
 DefineSample( "Allegro", { "../Samples/Allegro/AllegroSample.cpp" }, ALLEGRO_LIBS, ALLEGRO_LIBS_D )
 
 if ( os.get() == "windows" ) then
 
-	DefineSample( "Direct2D", { "../Samples/Direct2D/Direct2DSample.cpp" }, { "Renderer-Direct2D", "GWEN Static", "UnitTest", "d2d1", "dwrite", "windowscodecs" } )
-	DefineSample( "DirectX9", { "../Samples/Direct3D/Direct3DSample.cpp" }, { "Renderer-DirectX9", "GWEN Static", "UnitTest" } )
-	DefineSample( "WindowsGDI", { "../Samples/WindowsGDI/WindowsGDI.cpp" }, { "Renderer-GDI", "GWEN Static", "UnitTest" } )
-	DefineSample( "OpenGL", { "../Samples/OpenGL/OpenGLSample.cpp" }, { "Renderer-OpenGL", "GWEN Static", "UnitTest", "opengl32", "FreeImage" } )
-	DefineSample( "OpenGL_DebugFont", { "../Samples/OpenGL/OpenGLSample.cpp" }, { "Renderer-OpenGL_DebugFont", "GWEN Static", "UnitTest", "opengl32", "FreeImage" }, nil, { "USE_DEBUG_FONT" } )
+	DefineSample( "Direct2D", { "../Samples/Direct2D/Direct2DSample.cpp" }, { "UnitTest", "Renderer-Direct2D", "GWEN-Static", "d2d1", "dwrite", "windowscodecs" } )
+	DefineSample( "DirectX9", { "../Samples/Direct3D/Direct3DSample.cpp" }, { "UnitTest", "Renderer-DirectX9", "GWEN-Static" } )
+	DefineSample( "WindowsGDI", { "../Samples/WindowsGDI/WindowsGDI.cpp" }, { "UnitTest", "Renderer-GDI", "GWEN-Static" } )
+	DefineSample( "OpenGL", { "../Samples/OpenGL/OpenGLSample.cpp" }, { "UnitTest", "Renderer-OpenGL", "GWEN-Static", "FreeImage", "opengl32" } )
+	DefineSample( "OpenGL_DebugFont", { "../Samples/OpenGL/OpenGLSample.cpp" }, { "UnitTest", "Renderer-OpenGL_DebugFont", "GWEN-Static", "FreeImage", "opengl32" }, nil, { "USE_DEBUG_FONT" } )
 
 end
-
 

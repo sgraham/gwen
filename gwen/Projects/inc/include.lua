@@ -12,7 +12,7 @@ function DefineRenderer( name, filetable )
 		targetname( "GWEN-Renderer-"..name )
 		
 	configuration( "Debug" )
-		targetname( "GWEN-Renderer-"..name )
+		targetname( "GWEND-Renderer-"..name )
 
 end
 
@@ -37,3 +37,4 @@ function DefineSample( name, filetable, linktable, linktabled, definestable )
 		links( linktabled )
 
 end
+
