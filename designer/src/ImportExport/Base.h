@@ -20,7 +20,7 @@ namespace Gwen
 				virtual Gwen::String Name() = 0;
 
 				virtual bool CanImport() = 0;
-				virtual void Import( const Gwen::String& strFilename ) = 0;
+				virtual void Import( Gwen::Controls::Base* pRoot, const Gwen::String& strFilename ) = 0;
 
 				virtual bool CanExport() = 0;
 				virtual void Export( Gwen::Controls::Base* pRoot, const Gwen::String& strFilename ) = 0;

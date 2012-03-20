@@ -17,6 +17,7 @@ class Document : public Controls::Base
 
 		virtual void DoSaveAs( ImportExport::Base* exporter );
 		virtual void DoSave( ImportExport::Base* exporter );
+		virtual void LoadFromFile( const Gwen::String& str, ImportExport::Base* exporter );
 		
 
 	protected:

@@ -31,6 +31,7 @@ void DesignerBase::CreateMenu()
 
 		pRoot->GetMenu()->AddItem( "Open", "img/menu/open.png", "Ctrl + O" )->SetAction( this, &ThisClass::OpenDocument );
 		pRoot->GetMenu()->AddItem( "Save", "img/menu/save.png", "Ctrl + S" )->SetAction( this, &ThisClass::SaveDocument );
+		pRoot->GetMenu()->AddItem( "Save As", "img/menu/save.png", "Ctrl + Shift + S" )->SetAction( this, &ThisClass::SaveAsDocument );
 
 		pRoot->GetMenu()->AddItem( "Close", "img/menu/close.png" )->SetAction( this, &ThisClass::CloseDocument );
 	}
@@ -82,8 +83,17 @@ void DesignerBase::CloseDocument()
 
 void DesignerBase::OpenDocument()
 {
-	//Document* doc = CurrentDocument();
-	//if ( !doc ) return;
+	Gwen::Dialogs::FileOpen( true, "", "", "Gwen Designer File|*.gwen", this, &ThisClass::DoOpenDocument );
+}
+
+void DesignerBase::DoOpenDocument( Event::Info info )
+{
+	Controls::TabButton* pButton = m_DocumentHolder->AddPage( L"Untitled Design" );
+	pButton->SetImage( "img/document_normal.png" );
+
+	Document* doc = new Document( pButton->GetPage(), "Document" );
+	doc->Initialize( pButton );
+	doc->LoadFromFile( info.String.Get(), ImportExport::Base::Find( "Designer" ) );
 }
 
 void DesignerBase::SaveDocument()
@@ -92,6 +102,14 @@ void DesignerBase::SaveDocument()
 	if ( !doc ) return;
 
 	doc->DoSave( ImportExport::Base::Find( "Designer" ) );
+}
+
+void DesignerBase::SaveAsDocument()
+{
+	Document* doc = CurrentDocument();
+	if ( !doc ) return;
+
+	doc->DoSaveAs( ImportExport::Base::Find( "Designer" ) );
 }
 
 Document* DesignerBase::CurrentDocument()

@@ -29,7 +29,10 @@ class DesignerBase : public Controls::Base
 		void NewDocument();
 		void CloseDocument();
 		void OpenDocument();
+		void DoOpenDocument( Event::Info info );
 		void SaveDocument();
+		void SaveAsDocument();
+		
 
 		Document* CurrentDocument();
 

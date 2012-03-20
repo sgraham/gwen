@@ -102,3 +102,8 @@ void Document::DoSaveAs( ImportExport::Base* exporter )
 
 	Gwen::Dialogs::FileSave( true, m_strFilename, "", "Gwen Designer File|*.gwen", this, &ThisClass::DoSaveFromDialog );
 }
+
+void Document::LoadFromFile( const Gwen::String& str, ImportExport::Base* exporter )
+{
+	exporter->Import( m_pCanvas, str );
+}

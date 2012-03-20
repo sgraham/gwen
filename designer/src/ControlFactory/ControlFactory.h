@@ -45,7 +45,9 @@ namespace ControlFactory
 	};
 	
 	typedef std::list< ControlFactory::Base* > List;
+
 	List& GetList();
+	ControlFactory::Base* Find( const Gwen::String& name );
 }
 
 #define GWEN_CONTROL_FACTORY_CONSTRUCTOR( ThisName, BaseName )\

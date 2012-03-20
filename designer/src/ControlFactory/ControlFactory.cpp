@@ -9,6 +9,19 @@ namespace ControlFactory
 		return list;
 	}
 
+	ControlFactory::Base* Find( const Gwen::String& name )
+	{
+		for ( ControlFactory::List::iterator it = ControlFactory::GetList().begin(); it != ControlFactory::GetList().end(); ++it )
+		{
+			if ( (*it)->Name() == name )
+			{
+				return *it;
+			}
+		}
+
+		return NULL;
+	}
+
 	Base::Base()
 	{
 		GetList().push_back( this );
@@ -49,7 +62,14 @@ namespace ControlFactory
 	void Base::SetControlValue( Gwen::Controls::Base* ctrl, const Gwen::String& name, const Gwen::UnicodeString& str )
 	{
 		Property* pProp = GetProperty( name );
-		if ( !pProp ) return;
+		
+		if ( !pProp )
+		{
+			Base* pBase = GetBaseFactory();
+			if ( !pBase ) return;
+
+			return pBase->SetControlValue( ctrl, name, str );
+		}
 
 		pProp->SetValue( ctrl, str );
 	}

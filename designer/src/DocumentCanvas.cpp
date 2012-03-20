@@ -52,8 +52,6 @@ bool DocumentCanvas::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackag
 		pControl->UserData.Set( "ControlFactory", pControlFactory );
 		onChildAdded.Call( this, Event::Information( pControl ) );
 
-		ControlFactory::Base* pCF = pControl->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
-
 		return true;
 	}
 

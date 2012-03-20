@@ -12,12 +12,13 @@ class DesignerFormat : public Gwen::ImportExport::Base
 		virtual Gwen::String Name(){ return "Designer"; }
 
 		virtual bool CanImport(){ return true; }
-		virtual void Import( const Gwen::String& strFilename );
+		virtual void Import( Gwen::Controls::Base* pRoot, const Gwen::String& strFilename );
 
 		virtual bool CanExport(){ return true; }
 		virtual void Export( Gwen::Controls::Base* pRoot, const Gwen::String& strFilename );
 
-		void AddToTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree );
+		void ExportToTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree );
+		void ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree );
 
 };
 
@@ -29,44 +30,85 @@ DesignerFormat::DesignerFormat()
 	
 }
 
-void DesignerFormat::Import( const Gwen::String& strFilename )
+void DesignerFormat::Import( Gwen::Controls::Base* pRoot, const Gwen::String& strFilename )
 {
-	
+	Bootil::BString strContents;
+
+	if ( !Bootil::File::Read( strFilename, strContents ) )
+		return;
+
+	Bootil::Data::Tree tree;
+	Bootil::Data::Json::Import( tree, strContents );
+
+	ImportFromTree( pRoot, tree );
+	//Debug::Msg( "%s\n", strContents.c_str() );
+
+}
+
+void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree )
+{
+
+	if ( tree.HasChild( "Children" ) )
+	{
+		Bootil::Data::Tree& ChildrenObject = tree.GetChild( "Children" );
+
+		BOOTIL_FOREACH( c, ChildrenObject.Children(), Bootil::Data::Tree::List )
+		{
+			Bootil::BString strType = c->GetValue( "Type" );
+
+			ControlFactory::Base* pFactory = ControlFactory::Find( strType );
+			if ( !pFactory ) continue;
+
+			Gwen::Controls::Base* pControl = pFactory->CreateInstance( pRoot );
+			if ( !pControl ) continue;
+
+			pControl->SetMouseInputEnabled( true );
+			pControl->UserData.Set( "ControlFactory", pFactory );
+
+			if ( c->HasChild( "Properties" ) )
+			{
+				Bootil::Data::Tree& Properties = c->GetChild( "Properties" );
+				BOOTIL_FOREACH( p, Properties.Children(), Bootil::Data::Tree::List )
+				{
+					pFactory->SetControlValue( pControl, p->GetKey(), Bootil::String::Convert::ToWide( p->GetValue() ) );
+				}
+			}
+		}
+	}
 }
 
 void DesignerFormat::Export( Gwen::Controls::Base* pRoot, const Gwen::String& strFilename )
 {
 	Bootil::Data::Tree tree;
 
-	ControlList list = ImportExport::Tools::GetExportableChildren( pRoot );
-	if ( !list.list.empty() )
-	{
-		BOOTIL_FOREACH( a, list.list, ControlList::List )
-		{
-			AddToTree( *a, tree );
-		}
-	}
+	ExportToTree( pRoot, tree );
 
 	Bootil::BString strOutput;
 	if ( Bootil::Data::Json::Export( tree, strOutput, true ) )
 	{
-		Debug::Msg( "JSON!\n%s\n", strOutput.c_str() );
 		Bootil::File::Write( strFilename, strOutput );
 	}
-
-	Debug::Msg( "DEsigner Format Exporting.. %s\n", strFilename.c_str() );
 }
 
-void DesignerFormat::AddToTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree )
+void DesignerFormat::ExportToTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree )
 {
-	Bootil::Data::Tree& me = tree.AddChild();
+	Bootil::Data::Tree* me = &tree;
 
+	if ( pRoot->GetTypeName() == "DocumentCanvas" )
 	{
-		me.SetChild( "Type", pRoot->GetTypeName() );
+		
+	}
+	else
+	{
+		me = &tree.AddChild();
+		me->SetChild( "Type", pRoot->GetTypeName() );
 
+		//
+		// Set properties from the control factory
+		//
 		if ( pRoot->UserData.Exists( "ControlFactory" ) )
 		{
-			Bootil::Data::Tree& props = me.AddChild( "properties" );
+			Bootil::Data::Tree& props = me->AddChild( "Properties" );
 			ControlFactory::Base* pCF = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
 			while ( pCF )
 			{
@@ -86,13 +128,13 @@ void DesignerFormat::AddToTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree&
 
 	if ( !list.list.empty() )
 	{
-		Bootil::Data::Tree& children = me.AddChild( "Children" );
+		Bootil::Data::Tree& children = me->AddChild( "Children" );
 
 		ControlList::List::iterator it = list.list.begin();
 		ControlList::List::iterator itEnd = list.list.end();
 		while( it != itEnd )
 		{
-			AddToTree( *it, children );
+			ExportToTree( *it, children );
 			++it;
 		}
 	}
