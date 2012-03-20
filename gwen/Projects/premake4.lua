@@ -17,6 +17,8 @@ solution "GWEN"
 	if ( _ACTION == "vs2010" or _ACTION=="vs2008" ) then
 		buildoptions { "/MP"  }
 	end 
+	
+	
 
 configuration "Release"
 	defines { "NDEBUG" }
@@ -26,41 +28,26 @@ configuration "Release"
 configuration "Debug"
 	defines { "_DEBUG" }
 	includedirs { "../include/" }
+	targetextension( "d" )
 
 project "GWEN-DLL"
 	defines { "GWEN_COMPILE_DLL" }
 	files { "../src/**.*", "../include/Gwen/**.*" }
 	kind "SharedLib"
-	
-	configuration "Release"
-		targetname( "gwen" )
-		
-	configuration "Debug"
-		targetname( "gwend" )
+	targetname( "gwen" )
 
 project "GWEN-Static"
 	defines { "GWEN_COMPILE_STATIC" }
 	files { "../src/**.*", "../include/Gwen/**.*" }
 	flags { "Symbols" }
 	kind "StaticLib"
-	
-	configuration "Release"
-		targetname( "gwen_static" )
-		
-	configuration "Debug"
-		targetname( "gwend_static" )
+	targetname( "gwen_static" )
 		
 project "UnitTest"
 	files { "../UnitTest/**.*" }
 	flags { "Symbols" }
 	kind "StaticLib"
-	
-	configuration "Release"
-		targetname( "unittest" )
-		
-	configuration "Debug"
-		targetname( "unittestd" )
-		
+	targetname( "unittest" )		
 
 --
 -- Renderers
@@ -96,3 +83,8 @@ if ( os.get() == "windows" ) then
 
 end
 
+
+project "ControlFactory"
+	files { "../Util/ControlFactory/**.*" }
+	kind "StaticLib"
+	targetname( "controlfactory" )

@@ -1,5 +1,5 @@
 #include "DocumentCanvas.h"
-#include "ControlFactory/ControlFactory.h"
+#include "Gwen/Util/ControlFactory.h"
 #include "SelectionLayer.h"
 
 GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )

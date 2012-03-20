@@ -1,6 +1,6 @@
 #include "Hierarchy.h"
 #include "DocumentCanvas.h"
-#include "ControlFactory/ControlFactory.h"
+#include "Gwen/Util/ControlFactory.h"
 
 GWEN_CONTROL_CONSTRUCTOR( Hierarchy )
 {

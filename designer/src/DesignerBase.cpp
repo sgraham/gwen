@@ -44,8 +44,8 @@ void DesignerBase::CreateToolBar()
 
 	pStrip->Add( "New Document", "img/menu/new.png" )->onPress.Add( this, &ThisClass::NewDocument );
 
-	//pStrip->Add( "Open", "img/menu/open.png" )->onPress.Add( this, &ThisClass::OpenDocument );
-	//pStrip->Add( "Save", "img/menu/save.png" )->onPress.Add( this, &ThisClass::SaveDocument );
+	pStrip->Add( "Open", "img/menu/open.png" )->onPress.Add( this, &ThisClass::OpenDocument );
+	pStrip->Add( "Save", "img/menu/save.png" )->onPress.Add( this, &ThisClass::SaveDocument );
 }
 
 void DesignerBase::CreateControlToolbox()
@@ -88,12 +88,14 @@ void DesignerBase::OpenDocument()
 
 void DesignerBase::DoOpenDocument( Event::Info info )
 {
-	Controls::TabButton* pButton = m_DocumentHolder->AddPage( L"Untitled Design" );
+	Controls::TabButton* pButton = m_DocumentHolder->AddPage( L"Loaded" );
 	pButton->SetImage( "img/document_normal.png" );
 
 	Document* doc = new Document( pButton->GetPage(), "Document" );
 	doc->Initialize( pButton );
 	doc->LoadFromFile( info.String.Get(), ImportExport::Base::Find( "Designer" ) );
+
+	pButton->OnPress();
 }
 
 void DesignerBase::SaveDocument()

@@ -1,6 +1,6 @@
 
 #include "ControlToolbox.h"
-#include "ControlFactory/ControlFactory.h"
+#include "Gwen/Util/ControlFactory.h"
 
 GWEN_CONTROL_CONSTRUCTOR( ControlToolbox )
 {
