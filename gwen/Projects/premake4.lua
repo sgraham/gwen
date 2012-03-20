@@ -88,3 +88,8 @@ project "ControlFactory"
 	files { "../Util/ControlFactory/**.*" }
 	kind "StaticLib"
 	targetname( "controlfactory" )
+	
+project "ImportExport"
+	files { "../Util/ImportExport/**.*" }
+	kind "StaticLib"
+	targetname( "importexport" )

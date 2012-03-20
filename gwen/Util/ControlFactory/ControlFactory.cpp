@@ -6,6 +6,10 @@ namespace ControlFactory
 
 	void InitializeControls()
 	{
+		//
+		// This sucks, but I don't think it's possible to get the factory method working
+		// inside a static lib without some shady unportable compiler capers
+		//
 		DECLARE_GWEN_CONTROL_FACTORY( Label_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( TextBox_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( CheckBox_Factory );

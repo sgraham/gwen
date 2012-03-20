@@ -41,3 +41,13 @@ namespace Gwen
 		}
 	}
 }
+
+#define GWEN_IMPORTEXPORT( name )\
+void GWENIMPORTEXPORT_##name()\
+{\
+	static name my_instance;\
+}
+
+#define DECLARE_GWEN_IMPORTEXPORT( name )\
+void GWENIMPORTEXPORT_##name();\
+GWENIMPORTEXPORT_##name();

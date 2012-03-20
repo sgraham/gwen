@@ -1,12 +1,25 @@
-#include "Base.h"
+#include "Gwen/Util/ImportExport.h"
 
 using namespace Gwen;
 using namespace ImportExport;
+
+void InitializeFormats()
+{
+	DECLARE_GWEN_IMPORTEXPORT( DesignerFormat );
+}
 
 
 ImportExport::Base::List & ImportExport::Base::GetList()
 {
 	static ImportExport::Base::List list;
+	static bool Initialized = false;
+
+	if ( !Initialized )
+	{
+		Initialized = true;
+		InitializeFormats();
+	}
+
 	return list;
 }
 

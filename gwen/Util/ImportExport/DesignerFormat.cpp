@@ -1,5 +1,5 @@
 
-#include "ImportExport/Base.h"
+#include "Gwen/Util/ImportExport.h"
 #include "Bootil/Bootil.h"
 
 
@@ -22,7 +22,7 @@ class DesignerFormat : public Gwen::ImportExport::Base
 
 };
 
-DesignerFormat g_DesignerFormat;
+GWEN_IMPORTEXPORT( DesignerFormat );
 
 
 DesignerFormat::DesignerFormat()
@@ -41,8 +41,6 @@ void DesignerFormat::Import( Gwen::Controls::Base* pRoot, const Gwen::String& st
 	Bootil::Data::Json::Import( tree, strContents );
 
 	ImportFromTree( pRoot, tree );
-	//Debug::Msg( "%s\n", strContents.c_str() );
-
 }
 
 void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree )

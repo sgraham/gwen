@@ -20,4 +20,4 @@ configuration "Debug"
 project "Designer"
 	files { "../src/**.*" }
 	kind "WindowedApp"
-	links { "GWEN-Renderer-DirectX9", "gwen_static", "bootil_static", "controlfactory" }
+	links { "GWEN-Renderer-DirectX9", "gwen_static", "bootil_static", "controlfactory", "importexport" }
