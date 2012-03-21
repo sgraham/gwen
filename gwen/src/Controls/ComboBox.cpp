@@ -146,12 +146,15 @@ void ComboBox::SelectItemByName( const Gwen::String& name )
 {
 	Base::List& children = m_Menu->GetChildren();
 	Base::List::iterator it = children.begin();
-	if ( it != children.end() && ( ++it != children.end() ) )
+
+	while ( it != children.end() )
 	{
 		Base* pChild = *it;
 
 		if ( pChild->GetName() == name )
-			OnItemSelected( pChild );
+			return OnItemSelected( pChild );
+
+		++it;
 	}
 }
 
