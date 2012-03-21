@@ -18,9 +18,11 @@ class SelectionLayer : public Controls::Base
 
 	Event::Caller onSelectionChanged;
 	Event::Caller onPropertiesChanged;
+	Event::Caller onHierachyChanged;
 
 	protected:
 
+		void OnCageMoving( Event::Info info );
 		void OnControlDragged( Event::Info info );
 		void OnCagePressed( Event::Info info );
 

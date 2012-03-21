@@ -24,6 +24,8 @@ class Cage : public Controls::Button
 
 		Event::Caller	onMoved;
 
+		Event::Caller	onMoving;
+
 	protected:
 
 		bool				m_bDragged;

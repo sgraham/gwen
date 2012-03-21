@@ -24,11 +24,14 @@ class DocumentCanvas : public Controls::Base
 	Event::Caller	onChildRemoved;
 	Event::Caller	onSelectionChanged;
 	Event::Caller	onPropertiesChanged;
+	Event::Caller	onHierachyChanged;
 
 	protected:
 
 		void OnSelectionChanged( Event::Info info );
 		void OnPropertiesChanged( Event::Info info );
+		void OnHierachyChanged( Event::Info info );
+		
 
 		SelectionLayer*	m_SelectionLayer;
 };

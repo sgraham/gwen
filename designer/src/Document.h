@@ -24,6 +24,7 @@ class Document : public Controls::Base
 	protected:
 
 		void DoSaveFromDialog( Event::Info info );
+		void OnHierachyChanged( Event::Info info );
 
 		Controls::TabButton*	m_pTab;
 		DocumentCanvas*			m_pCanvas;

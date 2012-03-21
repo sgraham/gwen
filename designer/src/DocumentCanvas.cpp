@@ -9,6 +9,7 @@ GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )
 	m_SelectionLayer = new SelectionLayer( this );
 	m_SelectionLayer->onSelectionChanged.Add( this, &ThisClass::OnSelectionChanged );
 	m_SelectionLayer->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
+	m_SelectionLayer->onHierachyChanged.Add( this, &ThisClass::OnHierachyChanged );
 
 	ControlFactory::Base* pControlFactory = Gwen::ControlFactory::Find( "DesignerCanvas" );
 	UserData.Set( "ControlFactory", pControlFactory );
@@ -78,4 +79,9 @@ void DocumentCanvas::OnSelectionChanged( Event::Info info )
 void DocumentCanvas::OnPropertiesChanged( Event::Info info )
 {
 	onPropertiesChanged.Call( this, info );
+}
+
+void DocumentCanvas::OnHierachyChanged( Event::Info info )
+{
+	onHierachyChanged.Call( this, info );
 }

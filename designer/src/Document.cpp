@@ -49,6 +49,7 @@ GWEN_CONTROL_CONSTRUCTOR( Document )
 	{
 		m_pCanvas = new DocumentCanvas( pInner );
 		m_pCanvas->Dock( Pos::Fill );
+		m_pCanvas->onHierachyChanged.Add( this, &ThisClass::OnHierachyChanged );
 	}
 
 
@@ -105,5 +106,10 @@ void Document::LoadFromFile( const Gwen::String& str, ImportExport::Base* export
 {
 	exporter->Import( m_pCanvas, str );
 
+	m_pHierarchy->CompleteRefresh();
+}
+
+void Document::OnHierachyChanged( Event::Info info )
+{
 	m_pHierarchy->CompleteRefresh();
 }

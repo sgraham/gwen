@@ -61,6 +61,27 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 {
 	if ( !IsDepressed() ) return;
 
+	Controls::Base*	pControlParent = m_Control->GetParent();
+
+	//
+	// This event is used by the SelectionLayer to scan
+	// and change the parent - if appropriate.
+	//
+	{
+		Event::Information info;
+
+		info.Point = Point( x, y );
+		onMoving.Call( this, info );
+	}
+
+	//
+	// If the parent changed then fix up the drag position
+	//
+	if ( pControlParent != m_Control->GetParent() )
+	{
+		m_DragPoint = m_Control->GetPos();
+	}
+
 	m_bDragged = true;
 
 	m_DragPoint += Point( deltaX, deltaY );
@@ -72,9 +93,13 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 
 	pos -= m_Control->GetPos();
 
-	Event::Information info;
-	info.Point = pos;
-	onMoved.Call( this, info );
+	{
+		Event::Information info;
+		info.Point = pos;
+		onMoved.Call( this, info );
+	}
+
+
 }
 
 void Cage::OnPress()
