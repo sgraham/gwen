@@ -9,7 +9,9 @@ GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )
 	m_SelectionLayer = new SelectionLayer( this );
 	m_SelectionLayer->onSelectionChanged.Add( this, &ThisClass::OnSelectionChanged );
 	m_SelectionLayer->onPropertiesChanged.Add( this, &ThisClass::OnPropertiesChanged );
-	
+
+	ControlFactory::Base* pControlFactory = Gwen::ControlFactory::Find( "DesignerCanvas" );
+	UserData.Set( "ControlFactory", pControlFactory );
 }
 
 
@@ -26,23 +28,23 @@ void DocumentCanvas::PostLayout( Skin::Base* skin )
 
 bool DocumentCanvas::DragAndDrop_CanAcceptPackage( Gwen::DragAndDrop::Package* pPackage )
 {
-	return pPackage->name == "ControlButton";
+	return pPackage->name == "ControlSpawn";
 }
 
 bool DocumentCanvas::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackage, int x, int y )
 {
 	Gwen::Point pPos = CanvasPosToLocal( Gwen::Point( x, y ) );
 
-	m_SelectionLayer->SetMouseInputEnabled( false );
+	m_SelectionLayer->SetHidden( true );
 	Controls::Base* pDroppedOn = GetControlAt( pPos.x, pPos.y );
-	m_SelectionLayer->SetMouseInputEnabled( true );
+	m_SelectionLayer->SetHidden( false );
 
 	if ( !pDroppedOn ) pDroppedOn = this;
 
 	pPos = pDroppedOn->CanvasPosToLocal( Gwen::Point( x, y ) );
 	
 
-	if ( pPackage->name == "ControlButton" )
+	if ( pPackage->name == "ControlSpawn" )
 	{
 		ControlFactory::Base* pControlFactory = static_cast<ControlFactory::Base*>(pPackage->userdata);
 		Controls::Base* pControl = pControlFactory->CreateInstance( pDroppedOn );

@@ -26,9 +26,13 @@ namespace Gwen
 				list.push_back( pControl );
 			}
 
+			void Remove( TYPE pControl )
+			{
+				list.remove( pControl );
+			}
+
 			void Add( const List& list )
 			{
-				
 				for ( typename List::const_iterator it = list.begin(); it != list.end(); ++it )
 				{
 					Add( *it );

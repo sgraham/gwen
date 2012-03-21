@@ -40,11 +40,37 @@ void DesignerFormat::Import( Gwen::Controls::Base* pRoot, const Gwen::String& st
 	Bootil::Data::Tree tree;
 	Bootil::Data::Json::Import( tree, strContents );
 
-	ImportFromTree( pRoot, tree );
+	if ( !tree.HasChild( "Controls" ) ) return; // false
+
+	ImportFromTree( pRoot, tree.GetChild( "Controls" ) );
 }
 
 void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree )
 {
+	if ( pRoot->UserData.Exists( "ControlFactory" ) && tree.HasChild( "Properties" ) )
+	{
+		ControlFactory::Base* pFactory = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
+
+		Bootil::Data::Tree& Properties = tree.GetChild( "Properties" );
+		BOOTIL_FOREACH( p, Properties.Children(), Bootil::Data::Tree::List )
+		{
+			ControlFactory::Property* prop = pFactory->GetProperty( p->Name() );
+			if ( !prop ) continue;
+
+			if ( p->HasChildren() )
+			{
+				BOOTIL_FOREACH( pc, p->Children(), Bootil::Data::Tree::List )
+				{
+					prop->NumSet( pRoot, pc->Name(), pc->Var<float>()  );
+				}
+			}
+			else
+			{
+				pFactory->SetControlValue( pRoot, p->Name(), Bootil::String::Convert::ToWide( p->Value() ) );
+			}
+		}
+	}
+
 	if ( tree.HasChild( "Children" ) )
 	{
 		Bootil::Data::Tree& ChildrenObject = tree.GetChild( "Children" );
@@ -62,28 +88,9 @@ void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::
 			pControl->SetMouseInputEnabled( true );
 			pControl->UserData.Set( "ControlFactory", pFactory );
 
-			if ( c->HasChild( "Properties" ) )
-			{
-				Bootil::Data::Tree& Properties = c->GetChild( "Properties" );
-				BOOTIL_FOREACH( p, Properties.Children(), Bootil::Data::Tree::List )
-				{
-					ControlFactory::Property* prop = pFactory->GetProperty( p->Name() );
-					if ( !prop ) continue;
+			ImportFromTree( pControl, *c );
 
-					if ( p->HasChildren() )
-					{
-						BOOTIL_FOREACH( pc, p->Children(), Bootil::Data::Tree::List )
-						{
-							prop->NumSet( pControl, pc->Name(), pc->Var<float>()  );
-						}
-					}
-					else
-					{
-						pFactory->SetControlValue( pControl, p->Name(), Bootil::String::Convert::ToWide( p->Value() ) );
-					}
-					
-				}
-			}
+			
 		}
 	}
 }
@@ -107,44 +114,46 @@ void DesignerFormat::ExportToTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tr
 
 	if ( pRoot->GetTypeName() == "DocumentCanvas" )
 	{
-		
+		me = &tree.AddChild( "Controls" );
 	}
 	else
 	{
 		me = &tree.AddChild();
-		me->SetChild( "Type", pRoot->GetTypeName() );
+	}
+		
+	me->SetChild( "Type", pRoot->GetTypeName() );
 
-		//
-		// Set properties from the control factory
-		//
-		if ( pRoot->UserData.Exists( "ControlFactory" ) )
+	//
+	// Set properties from the control factory
+	//
+	if ( pRoot->UserData.Exists( "ControlFactory" ) )
+	{
+		Bootil::Data::Tree& props = me->AddChild( "Properties" );
+		ControlFactory::Base* pCF = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
+		while ( pCF )
 		{
-			Bootil::Data::Tree& props = me->AddChild( "Properties" );
-			ControlFactory::Base* pCF = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
-			while ( pCF )
+			ControlFactory::Property::List::const_iterator it = pCF->Properties().begin();
+			ControlFactory::Property::List::const_iterator itEnd = pCF->Properties().end();
+			for ( it; it != itEnd; ++it )
 			{
-				ControlFactory::Property::List::const_iterator it = pCF->Properties().begin();
-				ControlFactory::Property::List::const_iterator itEnd = pCF->Properties().end();
-				for ( it; it != itEnd; ++it )
+				if ( (*it)->NumCount() > 0 )
 				{
-					if ( (*it)->NumCount() > 0 )
+					Bootil::Data::Tree& prop = props.AddChild( (*it)->Name() );
+					for (int i=0; i<(*it)->NumCount(); i++)
 					{
-						Bootil::Data::Tree& prop = props.AddChild( (*it)->Name() );
-						for (int i=0; i<(*it)->NumCount(); i++)
-						{
-							prop.SetChildVar<float>( (*it)->NumName( i ), (*it)->NumGet( pRoot, i ) );
-						}
-
-						continue;
+						prop.SetChildVar<float>( (*it)->NumName( i ), (*it)->NumGet( pRoot, i ) );
 					}
 
-					props.SetChild( (*it)->Name(), Gwen::Utility::UnicodeToString( (*it)->GetValue( pRoot ) ).c_str() );
+					continue;
 				}
 
-				pCF = pCF->GetBaseFactory();
+				props.SetChild( (*it)->Name(), Gwen::Utility::UnicodeToString( (*it)->GetValue( pRoot ) ).c_str() );
 			}
+
+			pCF = pCF->GetBaseFactory();
 		}
 	}
+	
 	
 	ControlList list = ImportExport::Tools::GetExportableChildren( pRoot );
 

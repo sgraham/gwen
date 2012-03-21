@@ -28,12 +28,13 @@ namespace Gwen
 			public:
 				
 				typedef std::list<ImportExport::Base*> List;
-				static List& GetList();
-				static Base* Find( Gwen::String strName );
 
 			protected:
 
 		};
+
+		ImportExport::Base::List& GetList();
+		ImportExport::Base* Find( Gwen::String strName );
 
 		namespace Tools
 		{

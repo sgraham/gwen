@@ -21,7 +21,7 @@ void Cage::Render( Gwen::Skin::Base* skin )
 
 	skin->GetRender()->SetDrawColor( Color( 255, 0, 0, 255 ) );
 	skin->GetRender()->DrawLinedRect( bounds );
-	bounds.x -= 1; bounds.y -= 1; bounds.w += 2; bounds.h += 2; 
+	bounds.x += 1; bounds.y += 1; bounds.w -= 2; bounds.h -= 2; 
 	skin->GetRender()->DrawLinedRect( bounds );
 }
 
@@ -54,11 +54,14 @@ void Cage::SetDepressed( bool b )
 	BaseClass::SetDepressed( b );
 
 	m_DragPoint = m_Control->GetPos();
+	m_bDragged = false;
 }
 
 void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 {
 	if ( !IsDepressed() ) return;
+
+	m_bDragged = true;
 
 	m_DragPoint += Point( deltaX, deltaY );
 
@@ -72,4 +75,15 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	Event::Information info;
 	info.Point = pos;
 	onMoved.Call( this, info );
+}
+
+void Cage::OnPress()
+{
+	if ( IsToggle() )
+	{
+		SetToggleState( !GetToggleState() );
+	}
+
+	if ( !m_bDragged )
+		onPress.Call( this );
 }

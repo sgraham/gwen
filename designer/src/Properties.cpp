@@ -40,6 +40,9 @@ void Properties::OnCanvasSelectionChanged( Event::Info info )
 
 void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllowDifferent )
 {
+	if ( !pControl->UserData.Exists( "ControlFactory" ) )
+		return;
+
 	ControlFactory::Base* cf = pControl->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
 
 	//

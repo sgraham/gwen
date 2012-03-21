@@ -116,14 +116,39 @@ void ScrollControl::Render( Skin::Base* skin )
 #endif //0
 }
 
+bool ScrollControl::ContentsAreFill()
+{
+	if ( !m_InnerPanel )
+		return false;
+
+	for ( Base::List::iterator iter = m_InnerPanel->Children.begin(); iter != m_InnerPanel->Children.end(); ++iter )
+	{
+		Base* pChild = *iter;
+
+		if ( pChild->GetDock() != Pos::Fill )
+			return false;
+	}
+
+	return true;
+}
+
 void ScrollControl::UpdateScrollBars()
 { 
 	if ( !m_InnerPanel )
 		return;
 
+	if ( ContentsAreFill() )
+	{
+		m_VerticalScrollBar->SetHidden( true );
+		m_HorizontalScrollBar->SetHidden( true );
+		m_InnerPanel->SetSize( GetSize() );
+		m_InnerPanel->SetPos( 0, 0 );
+		return;
+	}
+
 	int childrenWidth = 0;
 	int childrenHeight = 0;
-	
+
 	//Get the max size of all our children together
 	for ( Base::List::iterator iter = m_InnerPanel->Children.begin(); iter != m_InnerPanel->Children.end(); ++iter )
 	{

@@ -32,12 +32,7 @@ void Hierarchy::UpdateNode( Controls::TreeNode* pNode, Controls::Base* pControl 
 {	
 	Controls::TreeNode* pChildNode = NULL;
 
-	if ( m_pCanvas == pControl )
-	{
-		pChildNode = pNode->AddNode( "Canvas" );
-		pChildNode->SetImage( "img/document_normal.png" );
-	}
-	else if ( !pControl->UserData.Exists( "ControlFactory" ) )
+	if ( !pControl->UserData.Exists( "ControlFactory" ) )
 	{
 		pChildNode = pNode;
 	}

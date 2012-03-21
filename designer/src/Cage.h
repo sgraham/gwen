@@ -18,10 +18,15 @@ class Cage : public Controls::Button
 		virtual void OnMouseMoved( int x, int y, int deltaX, int deltaY );
 		virtual void SetDepressed( bool b );
 
+		virtual void OnPress();
+
+		virtual Controls::Base* Target() { return m_Control; }
+
 		Event::Caller	onMoved;
 
 	protected:
 
+		bool				m_bDragged;
 		Controls::Base*		m_Control;
 		int					m_iBorder;
 

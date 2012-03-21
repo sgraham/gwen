@@ -14,6 +14,7 @@ class SelectionLayer : public Controls::Base
 
 	virtual void ClearSelection();
 	virtual void AddSelection( Controls::Base* pControl );
+	virtual void RemoveSelection(  Controls::Base* pControl );
 
 	Event::Caller onSelectionChanged;
 	Event::Caller onPropertiesChanged;
@@ -21,6 +22,7 @@ class SelectionLayer : public Controls::Base
 	protected:
 
 		void OnControlDragged( Event::Info info );
+		void OnCagePressed( Event::Info info );
 
 		ControlList	m_Selected;
 

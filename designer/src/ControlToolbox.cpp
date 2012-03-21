@@ -24,7 +24,7 @@ GWEN_CONTROL_CONSTRUCTOR( ControlToolbox )
 		//
 		// Make drag and droppable. Pass the ControlFactory as the userdata
 		//
-		pButton->DragAndDrop_SetPackage( true, "ControlButton", pControlFactory );
+		pButton->DragAndDrop_SetPackage( true, "ControlSpawn", pControlFactory );
 	}
 
 }

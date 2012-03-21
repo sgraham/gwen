@@ -16,9 +16,11 @@ class Hierarchy : public Controls::Base
 
 		void SelectNodeRepresentingControl( Controls::Base* pControl, Controls::TreeNode* pNode = NULL );
 
+		void CompleteRefresh();
+
 	protected:
 
-		void CompleteRefresh();
+		
 		void UpdateNode( Controls::TreeNode* pNode, Controls::Base* pControls );
 
 		void OnCanvasChildAdded( Event::Info info );

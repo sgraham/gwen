@@ -8,6 +8,7 @@
 using namespace Gwen;
 
 class DocumentCanvas;
+class Hierarchy;
 
 class Document : public Controls::Base 
 {
@@ -26,6 +27,7 @@ class Document : public Controls::Base
 
 		Controls::TabButton*	m_pTab;
 		DocumentCanvas*			m_pCanvas;
+		Hierarchy*				m_pHierarchy;
 
 		Gwen::String			m_strFilename;
 

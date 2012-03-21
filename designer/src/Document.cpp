@@ -7,7 +7,6 @@ class DocumentInner : public Gwen::Controls::ScrollControl
 {
 	GWEN_CONTROL_INLINE( DocumentInner, Gwen::Controls::ScrollControl )
 	{
-
 	}
 
 	void Render( Gwen::Skin::Base* skin )
@@ -49,22 +48,21 @@ GWEN_CONTROL_CONSTRUCTOR( Document )
 	// The actual canvas onto which we drop controls
 	{
 		m_pCanvas = new DocumentCanvas( pInner );
-		m_pCanvas->SetSize( 400, 300 );
-		m_pCanvas->SetPos( 5, 5 );
+		m_pCanvas->Dock( Pos::Fill );
 	}
 
 
 	// The controls on the right
 	{
-		Hierarchy* pHierarchy = new Hierarchy( pRightSplitter );
-		pHierarchy->WatchCanvas( m_pCanvas );
-		pHierarchy->Dock( Pos::Fill );
+		m_pHierarchy = new Hierarchy( pRightSplitter );
+		m_pHierarchy->WatchCanvas( m_pCanvas );
+		m_pHierarchy->Dock( Pos::Fill );
 
 		Properties* pProperties = new Properties( pRightSplitter );
 		pProperties->WatchCanvas( m_pCanvas );
 		pProperties->Dock( Pos::Fill );
 
-		pRightSplitter->SetPanels( pHierarchy, pProperties );
+		pRightSplitter->SetPanels( m_pHierarchy, pProperties );
 	}
 
 }
@@ -106,4 +104,6 @@ void Document::DoSaveAs( ImportExport::Base* exporter )
 void Document::LoadFromFile( const Gwen::String& str, ImportExport::Base* exporter )
 {
 	exporter->Import( m_pCanvas, str );
+
+	m_pHierarchy->CompleteRefresh();
 }

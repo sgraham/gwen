@@ -9,7 +9,7 @@ void InitializeFormats()
 }
 
 
-ImportExport::Base::List & ImportExport::Base::GetList()
+ImportExport::Base::List & ImportExport::GetList()
 {
 	static ImportExport::Base::List list;
 	static bool Initialized = false;
@@ -23,7 +23,7 @@ ImportExport::Base::List & ImportExport::Base::GetList()
 	return list;
 }
 
-ImportExport::Base* ImportExport::Base::Find( Gwen::String strName )
+ImportExport::Base* ImportExport::Find( Gwen::String strName )
 {
 	ImportExport::Base::List::iterator it = GetList().begin();
 	ImportExport::Base::List::iterator itEnd = GetList().end();

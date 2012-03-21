@@ -93,7 +93,7 @@ void DesignerBase::DoOpenDocument( Event::Info info )
 
 	Document* doc = new Document( pButton->GetPage(), "Document" );
 	doc->Initialize( pButton );
-	doc->LoadFromFile( info.String.Get(), ImportExport::Base::Find( "Designer" ) );
+	doc->LoadFromFile( info.String.Get(), ImportExport::Find( "Designer" ) );
 
 	pButton->OnPress();
 }
@@ -103,7 +103,7 @@ void DesignerBase::SaveDocument()
 	Document* doc = CurrentDocument();
 	if ( !doc ) return;
 
-	doc->DoSave( ImportExport::Base::Find( "Designer" ) );
+	doc->DoSave( ImportExport::Find( "Designer" ) );
 }
 
 void DesignerBase::SaveAsDocument()
@@ -111,7 +111,7 @@ void DesignerBase::SaveAsDocument()
 	Document* doc = CurrentDocument();
 	if ( !doc ) return;
 
-	doc->DoSaveAs( ImportExport::Base::Find( "Designer" ) );
+	doc->DoSaveAs( ImportExport::Find( "Designer" ) );
 }
 
 Document* DesignerBase::CurrentDocument()
