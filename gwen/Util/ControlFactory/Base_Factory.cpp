@@ -36,6 +36,26 @@ namespace Property
 			if ( swscanf( str.c_str(), L"%i %i", &x, &y ) != 2 ) return;
 			ctrl->SetPos( x, y );
 		}
+
+		int	NumCount(){ return 2; };
+
+		Gwen::String NumName( int i )
+		{ 
+			if ( i == 0 ) return "x";
+			return "y";
+		};
+
+		float NumGet( Controls::Base* ctrl, int i )
+		{ 
+			if ( i == 0 ) return ctrl->X();
+			return ctrl->Y();
+		};
+
+		void NumSet( Controls::Base* ctrl, int i, float f )
+		{
+			if ( i == 0 )	ctrl->SetPos( f, ctrl->Y() );
+			else			ctrl->SetPos( ctrl->X(), f );
+		};
 	};
 
 	class Size: public Gwen::ControlFactory::Property 
@@ -54,18 +74,24 @@ namespace Property
 			ctrl->SetSize( w, h );
 		}
 
-		int	NumberCount(){ return 2; };
+		int	NumCount(){ return 2; };
 
-		float GetNumber( Controls::Base* ctrl, int i )
+		Gwen::String NumName( int i )
 		{ 
-			if ( i == 0 ) return ctrl->X();
-			return ctrl->Y();
+			if ( i == 0 ) return "w";
+			return "h";
 		};
 
-		void SetNumber( Controls::Base* ctrl, int i, float f )
+		float NumGet( Controls::Base* ctrl, int i )
+		{ 
+			if ( i == 0 ) return ctrl->Width();
+			return ctrl->Height();
+		};
+
+		void NumSet( Controls::Base* ctrl, int i, float f )
 		{
-			if ( i == 0 ) return ctrl->SetPos( f, ctrl->Y() );
-			ctrl->SetPos( ctrl->X(), f );
+			if ( i == 0 )	ctrl->SetSize( f, ctrl->Height() );
+			else			ctrl->SetSize( ctrl->Width(), f );
 		};
 	};
 }

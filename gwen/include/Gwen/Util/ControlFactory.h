@@ -26,9 +26,10 @@ namespace Gwen
 			virtual Gwen::UnicodeString		GetValue( Gwen::Controls::Base* ctrl ) = 0;
 			virtual void					SetValue( Gwen::Controls::Base* ctrl, const Gwen::UnicodeString& str ) = 0;
 
-			virtual int						NumberCount(){ return 0; };
-			virtual float					GetNumber( Gwen::Controls::Base* ctrl, int i ){ return 0.0f; };
-			virtual void					SetNumber( Gwen::Controls::Base* ctrl, int i, float f ){; };
+			virtual int						NumCount(){ return 0; };
+			virtual Gwen::String			NumName( int i ){ return "unknown"; };
+			virtual float					NumGet( Gwen::Controls::Base* ctrl, int i ){ return 0.0f; };
+			virtual void					NumSet( Gwen::Controls::Base* ctrl, int i, float f ){; };
 		};
 
 		class Base

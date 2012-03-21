@@ -114,6 +114,17 @@ void DesignerFormat::ExportToTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tr
 				ControlFactory::Property::List::const_iterator itEnd = pCF->Properties().end();
 				for ( it; it != itEnd; ++it )
 				{
+					if ( (*it)->NumCount() > 0 )
+					{
+						Bootil::Data::Tree& prop = props.AddChild( (*it)->Name() );
+						for (int i=0; i<(*it)->NumCount(); i++)
+						{
+							prop.SetChildVar<float>( (*it)->NumName( i ), (*it)->NumGet( pRoot, i ) );
+						}
+
+						continue;
+					}
+
 					props.SetChild( (*it)->Name(), Gwen::Utility::UnicodeToString( (*it)->GetValue( pRoot ) ).c_str() );
 				}
 
