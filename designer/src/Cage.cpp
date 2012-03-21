@@ -62,6 +62,7 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	if ( !IsDepressed() ) return;
 
 	Controls::Base*	pControlParent = m_Control->GetParent();
+	Point pntRemainder = m_DragPoint - m_Control->GetPos();
 
 	//
 	// This event is used by the SelectionLayer to scan
@@ -79,7 +80,8 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 	//
 	if ( pControlParent != m_Control->GetParent() )
 	{
-		m_DragPoint = m_Control->GetPos();
+		m_DragPoint = m_Control->GetPos() + pntRemainder;
+
 	}
 
 	m_bDragged = true;

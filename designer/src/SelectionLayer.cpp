@@ -140,10 +140,11 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 		for ( ControlList::List::const_iterator it = m_Selected.list.begin(); it != m_Selected.list.end(); ++it )
 		{
 			(*it)->SetHidden( false );
+			if ( (*it) == GetParent() ) continue;
 
 			// If the panel we're dragging doesn't have the parent thats underneath
 			// then make it have it. Tweak positions so they're the same
-			if ( pCtrl != (*it)->GetParent() )
+			if ( pCtrl && pCtrl != (*it)->GetParent() )
 			{
 				Gwen::Point pPos = (*it)->LocalPosToCanvas();
 				(*it)->SetParent( pCtrl );
