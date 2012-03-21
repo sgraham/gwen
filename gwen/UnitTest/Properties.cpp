@@ -3,6 +3,7 @@
 #include "Gwen/Controls/PropertyTree.h"
 #include "Gwen/Controls/Property/ColorSelector.h"
 #include "Gwen/Controls/Property/Checkbox.h"
+#include "Gwen/Controls/Property/ComboBox.h"
 
 using namespace Gwen;
 
@@ -43,10 +44,24 @@ class Properties : public GUnit
 			{
 				Gwen::Controls::Properties* props = ptree->Add( L"Item Two" );
 				props->Add( L"More Items" );
-				props->Add( L"Bacon", new Gwen::Controls::Property::Checkbox( props ), L"1" );
+				props->Add( L"Checkbox", new Gwen::Controls::Property::Checkbox( props ), L"1" );
 				props->Add( L"To Fill" );
-				props->Add( L"Colour", new Gwen::Controls::Property::ColorSelector( props ), L"255 0 0" );
+				props->Add( L"ColorSelector", new Gwen::Controls::Property::ColorSelector( props ), L"255 0 0" );
 				props->Add( L"Out Here" );
+
+				// Combo Box Test
+				{
+					Gwen::Controls::Property::ComboBox* pCombo = new Gwen::Controls::Property::ComboBox( props );
+
+					pCombo->GetComboBox()->AddItem( L"Option One", "one" );
+					pCombo->GetComboBox()->AddItem( L"Number Two", "two" );
+					pCombo->GetComboBox()->AddItem( L"Door Three", "three" );
+					pCombo->GetComboBox()->AddItem( L"Four Legs", "four" );
+					pCombo->GetComboBox()->AddItem( L"Five Birds", "five" );
+
+					Gwen::Controls::PropertyRow* pRow = props->Add( L"ComboBox", pCombo, L"1" );
+					pRow->onChange.Add( this, &Properties::OnFirstNameChanged );
+				}
 			}
 
 			ptree->ExpandAll();

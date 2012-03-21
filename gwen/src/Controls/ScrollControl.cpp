@@ -116,7 +116,7 @@ void ScrollControl::Render( Skin::Base* skin )
 #endif //0
 }
 
-bool ScrollControl::ContentsAreFill()
+bool ScrollControl::ContentsAreDocked()
 {
 	if ( !m_InnerPanel )
 		return false;
@@ -125,7 +125,7 @@ bool ScrollControl::ContentsAreFill()
 	{
 		Base* pChild = *iter;
 
-		if ( pChild->GetDock() != Pos::Fill )
+		if ( pChild->GetDock() == Pos::None )
 			return false;
 	}
 
@@ -137,7 +137,7 @@ void ScrollControl::UpdateScrollBars()
 	if ( !m_InnerPanel )
 		return;
 
-	if ( ContentsAreFill() )
+	if ( ContentsAreDocked() )
 	{
 		m_VerticalScrollBar->SetHidden( true );
 		m_HorizontalScrollBar->SetHidden( true );

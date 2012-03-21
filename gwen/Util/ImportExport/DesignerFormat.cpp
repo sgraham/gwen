@@ -47,9 +47,12 @@ void DesignerFormat::Import( Gwen::Controls::Base* pRoot, const Gwen::String& st
 
 void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree )
 {
-	if ( pRoot->UserData.Exists( "ControlFactory" ) && tree.HasChild( "Properties" ) )
+	if ( tree.HasChild( "Properties" ) )
 	{
-		ControlFactory::Base* pFactory = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
+		ControlFactory::Base* pFactory = ControlFactory::Find( "Base" );
+		
+		if ( pRoot->UserData.Exists( "ControlFactory" ) )
+			pFactory = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
 
 		Bootil::Data::Tree& Properties = tree.GetChild( "Properties" );
 		BOOTIL_FOREACH( p, Properties.Children(), Bootil::Data::Tree::List )

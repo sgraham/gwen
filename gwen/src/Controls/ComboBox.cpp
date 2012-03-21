@@ -25,6 +25,11 @@ class GWEN_EXPORT DownArrow : public Controls::Base
 
 		void Render( Skin::Base* skin )
 		{
+			if ( !m_ComboBox->ShouldDrawBackground() )
+			{
+				return skin->DrawComboDownArrow( this, false, false, false, m_ComboBox->IsDisabled() );
+			}
+
 			skin->DrawComboDownArrow( this, m_ComboBox->IsHovered(), m_ComboBox->IsDepressed(), m_ComboBox->IsMenuOpen(), m_ComboBox->IsDisabled() );
 		}
 
@@ -75,6 +80,8 @@ MenuItem* ComboBox::AddItem( const UnicodeString& strLabel, const String& strNam
 
 void ComboBox::Render( Skin::Base* skin )
 {
+	if ( !ShouldDrawBackground() ) return;
+
 	skin->DrawComboBox( this, IsDepressed(), IsMenuOpen());
 }
 
@@ -83,6 +90,16 @@ void ComboBox::Layout( Skin::Base* skin )
 	m_Button->Position( Pos::Right | Pos::CenterV, 4, 0 );
 
 	BaseClass::Layout( skin );
+}
+
+void ComboBox::UpdateColours()
+{
+	if ( !ShouldDrawBackground() )
+	{
+		return SetTextColor( GetSkin()->Colors.Button.Normal );
+	}
+
+	BaseClass::UpdateColours();
 }
 
 void ComboBox::OnPress()
@@ -123,6 +140,19 @@ void ComboBox::OnItemSelected( Controls::Base* pControl )
 
 	Focus();
 	Invalidate();
+}
+
+void ComboBox::SelectItemByName( const Gwen::String& name )
+{
+	Base::List& children = m_Menu->GetChildren();
+	Base::List::iterator it = children.begin();
+	if ( it != children.end() && ( ++it != children.end() ) )
+	{
+		Base* pChild = *it;
+
+		if ( pChild->GetName() == name )
+			OnItemSelected( pChild );
+	}
 }
 
 void ComboBox::OnLostKeyboardFocus()

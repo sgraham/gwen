@@ -56,7 +56,7 @@ namespace Gwen
 
 			protected:
 
-				virtual bool ContentsAreFill();
+				virtual bool ContentsAreDocked();
 
 				bool m_bCanScrollH;
 				bool m_bCanScrollV;

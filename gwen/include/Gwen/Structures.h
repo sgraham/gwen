@@ -41,6 +41,7 @@ namespace Gwen
 
 	typedef std::wstring UnicodeString;
 	typedef std::string String;
+
 	typedef wchar_t UnicodeChar; // Portability??
 
 	struct GWEN_EXPORT Margin

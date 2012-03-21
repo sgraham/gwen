@@ -16,6 +16,7 @@
 #include "Gwen/Controls/Property/Folder.h"
 #include "Gwen/Controls/Property/File.h"
 #include "Gwen/Controls/Property/Text.h"
+#include "Gwen/Controls/Property/ComboBox.h"
 #include "Gwen/Controls/StatusBar.h"
 #include "Gwen/Controls/TabControl.h"
 #include "Gwen/Controls/Text.h"

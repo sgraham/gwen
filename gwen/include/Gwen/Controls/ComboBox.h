@@ -28,7 +28,9 @@ namespace Gwen
 
 				virtual void Render( Skin::Base* skin );
 				virtual void Layout( Skin::Base* skin );
+				virtual void UpdateColours();
 
+				virtual void SelectItemByName( const Gwen::String& name );
 				virtual Gwen::Controls::Label* GetSelectedItem();
 
 				virtual void OnPress();

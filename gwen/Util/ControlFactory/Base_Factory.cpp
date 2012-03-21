@@ -94,6 +94,48 @@ namespace Property
 			else			ctrl->SetSize( ctrl->Width(), f );
 		};
 	};
+
+	class Dock : public Gwen::ControlFactory::Property 
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( Dock, "How the control is to be docked" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			switch( ctrl->GetDock() )
+			{
+				case Pos::Left: return L"Left";
+				case Pos::Fill: return L"Fill";
+				case Pos::Right: return L"Right";
+				case Pos::Top: return L"Top";
+				case Pos::Bottom: return L"Bottom";
+			}
+
+			return L"None";
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			if ( str == L"Fill" ) ctrl->Dock( Pos::Fill );
+			if ( str == L"Left" ) ctrl->Dock( Pos::Left );
+			if ( str == L"Right" ) ctrl->Dock( Pos::Right );
+			if ( str == L"Top" ) ctrl->Dock( Pos::Top );
+			if ( str == L"Bottom" ) ctrl->Dock( Pos::Bottom );
+			if ( str == L"None" ) ctrl->Dock( Pos::None );
+		}
+
+		int	OptionNum(){ return 6; }
+
+		Gwen::UnicodeString	OptionGet( int i )
+		{ 
+			if ( i == 0 ) return L"None";
+			if ( i == 1 ) return L"Left";
+			if ( i == 2 ) return L"Right";
+			if ( i == 3 ) return L"Top";
+			if ( i == 4 ) return L"Bottom";
+
+			return L"Fill";
+		}
+	};
 }
 
 
@@ -103,6 +145,7 @@ class Base_Factory : public Gwen::ControlFactory::Base
 
 		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Base_Factory, Gwen::ControlFactory::Base )
 		{
+			AddProperty( new Property::Dock() );
 			AddProperty( new Property::Position() );
 			AddProperty( new Property::Size() );
 			AddProperty( new Property::ControlName() );

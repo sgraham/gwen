@@ -61,25 +61,45 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 		ControlFactory::Property::List::const_iterator itEnd = cf->Properties().end();
 		for ( it; it != itEnd; ++it )
 		{
+			Gwen::String strPropertyName = (*it)->Name();
+			Gwen::UnicodeString strValue = (*it)->GetValue( pControl );
+
 			//
 			// Add a property row to our control
 			//
-			Controls::PropertyRow* row = properties->Find( (*it)->Name() );
+			Controls::PropertyRow* row = properties->Find( strPropertyName );
 			if ( !row )
 			{
-				row = properties->Add( (*it)->Name(), (*it)->GetValue( pControl ) );
+				if ( (*it)->OptionNum() > 0 )
+				{
+					//row = properties->Add( strPropertyName, new Gwen::Controls::Property::Checkbox( properties ), strValue );
+
+					Gwen::Controls::Property::ComboBox* dd = new Gwen::Controls::Property::ComboBox( properties );
+
+					for ( int i=0; i<(*it)->OptionNum(); i++ )
+					{
+						dd->GetComboBox()->AddItem( (*it)->OptionGet(i), Gwen::Utility::UnicodeToString( (*it)->OptionGet(i) ) );
+					}
+
+					row = properties->Add( strPropertyName, dd, strValue );
+				}
+				else
+				{	
+					row = properties->Add( strPropertyName, strValue );
+				}
+
 				row->SetName( (*it)->Name() );
 				row->onChange.Add( this, &ThisClass::OnPropertyChanged );
 			}
 			else
 			{
-				if ( bAllowDifferent && row->GetProperty()->GetPropertyValue().GetUnicode() != (*it)->GetValue( pControl ) )
+				if ( bAllowDifferent && row->GetProperty()->GetPropertyValue().GetUnicode() != strValue )
 				{
 					row->GetProperty()->SetPropertyValue( "different" );
 				}
 				else 
 				{
-					row->GetProperty()->SetPropertyValue( (*it)->GetValue( pControl ) );
+					row->GetProperty()->SetPropertyValue( strValue );
 				}
 			}
 		}
