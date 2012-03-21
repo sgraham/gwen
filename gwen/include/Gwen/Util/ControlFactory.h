@@ -4,17 +4,18 @@
 #include "Gwen/Gwen.h"
 #include "ControlFactory.h"
 
-
-namespace ControlFactory
+namespace Gwen
 {
-	class Base;
-	typedef std::list< ControlFactory::Base* > List;
-
-	List& GetList();
-	ControlFactory::Base* Find( const Gwen::String& name );
-
-	class Property 
+	namespace ControlFactory
 	{
+		class Base;
+		typedef std::list< ControlFactory::Base* > List;
+
+		List& GetList();
+		ControlFactory::Base* Find( const Gwen::String& name );
+
+		class Property 
+		{
 		public:
 
 			typedef std::list<Property*> List;
@@ -24,10 +25,14 @@ namespace ControlFactory
 
 			virtual Gwen::UnicodeString		GetValue( Gwen::Controls::Base* ctrl ) = 0;
 			virtual void					SetValue( Gwen::Controls::Base* ctrl, const Gwen::UnicodeString& str ) = 0;
-	};
 
-	class Base
-	{
+			virtual int						NumberCount(){ return 0; };
+			virtual float					GetNumber( Gwen::Controls::Base* ctrl, int i ){ return 0.0f; };
+			virtual void					SetNumber( Gwen::Controls::Base* ctrl, int i, float f ){; };
+		};
+
+		class Base
+		{
 		public:
 
 			Base();
@@ -48,10 +53,11 @@ namespace ControlFactory
 		protected:
 
 			Property::List	m_Properties;
-	};
+		};
+
+	}
 
 }
-
 #define GWEN_CONTROL_FACTORY_CONSTRUCTOR( ThisName, BaseName )\
 	typedef BaseName BaseClass;\
 	typedef ThisName ThisClass;\
@@ -71,6 +77,3 @@ GWENCONTROLFACTORY##ThisName();
 	public:\
 	Gwen::String Name() { return #_name_; }\
 	Gwen::String Description() { return _description_; }
-
-
-class Label_Factory;

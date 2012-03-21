@@ -23,7 +23,7 @@ namespace Property
 	};
 }
 
-class Label_Factory : public ControlFactory::Base
+class Label_Factory : public Gwen::ControlFactory::Base
 {
 	public:
 

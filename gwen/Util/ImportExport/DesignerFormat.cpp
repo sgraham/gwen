@@ -52,7 +52,7 @@ void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::
 
 		BOOTIL_FOREACH( c, ChildrenObject.Children(), Bootil::Data::Tree::List )
 		{
-			Bootil::BString strType = c->GetValue( "Type" );
+			Bootil::BString strType = c->ChildValue( "Type" );
 
 			ControlFactory::Base* pFactory = ControlFactory::Find( strType );
 			if ( !pFactory ) continue;
@@ -68,7 +68,7 @@ void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::
 				Bootil::Data::Tree& Properties = c->GetChild( "Properties" );
 				BOOTIL_FOREACH( p, Properties.Children(), Bootil::Data::Tree::List )
 				{
-					pFactory->SetControlValue( pControl, p->GetKey(), Bootil::String::Convert::ToWide( p->GetValue() ) );
+					pFactory->SetControlValue( pControl, p->Name(), Bootil::String::Convert::ToWide( p->Value() ) );
 				}
 			}
 		}

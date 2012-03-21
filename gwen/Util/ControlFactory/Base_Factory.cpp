@@ -6,7 +6,7 @@ using namespace Gwen;
 
 namespace Property
 {
-	class ControlName : public ControlFactory::Property 
+	class ControlName : public Gwen::ControlFactory::Property 
 	{
 		GWEN_CONTROL_FACTORY_PROPERTY( ControlName, "The control's name" );
 
@@ -21,7 +21,7 @@ namespace Property
 		}
 	};
 
-	class Position : public ControlFactory::Property 
+	class Position : public Gwen::ControlFactory::Property 
 	{
 		GWEN_CONTROL_FACTORY_PROPERTY( Position, "Sets the position of the control" );
 
@@ -38,7 +38,7 @@ namespace Property
 		}
 	};
 
-	class Size: public ControlFactory::Property 
+	class Size: public Gwen::ControlFactory::Property 
 	{
 		GWEN_CONTROL_FACTORY_PROPERTY( Size, "The with and height of the control" );
 
@@ -53,15 +53,29 @@ namespace Property
 			if ( swscanf( str.c_str(), L"%i %i", &w, &h ) != 2 ) return;
 			ctrl->SetSize( w, h );
 		}
+
+		int	NumberCount(){ return 2; };
+
+		float GetNumber( Controls::Base* ctrl, int i )
+		{ 
+			if ( i == 0 ) return ctrl->X();
+			return ctrl->Y();
+		};
+
+		void SetNumber( Controls::Base* ctrl, int i, float f )
+		{
+			if ( i == 0 ) return ctrl->SetPos( f, ctrl->Y() );
+			ctrl->SetPos( ctrl->X(), f );
+		};
 	};
 }
 
 
-class Base_Factory : public ControlFactory::Base
+class Base_Factory : public Gwen::ControlFactory::Base
 {
 	public:
 
-		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Base_Factory, ControlFactory::Base )
+		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Base_Factory, Gwen::ControlFactory::Base )
 		{
 			AddProperty( new Property::Position() );
 			AddProperty( new Property::Size() );

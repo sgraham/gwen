@@ -1,6 +1,8 @@
 
 #include "Gwen/Util/ControlFactory.h"
 
+namespace Gwen 
+{
 namespace ControlFactory
 {
 
@@ -97,4 +99,5 @@ namespace ControlFactory
 
 		pProp->SetValue( ctrl, str );
 	}
+}
 }

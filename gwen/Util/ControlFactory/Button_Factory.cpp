@@ -2,11 +2,11 @@
 #include "Gwen/Util/ControlFactory.h"
 #include "Gwen/Controls.h"
 
-class Button_Factory : public ControlFactory::Base
+class Button_Factory : public Gwen::ControlFactory::Base
 {
 	public:
 
-		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Button_Factory, ControlFactory::Base )
+		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Button_Factory, Gwen::ControlFactory::Base )
 		{
 
 		}
