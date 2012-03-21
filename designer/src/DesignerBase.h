@@ -32,7 +32,10 @@ class DesignerBase : public Controls::Base
 		void DoOpenDocument( Event::Info info );
 		void SaveDocument();
 		void SaveAsDocument();
-		
+
+		void DeleteSelected();
+		void SendBack();
+		void BringForward();
 
 		Document* CurrentDocument();
 

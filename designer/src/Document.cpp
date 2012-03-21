@@ -113,3 +113,10 @@ void Document::OnHierachyChanged( Event::Info info )
 {
 	m_pHierarchy->CompleteRefresh();
 }
+
+void Document::Command( const Gwen::String& str )
+{
+	m_pCanvas->Command( str );
+
+	m_pHierarchy->CompleteRefresh();
+}

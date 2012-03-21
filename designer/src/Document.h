@@ -20,6 +20,7 @@ class Document : public Controls::Base
 		virtual void DoSave( ImportExport::Base* exporter );
 		virtual void LoadFromFile( const Gwen::String& str, ImportExport::Base* exporter );
 		
+		virtual void Command( const Gwen::String& str );
 
 	protected:
 

@@ -16,6 +16,8 @@ class SelectionLayer : public Controls::Base
 	virtual void AddSelection( Controls::Base* pControl );
 	virtual void RemoveSelection(  Controls::Base* pControl );
 
+	ControlList& GetSelected(){ return m_Selected; }
+
 	Event::Caller onSelectionChanged;
 	Event::Caller onPropertiesChanged;
 	Event::Caller onHierachyChanged;

@@ -85,3 +85,35 @@ void DocumentCanvas::OnHierachyChanged( Event::Info info )
 {
 	onHierachyChanged.Call( this, info );
 }
+
+void DocumentCanvas::Command( const Gwen::String& str )
+{
+	if ( str == "delete" )
+	{
+		for ( ControlList::List::const_iterator it = m_SelectionLayer->GetSelected().list.begin(); it != m_SelectionLayer->GetSelected().list.end(); ++it )
+		{
+			if ( *it == this ) continue;
+			(*it)->DelayedDelete();
+		}
+
+		m_SelectionLayer->ClearSelection();
+	}
+
+	if ( str == "bringforward" )
+	{
+		for ( ControlList::List::const_iterator it = m_SelectionLayer->GetSelected().list.begin(); it != m_SelectionLayer->GetSelected().list.end(); ++it )
+		{
+			if ( *it == this ) continue;
+			(*it)->BringToFront();
+		}
+	}
+
+	if ( str == "sendback" )
+	{
+		for ( ControlList::List::const_iterator it = m_SelectionLayer->GetSelected().list.begin(); it != m_SelectionLayer->GetSelected().list.end(); ++it )
+		{
+			if ( *it == this ) continue;
+			(*it)->SendToBack();
+		}
+	}
+}

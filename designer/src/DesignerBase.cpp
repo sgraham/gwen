@@ -46,6 +46,12 @@ void DesignerBase::CreateToolBar()
 
 	pStrip->Add( "Open", "img/menu/open.png" )->onPress.Add( this, &ThisClass::OpenDocument );
 	pStrip->Add( "Save", "img/menu/save.png" )->onPress.Add( this, &ThisClass::SaveDocument );
+
+	// splitter
+
+	pStrip->Add( "Delete", "img/menu/delete.png" )->onPress.Add( this, &ThisClass::DeleteSelected );
+	pStrip->Add( "Send Back", "img/menu/back.png" )->onPress.Add( this, &ThisClass::SendBack );
+	pStrip->Add( "Bring Forward", "img/menu/forward.png" )->onPress.Add( this, &ThisClass::BringForward );
 }
 
 void DesignerBase::CreateControlToolbox()
@@ -74,6 +80,11 @@ void DesignerBase::NewDocument()
 
 void DesignerBase::CloseDocument()
 {
+	Document* doc = CurrentDocument();
+	if ( !doc ) return;
+
+	doc->DelayedDelete();
+
 	Controls::TabButton* pButton = m_DocumentHolder->GetCurrentButton();
 	if ( !pButton ) return;
 
@@ -123,4 +134,28 @@ Document* DesignerBase::CurrentDocument()
 	if ( !doc ) return NULL;
 
 	return doc;
+}
+
+void DesignerBase::DeleteSelected()
+{
+	Document* doc = CurrentDocument();
+	if ( !doc ) return;
+
+	doc->Command( "delete" );
+}
+
+void DesignerBase::SendBack()
+{
+	Document* doc = CurrentDocument();
+	if ( !doc ) return;
+
+	doc->Command( "sendback" );
+}
+
+void DesignerBase::BringForward()
+{
+	Document* doc = CurrentDocument();
+	if ( !doc ) return;
+
+	doc->Command( "bringforward" );
 }
