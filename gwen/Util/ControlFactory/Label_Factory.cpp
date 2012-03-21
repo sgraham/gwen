@@ -30,7 +30,6 @@ class Label_Factory : public Gwen::ControlFactory::Base
 		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Label_Factory, ControlFactory::Base )
 		{
 			AddProperty( new Property::Text() );
-			Gwen::Debug::Msg( "KILL ME NOW!!!!\n" );
 		}
 
 		virtual Gwen::String Name(){ return "Label"; }

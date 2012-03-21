@@ -45,7 +45,6 @@ void DesignerFormat::Import( Gwen::Controls::Base* pRoot, const Gwen::String& st
 
 void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree )
 {
-
 	if ( tree.HasChild( "Children" ) )
 	{
 		Bootil::Data::Tree& ChildrenObject = tree.GetChild( "Children" );
@@ -68,7 +67,21 @@ void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::
 				Bootil::Data::Tree& Properties = c->GetChild( "Properties" );
 				BOOTIL_FOREACH( p, Properties.Children(), Bootil::Data::Tree::List )
 				{
-					pFactory->SetControlValue( pControl, p->Name(), Bootil::String::Convert::ToWide( p->Value() ) );
+					ControlFactory::Property* prop = pFactory->GetProperty( p->Name() );
+					if ( !prop ) continue;
+
+					if ( p->HasChildren() )
+					{
+						BOOTIL_FOREACH( pc, p->Children(), Bootil::Data::Tree::List )
+						{
+							prop->NumSet( pControl, pc->Name(), pc->Var<float>()  );
+						}
+					}
+					else
+					{
+						pFactory->SetControlValue( pControl, p->Name(), Bootil::String::Convert::ToWide( p->Value() ) );
+					}
+					
 				}
 			}
 		}

@@ -49,7 +49,6 @@ namespace ControlFactory
 
 	Base::Base()
 	{
-		Gwen::Debug::Msg( "Adding Control Factory!\n" );
 		GetList().push_back( this );
 	}
 
@@ -82,7 +81,10 @@ namespace ControlFactory
 			return *it;
 		}
 
-		return NULL;
+		Base* pBase = GetBaseFactory();
+		if ( !pBase ) return NULL;
+
+		return pBase->GetProperty( name );
 	}
 
 	void Base::SetControlValue( Gwen::Controls::Base* ctrl, const Gwen::String& name, const Gwen::UnicodeString& str )

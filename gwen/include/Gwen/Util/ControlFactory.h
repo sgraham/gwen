@@ -29,7 +29,15 @@ namespace Gwen
 			virtual int						NumCount(){ return 0; };
 			virtual Gwen::String			NumName( int i ){ return "unknown"; };
 			virtual float					NumGet( Gwen::Controls::Base* ctrl, int i ){ return 0.0f; };
-			virtual void					NumSet( Gwen::Controls::Base* ctrl, int i, float f ){; };
+			virtual void					NumSet( Gwen::Controls::Base* ctrl, int i, float f ){};
+
+			inline void NumSet( Gwen::Controls::Base* ctrl, const Gwen::String& str, float f )
+			{
+				for (int i=0; i<NumCount(); i++ )
+				{
+					if ( NumName( i ) == str ) NumSet( ctrl, i, f );
+				}
+			};
 		};
 
 		class Base
