@@ -85,11 +85,6 @@ namespace Gwen
 				Invalidate();
 			}
 
-			virtual int SplitterPos()
-			{
-				return m_pSplitter->X();
-			}
-
 			Controls::Base*			m_Panels[2];
 			bool					m_RightSided;
 			int						m_Size;
@@ -131,6 +126,11 @@ namespace Gwen
 
 				RefreshContainers();
 				Invalidate();
+			}
+
+			virtual int SplitterPos()
+			{
+				return m_pSplitter->X();
 			}
 		};
 	}
