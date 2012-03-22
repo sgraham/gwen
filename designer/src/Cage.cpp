@@ -19,7 +19,7 @@ void Cage::Render( Gwen::Skin::Base* skin )
 	skin->GetRender()->SetDrawColor( Color( 255, 255, 255, 100 ) );
 	skin->GetRender()->DrawFilledRect( bounds );
 
-	skin->GetRender()->SetDrawColor( Color( 255, 0, 0, 255 ) );
+	skin->GetRender()->SetDrawColor( Color( 20, 150, 255, 255 ) );
 	skin->GetRender()->DrawLinedRect( bounds );
 	bounds.x += 1; bounds.y += 1; bounds.w -= 2; bounds.h -= 2; 
 	skin->GetRender()->DrawLinedRect( bounds );

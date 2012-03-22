@@ -19,8 +19,9 @@ namespace ControlFactory
 		DECLARE_GWEN_CONTROL_FACTORY( CheckBox_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( MenuStrip_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( ListBox_Factory );
+		DECLARE_GWEN_CONTROL_FACTORY( VerticalSplitter_Factory );
 
-
+		
 		DECLARE_GWEN_CONTROL_FACTORY( DesignerCanvas_Factory );
 
 		
@@ -107,6 +108,16 @@ namespace ControlFactory
 		}
 
 		pProp->SetValue( ctrl, str );
+	}
+
+	void Base::AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, Gwen::Point& pos )
+	{
+		child->SetParent( ctrl );
+	}
+
+	void Base::AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, const Gwen::String& param )
+	{
+		child->SetParent( ctrl );
 	}
 }
 }

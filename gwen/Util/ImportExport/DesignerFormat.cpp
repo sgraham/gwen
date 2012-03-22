@@ -47,17 +47,17 @@ void DesignerFormat::Import( Gwen::Controls::Base* pRoot, const Gwen::String& st
 
 void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tree& tree )
 {
+	ControlFactory::Base* pRootFactory = ControlFactory::Find( "Base" );
+
+	if ( pRoot->UserData.Exists( "ControlFactory" ) )
+		pRootFactory = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
+
 	if ( tree.HasChild( "Properties" ) )
 	{
-		ControlFactory::Base* pFactory = ControlFactory::Find( "Base" );
-		
-		if ( pRoot->UserData.Exists( "ControlFactory" ) )
-			pFactory = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
-
 		Bootil::Data::Tree& Properties = tree.GetChild( "Properties" );
 		BOOTIL_FOREACH( p, Properties.Children(), Bootil::Data::Tree::List )
 		{
-			ControlFactory::Property* prop = pFactory->GetProperty( p->Name() );
+			ControlFactory::Property* prop = pRootFactory->GetProperty( p->Name() );
 			if ( !prop ) continue;
 
 			if ( p->HasChildren() )
@@ -69,7 +69,7 @@ void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::
 			}
 			else
 			{
-				pFactory->SetControlValue( pRoot, p->Name(), Bootil::String::Convert::ToWide( p->Value() ) );
+				pRootFactory->SetControlValue( pRoot, p->Name(), Bootil::String::Convert::ToWide( p->Value() ) );
 			}
 		}
 	}
@@ -87,6 +87,11 @@ void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::
 
 			Gwen::Controls::Base* pControl = pFactory->CreateInstance( pRoot );
 			if ( !pControl ) continue;
+
+			// Tell the control we're here and we're queer
+			{
+				pRootFactory->AddChild( pRoot, pControl, tree.ChildValue( "ParentParam", "" ) );
+			}
 
 			pControl->SetMouseInputEnabled( true );
 			pControl->UserData.Set( "ControlFactory", pFactory );

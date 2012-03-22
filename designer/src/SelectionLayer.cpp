@@ -1,5 +1,7 @@
 #include "SelectionLayer.h"
 #include "Cage.h"
+#include "Gwen/Util/ControlFactory.h"
+#include "Utility.h"
 
 GWEN_CONTROL_CONSTRUCTOR( SelectionLayer )
 {
@@ -50,6 +52,7 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 	
 	SetMouseInputEnabled( false );
 	Controls::Base* pCtrl = GetParent()->GetControlAt( pPos.x, pPos.y );
+	pCtrl = FindParentControlFactoryControl( pCtrl );
 	SetMouseInputEnabled( true );
 
 	bool bPanelsWereSelected = !m_Selected.list.empty();
@@ -130,7 +133,7 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 
 	// Find out which control is under our cursor
 	Controls::Base* pCtrl = GetParent()->GetControlAt( pPos.x, pPos.y );
-
+	pCtrl = FindParentControlFactoryControl( pCtrl );
 		
 	bool bHierachyChanged = false;
 
@@ -142,13 +145,17 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 			(*it)->SetHidden( false );
 			if ( (*it) == GetParent() ) continue;
 
+			if ( !pCtrl->UserData.Exists( "ControlFactory" ) ) continue;
+
+			Gwen::ControlFactory::Base* pFactory = pCtrl->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );
+
 			// If the panel we're dragging doesn't have the parent thats underneath
 			// then make it have it. Tweak positions so they're the same
 			if ( pCtrl && pCtrl != (*it)->GetParent() )
 			{
 				Gwen::Point pPos = (*it)->LocalPosToCanvas();
-				(*it)->SetParent( pCtrl );
-				(*it)->SetPos( pCtrl->CanvasPosToLocal( pPos ) );
+				pFactory->AddChild( pCtrl, (*it), pCtrl->CanvasPosToLocal( info.Point ) );
+				(*it)->SetPos( (*it)->GetParent()->CanvasPosToLocal( pPos ) );
 				bHierachyChanged = true;
 			}
 		}

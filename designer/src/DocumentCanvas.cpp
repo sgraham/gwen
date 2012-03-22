@@ -1,6 +1,7 @@
 #include "DocumentCanvas.h"
 #include "Gwen/Util/ControlFactory.h"
 #include "SelectionLayer.h"
+#include "Utility.h"
 
 GWEN_CONTROL_CONSTRUCTOR( DocumentCanvas )
 {
@@ -38,6 +39,7 @@ bool DocumentCanvas::DragAndDrop_HandleDrop( Gwen::DragAndDrop::Package* pPackag
 
 	m_SelectionLayer->SetHidden( true );
 	Controls::Base* pDroppedOn = GetControlAt( pPos.x, pPos.y );
+	pDroppedOn = FindParentControlFactoryControl( pDroppedOn );
 	m_SelectionLayer->SetHidden( false );
 
 	if ( !pDroppedOn ) pDroppedOn = this;

@@ -50,6 +50,11 @@ namespace Gwen
 				m_Size = iSize;
 			}
 
+			virtual int SplitterPos()
+			{
+				return m_pSplitter->Y();
+			}
+
 		protected:
 
 			virtual void RefreshContainers()
@@ -78,6 +83,11 @@ namespace Gwen
 
 				RefreshContainers();
 				Invalidate();
+			}
+
+			virtual int SplitterPos()
+			{
+				return m_pSplitter->X();
 			}
 
 			Controls::Base*			m_Panels[2];
