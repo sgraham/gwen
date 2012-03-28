@@ -117,6 +117,13 @@ void SelectionLayer::OnCagePressed( Event::Info info )
 void SelectionLayer::OnCageMoving( Event::Info info )
 {
 	//
+	// If we have the canvas selected - then don't do anything.
+	//
+	if ( m_Selected.Contains( GetParent() ) )
+		return;
+
+
+	//
 	// Convert the passed canvas pos to a pos local to the canvas
 	//
 	Gwen::Point pPos = GetParent()->CanvasPosToLocal( info.Point );
@@ -140,11 +147,12 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 	// Show all the hidden panels
 	{
 		SetHidden( false );
+		
 		for ( ControlList::List::const_iterator it = m_Selected.list.begin(); it != m_Selected.list.end(); ++it )
 		{
 			(*it)->SetHidden( false );
+			
 			if ( (*it) == GetParent() ) continue;
-
 			if ( !pCtrl->UserData.Exists( "ControlFactory" ) ) continue;
 
 			Gwen::ControlFactory::Base* pFactory = pCtrl->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );

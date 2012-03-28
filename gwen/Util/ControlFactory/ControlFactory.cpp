@@ -5,6 +5,8 @@ namespace Gwen
 {
 namespace ControlFactory
 {
+	const Gwen::UnicodeString PropertyBool::True	= L"true";
+	const Gwen::UnicodeString PropertyBool::False	= L"false";
 
 	void InitializeControls()
 	{

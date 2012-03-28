@@ -14,6 +14,8 @@ using namespace Gwen::Controls;
 
 GWEN_CONTROL_CONSTRUCTOR( Label )
 {
+	m_CreatedFont = NULL;
+
 	m_Text = new ControlsInternal::Text( this );
 	m_Text->SetFont( GetSkin()->GetDefaultFont() );
 
@@ -72,4 +74,23 @@ void Label::OnBoundsChanged( Gwen::Rect oldChildBounds )
 		m_Text->RefreshSize();
 		Invalidate();
 	}
+}
+
+void Label::SetFont( Gwen::UnicodeString strFacename, int iSize, bool bBold )
+{
+	if ( m_CreatedFont )
+	{
+		GetSkin()->ReleaseFont( m_CreatedFont );
+		delete m_CreatedFont;
+		m_CreatedFont = NULL;
+	}
+
+	m_CreatedFont = new Gwen::Font();
+	m_CreatedFont->bold = bBold;
+	m_CreatedFont->facename = strFacename;
+	m_CreatedFont->size = iSize;
+
+	SetFont( m_CreatedFont );
+
+	m_Text->RefreshSize();
 }

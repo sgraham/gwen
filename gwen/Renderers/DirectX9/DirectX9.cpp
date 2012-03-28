@@ -150,7 +150,7 @@ namespace Gwen
 			fd.Height = font->realsize * -1.0f;
 			fd.OutputPrecision = OUT_DEFAULT_PRECIS;
 			fd.Italic = 0;
-			fd.Weight = FW_NORMAL;
+			fd.Weight = font->bold ? FW_BOLD : FW_NORMAL;
 #ifdef CLEARTYPE_QUALITY
 			fd.Quality = font->realsize < 14 ? DEFAULT_QUALITY : CLEARTYPE_QUALITY;
 #else 

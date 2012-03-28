@@ -21,6 +21,71 @@ namespace Property
 		}
 
 	};
+
+	class Font: public ControlFactory::Property 
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( Font, "The font name" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			return gwen_cast<Controls::Label>(ctrl)->GetFont()->facename;
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			if ( str == L"" ) return;
+
+			Gwen::Font* pFont = gwen_cast<Controls::Label>(ctrl)->GetFont();
+
+			gwen_cast<Controls::Label>(ctrl)->SetFont( str, pFont->size, pFont->bold );
+		}
+
+	};
+
+	class FontSize: public ControlFactory::Property 
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( FontSize, "The font size" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			return Gwen::Utility::Format( L"%i", (int) gwen_cast<Controls::Label>(ctrl)->GetFont()->size );
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			int size;
+			if ( swscanf( str.c_str(), L"%i", &size ) != 1 ) return;
+
+			Gwen::Font* pFont = gwen_cast<Controls::Label>(ctrl)->GetFont();
+			if ( size == pFont->size ) return;
+
+			gwen_cast<Controls::Label>(ctrl)->SetFont( pFont->facename, size, pFont->bold );
+		}
+
+	};
+
+	class FontBold: public ControlFactory::PropertyBool
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( FontBold, "The font bold" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			if ( gwen_cast<Controls::Label>(ctrl)->GetFont()->bold ) return True;
+			return False;
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			bool bTrue = (str == True);
+
+			Gwen::Font* pFont = gwen_cast<Controls::Label>(ctrl)->GetFont();
+			if ( bTrue == pFont->bold ) return;
+
+			gwen_cast<Controls::Label>(ctrl)->SetFont( pFont->facename, pFont->size, bTrue ? true : false );
+		}
+
+	};
+
 }
 
 class Label_Factory : public Gwen::ControlFactory::Base
@@ -30,6 +95,9 @@ class Label_Factory : public Gwen::ControlFactory::Base
 		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Label_Factory, ControlFactory::Base )
 		{
 			AddProperty( new Property::Text() );
+			AddProperty( new Property::Font() );
+			AddProperty( new Property::FontSize() );
+			AddProperty( new Property::FontBold() );			
 		}
 
 		virtual Gwen::String Name(){ return "Label"; }

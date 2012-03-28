@@ -255,7 +255,7 @@ void Text::RefreshSizeWrap()
 		bool bWrapped = false;
 
 		// If this word is a newline - make a newline (we still add it to the text)
-        if ( (*it).c_str()[0] == L'\n' ) bFinishLine = true;
+		if ( (*it).c_str()[0] == L'\n' ) bFinishLine = true;
 
 		// Does adding this word drive us over the width?
 		{

@@ -34,6 +34,8 @@ namespace Gwen
 
 				virtual void SetAlignment( int iAlign );
 
+				virtual void SetFont( Gwen::UnicodeString strFacename, int iSize, bool bBold );
+
 				virtual void SetFont( Gwen::Font* pFont ){ m_Text->SetFont( pFont ); }
 				virtual Gwen::Font* GetFont(){ return m_Text->GetFont(); }
 				virtual void SetTextColor( const Gwen::Color& col ){ m_Text->SetTextColor( col ); }
@@ -70,7 +72,8 @@ namespace Gwen
 
 				virtual void OnTextChanged(){};
 
-				ControlsInternal::Text*	m_Text;
+				Gwen::Font*					m_CreatedFont;
+				ControlsInternal::Text*		m_Text;
 				int m_iAlign;
 
 

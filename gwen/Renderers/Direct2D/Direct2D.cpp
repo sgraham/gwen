@@ -79,7 +79,7 @@ namespace Gwen
 			HRESULT hr = m_pDWriteFactory->CreateTextFormat(
 				pFont->facename.c_str(),
 				NULL,
-				DWRITE_FONT_WEIGHT_NORMAL,
+				pFont->bold ? DWRITE_FONT_WEIGHT_BOLD : DWRITE_FONT_WEIGHT_NORMAL,
 				DWRITE_FONT_STYLE_NORMAL,
 				DWRITE_FONT_STRETCH_NORMAL,
 				pFont->size,

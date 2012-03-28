@@ -43,6 +43,17 @@ namespace Gwen
 				};
 		};
 
+		class PropertyBool : public Property
+		{
+			public:
+				
+				static const Gwen::UnicodeString		True;
+				static const Gwen::UnicodeString		False;
+
+				virtual int						OptionNum(){ return 2; }
+				virtual Gwen::UnicodeString		OptionGet( int i ){ if ( i == 0 ) return False; return True; }
+		};
+
 		class Base
 		{
 			public:
