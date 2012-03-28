@@ -373,13 +373,12 @@ namespace Gwen
 			ZeroMemory( &Params, sizeof( Params ) );
 
 			Params.Windowed						= true;
-			Params.SwapEffect					= D3DSWAPEFFECT_COPY;
+			Params.SwapEffect					= D3DSWAPEFFECT_DISCARD;
 			Params.BackBufferWidth				= ClientRect.right;
 			Params.BackBufferHeight				= ClientRect.bottom;
 			Params.FullScreen_RefreshRateInHz	= D3DPRESENT_RATE_DEFAULT;
-			Params.BackBufferFormat				= D3DFMT_UNKNOWN;
-			Params.PresentationInterval			= D3DPRESENT_INTERVAL_DEFAULT;
-
+			Params.BackBufferFormat				= D3DFMT_X8R8G8B8;
+			Params.PresentationInterval			= D3DPRESENT_INTERVAL_IMMEDIATE;
 		}
 
 		bool DirectX9::InitializeContext( Gwen::WindowProvider* pWindow )

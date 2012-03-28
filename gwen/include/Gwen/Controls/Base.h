@@ -78,6 +78,12 @@ namespace Gwen
 				virtual Gwen::Point ChildrenSize();
 				virtual Controls::Base* FindChildByName( const Gwen::String& name, bool bRecursive = false );
 
+				template <typename T>
+				T* FindChild( const Gwen::String& name, bool bRecursive = false )
+				{
+					return gwen_cast<T>( FindChildByName( name, bRecursive ) );
+				}
+
 				virtual void SetName( const Gwen::String& name) { m_Name = name; }
 				virtual const Gwen::String& GetName() { return m_Name; }
 
@@ -333,6 +339,7 @@ namespace Gwen
 				//  become children of that instead of us - allowing us to move
 				//  them all around by moving that panel (useful for scrolling etc)
 				Base* m_InnerPanel;
+				virtual Base* Inner(){ return m_InnerPanel; }
 
 				// This is the panel's actual parent - most likely the logical 
 				//  parent's InnerPanel (if it has one). You should rarely need this.

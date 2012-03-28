@@ -39,6 +39,7 @@ namespace Gwen
 				}
 
 				void SetFileType( const Gwen::String& string ) { m_FileType = string; }
+				Gwen::String GetFileType() { return m_FileType; }
 
 				void SetFileName( const TextObject& strValue )
 				{

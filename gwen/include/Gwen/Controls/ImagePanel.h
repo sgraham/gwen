@@ -46,6 +46,11 @@ namespace Gwen
 					m_Texture.Load( imageName, GetSkin()->GetRender() );
 				}
 
+				virtual TextObject& GetImage()
+				{ 
+					return m_Texture.name;
+				}
+
 				virtual int TextureWidth()
 				{
 					return m_Texture.width;
@@ -84,9 +89,9 @@ namespace Gwen
 
 			protected:
 
-				Texture	m_Texture;
-				float	m_uv[4];
-				Gwen::Color m_DrawColor;
+				Texture			m_Texture;
+				float			m_uv[4];
+				Gwen::Color		m_DrawColor;
 
 		};
 	}

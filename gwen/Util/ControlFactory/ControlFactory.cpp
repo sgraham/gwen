@@ -21,8 +21,11 @@ namespace ControlFactory
 		DECLARE_GWEN_CONTROL_FACTORY( CheckBox_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( MenuStrip_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( ListBox_Factory );
-		DECLARE_GWEN_CONTROL_FACTORY( VerticalSplitter_Factory );
-
+		//DECLARE_GWEN_CONTROL_FACTORY( VerticalSplitter_Factory );
+		DECLARE_GWEN_CONTROL_FACTORY( Image_Factory );
+		DECLARE_GWEN_CONTROL_FACTORY( FilePicker_Factory );
+		DECLARE_GWEN_CONTROL_FACTORY( FolderPicker_Factory );
+		
 		
 		DECLARE_GWEN_CONTROL_FACTORY( DesignerCanvas_Factory );
 
