@@ -84,6 +84,11 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 
 	}
 
+	if ( !m_bDragged )
+	{
+		Event::Information info;
+		onDragStart.Call( this, info );
+	}
 	m_bDragged = true;
 
 	m_DragPoint += Point( deltaX, deltaY );
@@ -100,8 +105,6 @@ void Cage::OnMouseMoved( int x, int y, int deltaX, int deltaY )
 		info.Point = pos;
 		onMoved.Call( this, info );
 	}
-
-
 }
 
 void Cage::OnPress()

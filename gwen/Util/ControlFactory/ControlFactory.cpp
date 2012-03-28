@@ -121,5 +121,24 @@ namespace ControlFactory
 	{
 		child->SetParent( ctrl );
 	}
+
+	Controls::Base* Clone( Controls::Base* pSource, ControlFactory::Base* pFactory )
+	{
+		Controls::Base* pControl = pFactory->CreateInstance( pSource->GetParent() );
+
+		while ( pFactory )
+		{
+			ControlFactory::Property::List::const_iterator it = pFactory->Properties().begin();
+			ControlFactory::Property::List::const_iterator itEnd = pFactory->Properties().end();
+			for ( it; it != itEnd; ++it )
+			{
+				(*it)->SetValue( pControl, (*it)->GetValue( pSource ) );
+			}
+
+			pFactory = pFactory->GetBaseFactory();
+		}
+
+		return pControl;
+	}
 }
 }

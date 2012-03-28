@@ -27,6 +27,9 @@ class SelectionLayer : public Controls::Base
 		void OnCageMoving( Event::Info info );
 		void OnControlDragged( Event::Info info );
 		void OnCagePressed( Event::Info info );
+		void OnDragStart();
+
+		void SwitchCage( Controls::Base* pControl, Controls::Base* pTo );
 
 		ControlList	m_Selected;
 

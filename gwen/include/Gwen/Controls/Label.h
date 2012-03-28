@@ -64,6 +64,7 @@ namespace Gwen
 				virtual TextObject GetValue(){ return GetText(); }
 				virtual void SetValue( const TextObject& strValue ){ return SetText( strValue ); }
 
+				virtual bool Wrap(){ return m_Text->Wrap(); }
 				virtual void SetWrap( bool b ){ m_Text->SetWrap( b ); }
 
 				virtual void OnBoundsChanged( Gwen::Rect oldChildBounds );

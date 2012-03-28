@@ -86,6 +86,27 @@ namespace Property
 
 	};
 
+	class Wrap: public ControlFactory::PropertyBool
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( Wrap, "Wrap the text" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			if ( gwen_cast<Controls::Label>(ctrl)->Wrap() ) return True;
+			return False;
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			bool bTrue = (str == True);
+
+			if ( bTrue == gwen_cast<Controls::Label>(ctrl)->Wrap() ) return;
+
+			gwen_cast<Controls::Label>(ctrl)->SetWrap( bTrue );
+		}
+
+	};
+
 }
 
 class Label_Factory : public Gwen::ControlFactory::Base
@@ -95,6 +116,7 @@ class Label_Factory : public Gwen::ControlFactory::Base
 		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Label_Factory, ControlFactory::Base )
 		{
 			AddProperty( new Property::Text() );
+			AddProperty( new Property::Wrap() );	
 			AddProperty( new Property::Font() );
 			AddProperty( new Property::FontSize() );
 			AddProperty( new Property::FontBold() );			

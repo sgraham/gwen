@@ -13,6 +13,7 @@ namespace Gwen
 
 		List& GetList();
 		ControlFactory::Base* Find( const Gwen::String& name );
+		Controls::Base* Clone( Controls::Base* pEnt, ControlFactory::Base* pFactory );
 
 		class Property 
 		{

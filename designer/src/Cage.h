@@ -23,7 +23,7 @@ class Cage : public Controls::Button
 		virtual Controls::Base* Target() { return m_Control; }
 
 		Event::Caller	onMoved;
-
+		Event::Caller	onDragStart;
 		Event::Caller	onMoving;
 
 	protected:

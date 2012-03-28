@@ -22,6 +22,7 @@ void SelectionLayer::AddSelection( Controls::Base* pControl )
 	pCage->onMoved.Add( this, &ThisClass::OnControlDragged );
 	pCage->onPress.Add( this, &ThisClass::OnCagePressed );
 	pCage->onMoving.Add( this, &ThisClass::OnCageMoving );
+	pCage->onDragStart.Add( this, &ThisClass::OnDragStart );
 
 	m_Selected.Add( pControl );
 
@@ -32,9 +33,9 @@ void SelectionLayer::RemoveSelection( Controls::Base* pControl )
 {
 	m_Selected.Remove( pControl );
 
-	for ( int i=0; i<pControl->NumChildren(); i++ )
+	for ( int i=0; i<NumChildren(); i++ )
 	{
-		Cage* pCage = gwen_cast<Cage>( pControl->GetChild( i ) );
+		Cage* pCage = gwen_cast<Cage>( GetChild( i ) );
 		if  (!pCage ) continue;
 
 		if ( pCage->Target() == pControl )
@@ -177,4 +178,40 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 		onHierachyChanged.Call( this );
 	}
 
+}
+
+void SelectionLayer::OnDragStart()
+{
+	//
+	// If shift dragging, duplicate the selected panels
+	//
+	if ( !Gwen::Input::IsShiftDown() ) return;
+
+	ControlList NewList;
+
+	for ( ControlList::List::const_iterator it = m_Selected.list.begin(); it != m_Selected.list.end(); ++it )
+	{
+		Gwen::ControlFactory::Base* pFactory = (*it)->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );
+		Controls::Base* pControl = ControlFactory::Clone( *it, pFactory );
+		pControl->UserData.Set( "ControlFactory", pFactory );
+		NewList.Add( pControl );
+
+		SwitchCage( *it, pControl );
+	}
+
+	m_Selected = NewList;
+}
+
+void SelectionLayer::SwitchCage( Controls::Base* pControl, Controls::Base* pTo )
+{
+	for ( int i=0; i<NumChildren(); i++ )
+	{
+		Cage* pCage = gwen_cast<Cage>( GetChild( i ) );
+		if  (!pCage ) continue;
+
+		if ( pCage->Target() == pControl )
+		{
+			pCage->Setup( pTo );
+		}
+	}
 }
