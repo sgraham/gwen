@@ -25,6 +25,7 @@ namespace ControlFactory
 		DECLARE_GWEN_CONTROL_FACTORY( Image_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( FilePicker_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( FolderPicker_Factory );
+		DECLARE_GWEN_CONTROL_FACTORY( PageControl_Factory );
 		
 		
 		DECLARE_GWEN_CONTROL_FACTORY( DesignerCanvas_Factory );
@@ -120,7 +121,7 @@ namespace ControlFactory
 		child->SetParent( ctrl );
 	}
 
-	void Base::AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, const Gwen::String& param )
+	void Base::AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, int iPage )
 	{
 		child->SetParent( ctrl );
 	}
@@ -142,6 +143,18 @@ namespace ControlFactory
 		}
 
 		return pControl;
+	}
+
+	void Base::SetParentPage( Gwen::Controls::Base* ctrl, int i )
+	{
+		ctrl->UserData.Set<int>( "ParentPage", i );
+	}
+
+	int Base::GetParentPage( Gwen::Controls::Base* ctrl )
+	{
+		if ( !ctrl->UserData.Exists( "ParentPage" ) ) return 0;
+
+		return ctrl->UserData.Get<int>( "ParentPage");
 	}
 }
 }

@@ -52,8 +52,10 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 	Gwen::Point pPos = GetParent()->CanvasPosToLocal( Gwen::Point( x, y ) );
 	
 	SetMouseInputEnabled( false );
-	Controls::Base* pCtrl = GetParent()->GetControlAt( pPos.x, pPos.y );
-	pCtrl = FindParentControlFactoryControl( pCtrl );
+
+	Controls::Base* pChild = GetParent()->GetControlAt( pPos.x, pPos.y );
+	Controls::Base* pCtrl = FindParentControlFactoryControl( pChild );
+
 	SetMouseInputEnabled( true );
 
 	bool bPanelsWereSelected = !m_Selected.list.empty();
@@ -66,6 +68,15 @@ void SelectionLayer::OnMouseClickLeft( int x, int y, bool bDown )
 
 	if ( pCtrl )
 	{
+
+		if ( pCtrl != pChild )
+		{
+			Gwen::ControlFactory::Base* pFactory = pCtrl->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );
+
+			if ( pFactory->ChildTouched( pCtrl, pChild ) )
+				return;
+		}
+
 			if ( pCtrl == GetParent() )
 			{
 				//
@@ -140,8 +151,8 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 	}
 
 	// Find out which control is under our cursor
-	Controls::Base* pCtrl = GetParent()->GetControlAt( pPos.x, pPos.y );
-	pCtrl = FindParentControlFactoryControl( pCtrl );
+	Controls::Base* pChild = GetParent()->GetControlAt( pPos.x, pPos.y );
+	Controls::Base* pCtrl = FindParentControlFactoryControl( pChild );
 		
 	bool bHierachyChanged = false;
 

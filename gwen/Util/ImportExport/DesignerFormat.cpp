@@ -52,6 +52,8 @@ void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::
 	if ( pRoot->UserData.Exists( "ControlFactory" ) )
 		pRootFactory = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
 
+
+
 	if ( tree.HasChild( "Properties" ) )
 	{
 		Bootil::Data::Tree& Properties = tree.GetChild( "Properties" );
@@ -90,7 +92,8 @@ void DesignerFormat::ImportFromTree( Gwen::Controls::Base* pRoot, Bootil::Data::
 
 			// Tell the control we're here and we're queer
 			{
-				pRootFactory->AddChild( pRoot, pControl, tree.ChildValue( "ParentParam", "" ) );
+				int iPage = c->ChildVar<int>( "Page", 0 );
+				pRootFactory->AddChild( pRoot, pControl, iPage );
 			}
 
 			pControl->SetMouseInputEnabled( true );
@@ -138,6 +141,16 @@ void DesignerFormat::ExportToTree( Gwen::Controls::Base* pRoot, Bootil::Data::Tr
 	{
 		Bootil::Data::Tree& props = me->AddChild( "Properties" );
 		ControlFactory::Base* pCF = pRoot->UserData.Get<ControlFactory::Base*>( "ControlFactory" );
+
+		// Save the ParentPage
+		{
+			int iParentPage = pCF->GetParentPage( pRoot );
+			if ( iParentPage != 0 )
+			{
+				me->SetChildVar( "Page", iParentPage );
+			}
+		}
+
 		while ( pCF )
 		{
 			ControlFactory::Property::List::const_iterator it = pCF->Properties().begin();

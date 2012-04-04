@@ -56,7 +56,16 @@ namespace Tools{
 		{
 			Gwen::Controls::Base* pBaseChild = pRoot->GetChild( i );
 			if  ( !pBaseChild ) continue;
-			if ( !pBaseChild->UserData.Exists( "ControlFactory" ) ) continue;
+
+			//
+			// If we have a child is isn't exportable - maybe it has a child that is
+			// We will count it as one of our children.
+			//
+			if ( !pBaseChild->UserData.Exists( "ControlFactory" ) )
+			{
+				list.Add( GetExportableChildren( pBaseChild ) );
+				continue;
+			}
 
 			list.Add( pBaseChild );
 		}

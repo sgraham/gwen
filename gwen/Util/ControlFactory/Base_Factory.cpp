@@ -58,6 +58,57 @@ namespace Property
 		};
 	};
 
+	class Margin : public Gwen::ControlFactory::Property 
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( Margin, "Sets the margin of a docked control" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			Gwen::Margin m = ctrl->GetMargin();
+			return Utility::Format( L"%i %i %i %i", m.left, m.top, m.right, m.bottom );
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			Gwen::Margin m;
+			if ( swscanf( str.c_str(), L"%i %i %i %i", &m.left, &m.top, &m.right, &m.bottom ) != 4 ) return;
+			ctrl->SetMargin( m );
+		}
+
+		int	NumCount(){ return 4; };
+
+		Gwen::String NumName( int i )
+		{ 
+			if ( i == 0 ) return "left";
+			if ( i == 1 ) return "top";
+			if ( i == 2 ) return "right";
+			return "bottom";
+		};
+
+		float NumGet( Controls::Base* ctrl, int i )
+		{ 
+			Gwen::Margin m = ctrl->GetMargin();
+
+			if ( i == 0 ) return m.left;
+			if ( i == 1 ) return m.top;
+			if ( i == 2 ) return m.right;
+
+			return m.bottom;
+		};
+
+		void NumSet( Controls::Base* ctrl, int i, float f )
+		{
+			Gwen::Margin m = ctrl->GetMargin();
+
+			if ( i == 0 ) m.left = f;
+			if ( i == 1 ) m.top = f;
+			if ( i == 2 ) m.right = f;
+			if ( i == 3 ) m.bottom = f;
+
+			ctrl->SetMargin( m );
+		};
+	};
+
 	class Size: public Gwen::ControlFactory::Property 
 	{
 		GWEN_CONTROL_FACTORY_PROPERTY( Size, "The with and height of the control" );
@@ -145,10 +196,13 @@ class Base_Factory : public Gwen::ControlFactory::Base
 
 		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Base_Factory, Gwen::ControlFactory::Base )
 		{
+			AddProperty( new Property::ControlName() );
 			AddProperty( new Property::Dock() );
 			AddProperty( new Property::Position() );
 			AddProperty( new Property::Size() );
-			AddProperty( new Property::ControlName() );
+			AddProperty( new Property::Margin() );
+			
+			
 		}
 
 		virtual Gwen::String Name(){ return "Base"; }

@@ -78,7 +78,18 @@ namespace Gwen
 				virtual void AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, Gwen::Point& pos );
 
 				// Called when creating the control - param might be empty
-				virtual void AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, const Gwen::String& param );
+				virtual void AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, int iPage = 0 );
+
+				// Called when a child is clicked on in an editor
+				virtual bool ChildTouched( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* pChildControl ){ return false; };
+
+
+				//
+				// If a control is parented to a control with multiple sections, or pages
+				// these functions are used to store which page they're on - on the child control
+				//
+				virtual void SetParentPage( Gwen::Controls::Base* ctrl, int i );
+				virtual int GetParentPage( Gwen::Controls::Base* ctrl );
 
 			protected:
 

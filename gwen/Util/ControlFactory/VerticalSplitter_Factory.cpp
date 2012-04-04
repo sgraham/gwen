@@ -34,7 +34,7 @@ class VerticalSplitter_Factory : public Gwen::ControlFactory::Base
 				pSplitter->SetPanels( NULL, child );
 		}
 
-		void AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, const Gwen::String& param )
+		void AddChild( Gwen::Controls::Base* ctrl, Gwen::Controls::Base* child, int iPage )
 		{
 			child->SetParent( ctrl );
 		}

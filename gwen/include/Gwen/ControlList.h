@@ -39,6 +39,11 @@ namespace Gwen
 				}
 			}
 
+			void Add( const TEasyList<TYPE>& list )
+			{
+				Add( list.list );
+			}
+
 			bool Contains( TYPE pControl ) const
 			{
 				typename List::const_iterator it = std::find( list.begin(), list.end(), pControl );

@@ -27,6 +27,7 @@ namespace Gwen
 			virtual void ShowPage( unsigned int i );
 			virtual unsigned int GetPageNumber(){ return m_iCurrentPage; }
 			virtual Controls::Base* GetPage( unsigned int i );
+			virtual Controls::Base* GetCurrentPage();
 
 			virtual void NextPage();
 			virtual void PreviousPage();
