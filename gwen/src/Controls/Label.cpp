@@ -24,6 +24,17 @@ GWEN_CONTROL_CONSTRUCTOR( Label )
 	SetAlignment( Gwen::Pos::Left | Gwen::Pos::Top );
 }
 
+void Label::PreDelete( Gwen::Skin::Base* skin )
+{
+	if ( m_CreatedFont )
+	{
+		skin->ReleaseFont( m_CreatedFont );
+		delete m_CreatedFont;
+		m_CreatedFont = NULL;
+		SetFont( NULL );
+	}
+}
+
 void Label::PostLayout( Skin::Base* /*skin*/ )
 {
 	m_Text->Position( m_iAlign );
@@ -83,9 +94,12 @@ void Label::SetFont( Gwen::UnicodeString strFacename, int iSize, bool bBold )
 		GetSkin()->ReleaseFont( m_CreatedFont );
 		delete m_CreatedFont;
 		m_CreatedFont = NULL;
+		SetFont( NULL );
 	}
 
 	m_CreatedFont = new Gwen::Font();
+	Debug::AssertCheck( m_CreatedFont != NULL, "Couldn't Create Font!" );
+
 	m_CreatedFont->bold = bBold;
 	m_CreatedFont->facename = strFacename;
 	m_CreatedFont->size = iSize;

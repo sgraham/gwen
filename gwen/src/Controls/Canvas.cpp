@@ -143,6 +143,7 @@ void Canvas::PreDelete( Controls::Base * pControl )
 
 void Canvas::ProcessDelayedDeletes()
 {
+	
 	while( m_bAnyDelete )
 	{
 		m_bAnyDelete = false;
@@ -155,7 +156,9 @@ void Canvas::ProcessDelayedDeletes()
 		for ( Gwen::Controls::Base::List::iterator it = deleteList.begin(); it != deleteList.end(); ++it )
 		{
 			Gwen::Controls::Base* pControl = *it;
+			pControl->PreDelete( GetSkin() );
 			delete pControl;
+
 			Redraw();
 		}
 	}

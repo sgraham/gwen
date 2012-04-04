@@ -48,6 +48,18 @@ void Text::SetFont( Gwen::Font* pFont )
 
 	m_Font = pFont;
 	m_bTextChanged = true;
+
+	// Change the font of multilines too!
+	{
+		TextLines::iterator it = m_Lines.begin(); 
+		TextLines::iterator itEnd = m_Lines.end();
+		while ( it != itEnd )
+		{
+			(*it)->SetFont( m_Font );
+			++it;
+		}
+	}
+
 	Invalidate();
 }
 

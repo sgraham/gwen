@@ -66,6 +66,7 @@ namespace Gwen
 				virtual const char* GetTypeName(){ return "Base"; }
 
 				virtual void DelayedDelete();
+				virtual void PreDelete( Gwen::Skin::Base* skin ){};
 
 				virtual void SetParent( Controls::Base* pParent );
 				virtual Controls::Base* GetParent() const { return m_Parent; }

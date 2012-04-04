@@ -21,6 +21,7 @@ namespace Gwen
 			public:
 
 				GWEN_CONTROL( Label, Controls::Base );
+				virtual void PreDelete( Gwen::Skin::Base* skin );
 
 				virtual void SetText( const TextObject& str, bool bDoEvents = true );
 
