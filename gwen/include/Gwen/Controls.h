@@ -25,6 +25,7 @@
 #include "Gwen/Controls/MenuStrip.h"
 #include "Gwen/Controls/ToolBar.h"
 #include "Gwen/Controls/Splitters.h"
+#include "Gwen/Controls/PageControl.h"
 
 #include "Gwen/Controls/Dialogs/FileOpen.h"
 #include "Gwen/Controls/Dialogs/FileSave.h"

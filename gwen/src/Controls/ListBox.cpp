@@ -65,7 +65,6 @@ GWEN_CONTROL_CONSTRUCTOR( ListBox )
 	m_InnerPanel->SetPadding( Padding( 2, 2, 2, 2 ) );
 
 	m_Table = new Controls::Layout::Table( this );
-	m_Table->Dock( Pos::Top );
 	m_Table->SetColumnCount( 1 );
 
 	m_bMultiSelect = false;
@@ -98,7 +97,13 @@ void ListBox::Layout( Skin::Base* skin )
 {
 	BaseClass::Layout( skin );
 
+	const Gwen::Rect& inner = m_InnerPanel->GetInnerBounds();
+
+	m_Table->SetPos( inner.x, inner.y );
+	m_Table->SetWidth( inner.w );
 	m_Table->SizeToChildren( false, true );
+
+	BaseClass::Layout( skin );
 }
 
 void ListBox::UnselectAll()

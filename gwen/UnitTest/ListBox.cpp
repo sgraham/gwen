@@ -56,7 +56,7 @@ class ListBox : public GUnit
 			{
 				Gwen::Controls::Layout::TableRow* pRow = ctrl->AddItem( L"Chicken" );
 				pRow->SetCellText( 1, L"\u5355\u5143\u6D4B\u8BD5" );
-				pRow->SetCellText( 2, L"€8.95" );
+				pRow->SetCellText( 2, L"\u20AC8.95" );
 			}
 		}
 	}

@@ -89,6 +89,7 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 		ADD_UNIT_TEST( Properties );
 		ADD_UNIT_TEST( TabControl );
 		ADD_UNIT_TEST( ScrollControl );
+		ADD_UNIT_TEST( PageControl );
 
 	}
 
@@ -106,7 +107,7 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 	m_fLastSecond = Gwen::Platform::GetTimeInSeconds();
 	m_iFrames = 0;
 
-	pList->GetNamedChildren( "TextBox" ).DoAction();
+	pList->GetNamedChildren( "PageControl" ).DoAction();
 }
 
 void UnitTest::OnCategorySelect( Gwen::Event::Info info )

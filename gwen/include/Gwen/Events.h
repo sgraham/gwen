@@ -52,6 +52,7 @@ namespace Gwen
 				ControlCaller	= NULL;
 				Packet			= NULL;
 				Control			= NULL;
+				Integer			= 0;
 			}
 
 			// This is set by the event caller, it will always be
@@ -70,6 +71,7 @@ namespace Gwen
 			Gwen::ControlList		ControlList;
 			Gwen::TextObject		String;
 			Gwen::Point				Point;
+			int						Integer;
 			
 		};
 
