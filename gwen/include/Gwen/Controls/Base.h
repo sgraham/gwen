@@ -78,11 +78,7 @@ namespace Gwen
 				virtual Gwen::Point ChildrenSize();
 				virtual Controls::Base* FindChildByName( const Gwen::String& name, bool bRecursive = false );
 
-				template <typename T>
-				T* FindChild( const Gwen::String& name, bool bRecursive = false )
-				{
-					return gwen_cast<T>( FindChildByName( name, bRecursive ) );
-				}
+				template <typename T> T* FindChild( const Gwen::String& name, bool bRecursive = false );
 
 				virtual void SetName( const Gwen::String& name) { m_Name = name; }
 				virtual const Gwen::String& GetName() { return m_Name; }
@@ -510,6 +506,13 @@ T* gwen_cast( Gwen::Controls::Base* p )
 	if ( !pReturn ) return NULL;
 
 	return static_cast<T*>(pReturn);
+}
+
+
+template <typename T> 
+T* Gwen::Controls::Base::FindChild( const Gwen::String& name, bool bRecursive )
+{
+	return gwen_cast<T>( FindChildByName( name, bRecursive ) );
 }
 
 #define GWEN_DYNAMIC( ThisName, BaseName )									\
