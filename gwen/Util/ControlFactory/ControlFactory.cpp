@@ -18,6 +18,7 @@ namespace ControlFactory
 		DECLARE_GWEN_CONTROL_FACTORY( Label_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( Button_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( TextBox_Factory );
+		DECLARE_GWEN_CONTROL_FACTORY( TextBoxMultiLine_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( CheckBox_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( MenuStrip_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( ListBox_Factory );

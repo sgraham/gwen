@@ -15,6 +15,8 @@ GWEN_CONTROL_CONSTRUCTOR( ControlToolbox )
 	{
 		ControlFactory::Base* pControlFactory = *it;
 
+		if ( pControlFactory->Name() == "DesignerCanvas" ) continue;
+
 		Controls::Button* pButton = new Controls::Button( pTileLayout );
 		pButton->SetSize( 20, 20 );
 		pButton->SetToolTip( pControlFactory->Name() );

@@ -99,7 +99,7 @@ void Properties::AddPropertiesFromControl( Controls::Base* pControl, bool bAllow
 				}
 				else 
 				{
-					row->GetProperty()->SetPropertyValue( strValue );
+					row->GetProperty()->SetPropertyValue( strValue, false );
 				}
 			}
 		}

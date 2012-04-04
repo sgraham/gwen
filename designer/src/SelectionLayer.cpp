@@ -165,6 +165,8 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 			(*it)->SetHidden( false );
 			
 			if ( (*it) == GetParent() ) continue;
+
+			if ( !pCtrl ) continue;
 			if ( !pCtrl->UserData.Exists( "ControlFactory" ) ) continue;
 
 			Gwen::ControlFactory::Base* pFactory = pCtrl->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );

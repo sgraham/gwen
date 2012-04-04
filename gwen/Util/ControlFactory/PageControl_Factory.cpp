@@ -25,6 +25,24 @@ namespace Property
 
 	};
 
+	class FinishName: public ControlFactory::Property 
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( FinishName, "The name of the finish button" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			Gwen::Controls::PageControl* pControl = gwen_cast<Gwen::Controls::PageControl>( ctrl );
+			return Utility::StringToUnicode( pControl->FinishButton()->GetName() );
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			Gwen::Controls::PageControl* pControl = gwen_cast<Gwen::Controls::PageControl>( ctrl );
+			pControl->FinishButton()->SetName( Utility::UnicodeToString( str ) );
+		}
+
+	};
+
 }
 
 class PageControl_Factory : public Gwen::ControlFactory::Base
@@ -34,6 +52,7 @@ class PageControl_Factory : public Gwen::ControlFactory::Base
 		GWEN_CONTROL_FACTORY_CONSTRUCTOR( PageControl_Factory, Gwen::ControlFactory::Base )
 		{
 			AddProperty( new Property::NumPages() );
+			AddProperty( new Property::FinishName() );
 		}
 
 		virtual Gwen::String Name(){ return "PageControl"; }
