@@ -135,7 +135,7 @@ void WindowCanvas::RenderCanvas()
 	//
 	if  ( !NeedsRedraw() )
 	{
-		Platform::Sleep( 20 );
+		Platform::Sleep( 10 );
 		return;
 	}
 

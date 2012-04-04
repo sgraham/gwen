@@ -43,7 +43,7 @@ namespace Gwen
 
 					virtual void SetPropertyValue( const TextObject& v, bool bFireChangeEvents )
 					{
-						m_ComboBox->SelectItemByName( v.Get() );
+						m_ComboBox->SelectItemByName( v.Get(), bFireChangeEvents );
 					}
 
 					virtual bool IsEditing()

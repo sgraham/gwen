@@ -126,33 +126,45 @@ void ComboBox::ClearItems()
 		m_Menu->ClearItems();
 	}
 }
+
+void ComboBox::SelectItem( MenuItem* pItem )
+{
+	if ( m_SelectedItem == pItem ) return;
+
+	m_SelectedItem = pItem;
+	SetText( m_SelectedItem->GetText() );
+	m_Menu->SetHidden( true );
+	Invalidate();
+}
+
 void ComboBox::OnItemSelected( Controls::Base* pControl )
 {
 	//Convert selected to a menu item
 	MenuItem* pItem = gwen_cast<MenuItem>( pControl );
 	if ( !pItem ) return;
 
-	m_SelectedItem = pItem;
-	SetText( m_SelectedItem->GetText() );
-	m_Menu->SetHidden( true );
+	SelectItem( pItem );
 
 	onSelection.Call( this );
-
 	Focus();
-	Invalidate();
 }
 
-void ComboBox::SelectItemByName( const Gwen::String& name )
+void ComboBox::SelectItemByName( const Gwen::String& name, bool bFireChangeEvents )
 {
 	Base::List& children = m_Menu->GetChildren();
 	Base::List::iterator it = children.begin();
 
 	while ( it != children.end() )
 	{
-		Base* pChild = *it;
+		MenuItem* pChild = gwen_cast<MenuItem>( *it );
 
 		if ( pChild->GetName() == name )
-			return OnItemSelected( pChild );
+		{
+			if ( bFireChangeEvents )
+				return OnItemSelected( pChild );
+
+			return SelectItem( pChild );
+		}
 
 		++it;
 	}
