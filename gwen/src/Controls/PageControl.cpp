@@ -68,7 +68,7 @@ void PageControl::SetPageCount( unsigned int iNum )
 	{
 		if ( !m_pPages[i] )
 		{
-			m_pPages[i] = new Controls::ScrollControl( this );
+			m_pPages[i] = new Controls::Base( this );
 			m_pPages[i]->Dock( Pos::Fill );
 		}
 	}

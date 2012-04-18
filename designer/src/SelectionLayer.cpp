@@ -140,7 +140,7 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 	//
 	Gwen::Point pPos = GetParent()->CanvasPosToLocal( info.Point );
 	
-	// Hide all of the selected panels, and this selecion layer
+	// Hide all of the selected panels, and this selection layer
 	{
 		for ( ControlList::List::const_iterator it = m_Selected.list.begin(); it != m_Selected.list.end(); ++it )
 		{
@@ -171,6 +171,8 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 
 			Gwen::ControlFactory::Base* pFactory = pCtrl->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );
 
+			Controls::Base* pOldParent = (*it)->GetParent();
+
 			// If the panel we're dragging doesn't have the parent thats underneath
 			// then make it have it. Tweak positions so they're the same
 			if ( pCtrl && pCtrl != (*it)->GetParent() )
@@ -178,7 +180,8 @@ void SelectionLayer::OnCageMoving( Event::Info info )
 				Gwen::Point pPos = (*it)->LocalPosToCanvas();
 				pFactory->AddChild( pCtrl, (*it), pCtrl->CanvasPosToLocal( info.Point ) );
 				(*it)->SetPos( (*it)->GetParent()->CanvasPosToLocal( pPos ) );
-				bHierachyChanged = true;
+
+				bHierachyChanged = bHierachyChanged || ( pOldParent != (*it)->GetParent() );
 			}
 		}
 	}
@@ -207,6 +210,7 @@ void SelectionLayer::OnDragStart()
 		Gwen::ControlFactory::Base* pFactory = (*it)->UserData.Get<Gwen::ControlFactory::Base*>( "ControlFactory" );
 		Controls::Base* pControl = ControlFactory::Clone( *it, pFactory );
 		pControl->UserData.Set( "ControlFactory", pFactory );
+		pControl->SetMouseInputEnabled( true );
 		NewList.Add( pControl );
 
 		SwitchCage( *it, pControl );
