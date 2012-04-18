@@ -50,6 +50,9 @@ namespace Gwen
 				virtual void SetCanMaximize( bool b );
 				virtual void SetMaximize( bool b );
 
+				virtual void SetSizable( bool b ){ m_Sizer->SetHidden( !b ); }
+				virtual bool GetSizable(){ return m_Sizer->Visible(); }
+
 			protected:
 
 				virtual void RenderCanvas();
