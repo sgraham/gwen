@@ -29,7 +29,7 @@ GWEN_CONTROL_CONSTRUCTOR( PageControl )
 	Base* pControls = new Base( this );
 	pControls->Dock( Pos::Bottom );
 	pControls->SetSize( 24, 24 );
-	pControls->SetMargin( Margin( 0, 4, 0, 0 ) );
+	pControls->SetMargin( Margin( 10, 10, 10, 10 ) );
 
 	m_Finish = new Controls::Button( pControls );
 	m_Finish->SetText( "Finish" );

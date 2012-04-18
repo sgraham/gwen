@@ -34,6 +34,8 @@ namespace Gwen
 				virtual void SizeToContents();
 
 				virtual void SetAlignment( int iAlign );
+				virtual int GetAlignment();
+				
 
 				virtual void SetFont( Gwen::UnicodeString strFacename, int iSize, bool bBold );
 

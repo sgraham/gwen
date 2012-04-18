@@ -107,6 +107,79 @@ namespace Property
 
 	};
 
+	class VerticalAlign: public ControlFactory::Property
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( VerticalAlign, "VerticalAlign" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			if ( gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Top )	return L"Top";
+			if ( gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::CenterV )	return L"Center";
+			if ( gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Bottom )	return L"Bottom";
+
+			return L"Top";
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			int iAlign = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
+
+			iAlign &= ~Pos::Top;
+			iAlign &= ~Pos::CenterV;
+			iAlign &= ~Pos::Bottom;
+
+			if ( str == L"Top" )	gwen_cast<Controls::Label>(ctrl)->SetAlignment( iAlign | Pos::Top );
+			if ( str == L"Center" ) gwen_cast<Controls::Label>(ctrl)->SetAlignment( iAlign | Pos::CenterV );
+			if ( str == L"Bottom" ) gwen_cast<Controls::Label>(ctrl)->SetAlignment( iAlign | Pos::Bottom );
+		}
+
+		int	OptionNum(){ return 3; }
+
+		Gwen::UnicodeString	OptionGet( int i )
+		{ 
+			if ( i == 0 ) return L"Top";
+			if ( i == 1 ) return L"Center";
+			return L"Bottom";
+		}
+
+	};
+
+	class HorizontalAlign: public ControlFactory::Property
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( HorizontalAlign, "HorizontalAlign" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			if ( gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Left )	return L"Left";
+			if ( gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::CenterH )	return L"Center";
+			if ( gwen_cast<Controls::Label>(ctrl)->GetAlignment() & Pos::Right )	return L"Right";
+
+			return L"Left";
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			int iAlign = gwen_cast<Controls::Label>(ctrl)->GetAlignment();
+
+			iAlign &= ~Pos::Left;
+			iAlign &= ~Pos::CenterH;
+			iAlign &= ~Pos::Right;
+
+			if ( str == L"Left" )	gwen_cast<Controls::Label>(ctrl)->SetAlignment( iAlign | Pos::Left );
+			if ( str == L"Center" ) gwen_cast<Controls::Label>(ctrl)->SetAlignment( iAlign | Pos::CenterH );
+			if ( str == L"Right" ) gwen_cast<Controls::Label>(ctrl)->SetAlignment( iAlign | Pos::Right );
+		}
+
+		int	OptionNum(){ return 3; }
+
+		Gwen::UnicodeString	OptionGet( int i )
+		{ 
+			if ( i == 0 ) return L"Left";
+			if ( i == 1 ) return L"Center";
+			return L"Right";
+		}
+
+	};
 }
 
 class Label_Factory : public Gwen::ControlFactory::Base
@@ -119,7 +192,9 @@ class Label_Factory : public Gwen::ControlFactory::Base
 			AddProperty( new Property::Wrap() );	
 			AddProperty( new Property::Font() );
 			AddProperty( new Property::FontSize() );
-			AddProperty( new Property::FontBold() );			
+			AddProperty( new Property::FontBold() );
+			AddProperty( new Property::VerticalAlign() );
+			AddProperty( new Property::HorizontalAlign() );
 		}
 
 		virtual Gwen::String Name(){ return "Label"; }

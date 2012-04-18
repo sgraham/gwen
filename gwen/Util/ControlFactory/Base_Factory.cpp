@@ -201,8 +201,6 @@ class Base_Factory : public Gwen::ControlFactory::Base
 			AddProperty( new Property::Position() );
 			AddProperty( new Property::Size() );
 			AddProperty( new Property::Margin() );
-			
-			
 		}
 
 		virtual Gwen::String Name(){ return "Base"; }

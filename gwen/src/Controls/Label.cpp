@@ -48,6 +48,11 @@ void Label::SetAlignment( int iAlign )
 	Invalidate();
 }
 
+int Label::GetAlignment()
+{
+	return m_iAlign;
+}
+
 void Label::SetText( const TextObject& str, bool bDoEvents )
 { 
 	if ( m_Text->GetText() == str.GetUnicode() ) return;
