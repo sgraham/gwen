@@ -107,6 +107,15 @@ Gwen::Anim::TimedAnimation::TimedAnimation( float fLength, float fDelay, float f
 	m_bFinished = false;
 }
 
+float GetEased( float fTime, float fEase )
+{
+	// Ease in and Out if ease is < 0
+	if ( fEase < 0 )
+		return -fTime/2 * (cos(3.14159f*fTime) - 1);
+
+	return pow( fTime, fEase );
+}
+
 void Gwen::Anim::TimedAnimation::Think()
 {
 	if ( m_bFinished ) return;
@@ -125,7 +134,9 @@ void Gwen::Anim::TimedAnimation::Think()
 	if ( fDelta < 0.0f ) fDelta = 0.0f;
 	if ( fDelta > 1.0f ) fDelta = 1.0f;
 
-	Run( pow( fDelta, m_fEase ) );
+	float fEased = GetEased( fDelta, m_fEase );
+
+	Run( fEased );
 
 	if ( fDelta == 1.0f )
 	{

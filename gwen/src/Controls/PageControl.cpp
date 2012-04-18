@@ -52,8 +52,6 @@ GWEN_CONTROL_CONSTRUCTOR( PageControl )
 	m_Back->onPress.Add( this, &ThisClass::PreviousPage );
 	m_Back->SetSize( 70 );
 
-	
-
 	m_Label = new Controls::Label( pControls );
 	m_Label->Dock( Pos::Fill );
 	m_Label->SetAlignment( Pos::Left | Pos::CenterV );
@@ -77,6 +75,7 @@ void PageControl::SetPageCount( unsigned int iNum )
 
 	// Setting to -1 to force the page to change
 	m_iCurrentPage = -1;
+	HideAll();
 	ShowPage( 0 );
 }
 
@@ -94,11 +93,10 @@ void PageControl::ShowPage( unsigned int i )
 {
 	if ( m_iCurrentPage == i ) return;
 
-	HideAll();
-
 	if ( m_pPages[i] )
 	{
 		m_pPages[i]->Show();
+		m_pPages[i]->Dock( Pos::Fill );
 	}
 
 	m_iCurrentPage = i;
@@ -137,13 +135,39 @@ Controls::Base* PageControl::GetCurrentPage()
 void PageControl::NextPage()
 {
 	if ( m_iCurrentPage >= m_iPages-1 ) return;
+
+	if ( m_pPages[m_iCurrentPage] )
+	{
+		m_pPages[m_iCurrentPage]->Dock( Pos::None );
+		Anim::Add( m_pPages[m_iCurrentPage], new Anim::Pos::X( m_pPages[m_iCurrentPage]->X(), Width() * -1, 0.2f, true, 0.0f, -1 ) );
+	}
+
 	ShowPage( m_iCurrentPage + 1 );
+
+	if ( m_pPages[m_iCurrentPage] )
+	{
+		m_pPages[m_iCurrentPage]->Dock( Pos::None );
+		Anim::Add( m_pPages[m_iCurrentPage], new Anim::Pos::X( Width(), 0, 0.2f, false, 0.0f, -1 ) );
+	}
 }
 
 void PageControl::PreviousPage()
 {
 	if ( m_iCurrentPage == 0 ) return;
+
+	if ( m_pPages[m_iCurrentPage] )
+	{
+		m_pPages[m_iCurrentPage]->Dock( Pos::None );
+		Anim::Add( m_pPages[m_iCurrentPage], new Anim::Pos::X( m_pPages[m_iCurrentPage]->X(), Width(), 0.3f, true, 0.0f, -1 ) );
+	}
+
 	ShowPage( m_iCurrentPage - 1 );
+
+	if ( m_pPages[m_iCurrentPage] )
+	{
+		m_pPages[m_iCurrentPage]->Dock( Pos::None );
+		Anim::Add( m_pPages[m_iCurrentPage], new Anim::Pos::X( Width() * -1, 0, 0.3f, false, 0.0f, -1 ) );
+	}
 }
 
 void PageControl::Finish()
