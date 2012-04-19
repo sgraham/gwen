@@ -210,3 +210,25 @@ class Label_Factory : public Gwen::ControlFactory::Base
 };
 
 GWEN_CONTROL_FACTORY( Label_Factory );
+
+class LabelClickable_Factory : public Gwen::ControlFactory::Base
+{
+public:
+
+	GWEN_CONTROL_FACTORY_CONSTRUCTOR( LabelClickable_Factory, ControlFactory::Base )
+	{
+	}
+
+	virtual Gwen::String Name(){ return "LabelClickable"; }
+	virtual Gwen::String BaseName(){ return "Label"; }
+
+	virtual Gwen::Controls::Base* CreateInstance( Gwen::Controls::Base* parent )
+	{
+		Gwen::Controls::Label* pControl = new Gwen::Controls::LabelClickable( parent );
+		pControl->SetSize( 100, 20 );
+		pControl->SetText( "LabelClickable" );
+		return pControl;
+	}
+};
+
+GWEN_CONTROL_FACTORY( LabelClickable_Factory );

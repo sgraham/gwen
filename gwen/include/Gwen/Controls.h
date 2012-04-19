@@ -27,6 +27,7 @@
 #include "Gwen/Controls/Splitters.h"
 #include "Gwen/Controls/PageControl.h"
 #include "Gwen/Controls/ProgressBar.h"
+#include "Gwen/Controls/LabelClickable.h"
 
 #include "Gwen/Controls/Rectangle.h"
 

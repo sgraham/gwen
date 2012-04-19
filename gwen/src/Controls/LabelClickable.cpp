@@ -16,6 +16,7 @@ GWEN_CONTROL_CONSTRUCTOR( LabelClickable )
 {
 	SetIsToggle( false );
 
+	SetCursor( Gwen::CursorType::Finger );
 	SetAlignment( Gwen::Pos::Left | Gwen::Pos::CenterV );
 }
 
