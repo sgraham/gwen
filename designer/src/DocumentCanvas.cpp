@@ -71,6 +71,13 @@ void DocumentCanvas::SelectControls( ControlList& CtrlList )
 	{
 		m_SelectionLayer->AddSelection( (*it) );
 	}
+
+	// Let everything else know the selection changed
+	{
+		Event::Information info;
+		info.ControlList = CtrlList;
+		onSelectionChanged.Call( this, info );
+	}
 }
 
 void DocumentCanvas::OnSelectionChanged( Event::Info info )

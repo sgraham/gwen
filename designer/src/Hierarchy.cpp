@@ -56,11 +56,7 @@ void Hierarchy::UpdateNode( Controls::TreeNode* pNode, Controls::Base* pControl 
 
 void Hierarchy::OnCanvasChildAdded( Event::Info info )
 {
-	
-	info.Control;
-
-	Debug::Msg( "Document Added\n" );
-
+	//info.Control;
 	CompleteRefresh();
 }
 
@@ -69,7 +65,6 @@ void Hierarchy::OnNodeSelected( Event::Info info )
 	if ( !info.ControlCaller->UserData.Exists( "TargetControl" ) ) return;
 
 	Controls::Base* ctrl = info.ControlCaller->UserData.Get<Controls::Base*>( "TargetControl" );
-	Debug::Msg( "Selected %s\n", ctrl->GetTypeName() );
 
 	ControlList list;
 	list.Add( ctrl );

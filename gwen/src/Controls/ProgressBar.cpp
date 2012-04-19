@@ -7,10 +7,33 @@
 
 #include "Gwen/Controls/ScrollControl.h"
 #include "Gwen/Controls/ProgressBar.h"
+#include "Gwen/Anim.h"
 #include "Gwen/Utility.h"
 
 using namespace Gwen;
 using namespace Gwen::Controls;
+
+class ProgressBarThink : public Gwen::Anim::Animation
+{
+	public:
+
+		ProgressBarThink()
+		{
+			m_fLastFrame = 0.0f;
+		}
+
+		virtual void Think()
+		{
+			float fDiff = Platform::GetTimeInSeconds() - m_fLastFrame;
+
+			gwen_cast<ProgressBar>(m_Control)->CycleThink( Gwen::Clamp( fDiff, 0, 0.3 ) );
+
+			m_fLastFrame = Platform::GetTimeInSeconds();
+		}
+
+
+		float	m_fLastFrame;
+};
 
 
 GWEN_CONTROL_CONSTRUCTOR( ProgressBar )
@@ -24,6 +47,9 @@ GWEN_CONTROL_CONSTRUCTOR( ProgressBar )
 
 	m_fProgress = 0.0f;
 	m_bAutoLabel = true;
+	m_fCycleSpeed = 0.0f;
+
+	Gwen::Anim::Add( this, new ProgressBarThink() );
 }
 
 void ProgressBar::SetValue(float val)
@@ -43,7 +69,30 @@ void ProgressBar::SetValue(float val)
 	}
 }
 
+void ProgressBar::CycleThink( float fDelta )
+{
+	if ( !Visible() ) return;
+	if ( m_fCycleSpeed == 0.0f ) return;
+	
+	m_fProgress += m_fCycleSpeed * fDelta;
+	
+	if ( m_fProgress < 0.0f ) m_fProgress += 1.0f;
+	if ( m_fProgress > 1.0f ) m_fProgress -= 1.0f;
+
+	Redraw();
+}
+
 void ProgressBar::Render( Skin::Base* skin )
 {
 	skin->DrawProgressBar( this, m_bHorizontal, m_fProgress);
+}
+
+float ProgressBar::GetCycleSpeed()
+{
+	return m_fCycleSpeed;
+}
+
+void ProgressBar::SetCycleSpeed( float f )
+{
+	m_fCycleSpeed = f;
 }

@@ -29,6 +29,7 @@ namespace ControlFactory
 		DECLARE_GWEN_CONTROL_FACTORY( FolderPicker_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( PageControl_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( Rectangle_Factory );
+		DECLARE_GWEN_CONTROL_FACTORY( ProgressBar_Factory );
 		
 		
 		DECLARE_GWEN_CONTROL_FACTORY( DesignerCanvas_Factory );
