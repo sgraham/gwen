@@ -76,3 +76,11 @@ void ControlList::DoAction()
 		(*it)->DoAction();
 	}
 }
+
+void ControlList::SetActionInternal( Gwen::Event::Handler* pObject, void (Gwen::Event::Handler::*f)( Gwen::Event::Info ), const Gwen::Event::Packet& packet )
+{
+	for ( List::const_iterator it = list.begin(); it != list.end(); ++it )
+	{
+		(*it)->SetAction( pObject, f, packet );
+	}
+}

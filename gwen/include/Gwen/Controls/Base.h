@@ -459,6 +459,7 @@ namespace Gwen
 				virtual TextObject GetValue();
 				virtual void SetValue( const TextObject& strValue );
 				virtual void DoAction(){};
+				virtual void SetAction( Event::Handler* pObject, Handler::FunctionWithInformation pFunction, const Gwen::Event::Packet& packet ){};
 
 				virtual int GetNamedChildren( Gwen::ControlList& list, const Gwen::String& strName, bool bDeep = true );
 				virtual Gwen::ControlList GetNamedChildren( const Gwen::String& strName, bool bDeep = true );

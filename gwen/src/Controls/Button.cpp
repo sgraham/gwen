@@ -228,3 +228,8 @@ void Button::SetImageAlpha( float f )
 
 	m_Image->SetDrawColor( Gwen::Color( 255, 255, 255, 255.0f * f ) );
 }
+
+void Button::SetAction( Event::Handler* pObject, Handler::FunctionWithInformation pFunction, const Gwen::Event::Packet& packet )
+{
+	onPress.Add( pObject, pFunction, packet );
+}

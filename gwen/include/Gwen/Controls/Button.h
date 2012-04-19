@@ -57,6 +57,7 @@ namespace Gwen
 				virtual void SetImageAlpha( float fMultiply );
 
 				virtual void DoAction(){ OnPress(); }
+				virtual void SetAction( Event::Handler* pObject, Handler::FunctionWithInformation pFunction, const Gwen::Event::Packet& packet );
 
 			public:
 

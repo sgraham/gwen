@@ -35,6 +35,11 @@ namespace Gwen
 			Packet( Gwen::Controls::Base* pControl = NULL ){ Control = pControl; }
 
 			Gwen::Controls::Base*	Control;
+			Gwen::String			String;
+			Gwen::UnicodeString		UnicodeString;
+			int						Integer;
+			float					Float;
+			unsigned long long		UnsignedLongLong;
 		};
 
 		/*
