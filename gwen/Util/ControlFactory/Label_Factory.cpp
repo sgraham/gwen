@@ -12,12 +12,21 @@ namespace Property
 
 		UnicodeString GetValue( Controls::Base* ctrl )
 		{
-			return gwen_cast<Controls::Label>(ctrl)->GetText().GetUnicode();
+			UnicodeString str = gwen_cast<Controls::Label>(ctrl)->GetText().GetUnicode();
+
+			Gwen::Utility::Replace<UnicodeString>( str, L"\n", L"\\n" );
+			Gwen::Utility::Replace<UnicodeString>( str, L"\t", L"\\t" );
+
+			return str;
 		}
 
 		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
 		{
-			gwen_cast<Controls::Label>(ctrl)->SetText( str );
+			UnicodeString strOut = str;
+			Gwen::Utility::Replace<UnicodeString>( strOut, L"\\n", L"\n" );
+			Gwen::Utility::Replace<UnicodeString>( strOut, L"\\t", L"\t" );
+
+			gwen_cast<Controls::Label>(ctrl)->SetText( strOut );
 		}
 
 	};

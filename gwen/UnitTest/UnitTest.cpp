@@ -44,7 +44,6 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 	m_StatusBar = new Controls::StatusBar( this );
 	m_StatusBar->Dock( Pos::Bottom );
 
-
 	Controls::Layout::Center* pCenter = new Controls::Layout::Center( this );
 	pCenter->Dock( Pos::Fill );
 
@@ -64,8 +63,6 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 		ADD_UNIT_TEST( ImagePanel );
 		ADD_UNIT_TEST( StatusBar );
 	}
-
-
 
 	{	
 		Controls::CollapsibleCategory* cat = pList->Add( "Controls" );
@@ -107,7 +104,7 @@ GWEN_CONTROL_CONSTRUCTOR( UnitTest )
 	m_fLastSecond = Gwen::Platform::GetTimeInSeconds();
 	m_iFrames = 0;
 
-	pList->GetNamedChildren( "PageControl" ).DoAction();
+	pList->GetNamedChildren( "MenuStrip" ).DoAction();
 }
 
 void UnitTest::OnCategorySelect( Gwen::Event::Info info )

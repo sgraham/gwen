@@ -61,6 +61,16 @@ namespace Gwen
 			return temp; 
 		}
 
+		template<typename T> void Replace( T& str, const T& strFind, const T& strReplace )
+		{
+			size_t pos = 0;
+			while( (pos = str.find(strFind, pos) ) != T::npos )
+			{
+				str.replace( pos, strFind.length(), strReplace );
+				pos += strReplace.length();
+			}
+		}
+
 #ifdef _MSC_VER
 	#pragma warning( pop )
 #endif

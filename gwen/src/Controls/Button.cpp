@@ -140,7 +140,6 @@ void Button::SetImage( const TextObject& strName, bool bCenter )
 	Padding padding = GetTextPadding();
 	padding.left = m_Image->Right() + 2;
 	SetTextPadding( padding );
-
 }
 
 void Button::SetToggleState( bool b ) 
@@ -201,9 +200,9 @@ void Button::UpdateColours()
 	SetTextColor( GetSkin()->Colors.Button.Normal );
 }
 
-void Button::Layout( Skin::Base* pSkin )
-{	
-	BaseClass::Layout( pSkin );	
+void Button::PostLayout( Skin::Base* pSkin )
+{
+	BaseClass::PostLayout( pSkin );	
 
 	if ( m_Image )	
 	{		

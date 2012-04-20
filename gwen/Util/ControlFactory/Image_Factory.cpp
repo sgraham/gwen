@@ -22,6 +22,23 @@ namespace Property
 
 	};
 
+	class Stretch: public ControlFactory::PropertyBool 
+	{
+		GWEN_CONTROL_FACTORY_PROPERTY( Stretch, "The path to the image (relative to .exe)" );
+
+		UnicodeString GetValue( Controls::Base* ctrl )
+		{
+			if ( gwen_cast<Controls::ImagePanel>(ctrl)->GetStretch() ) return True;
+			return False;
+		}
+
+		void SetValue( Controls::Base* ctrl, const UnicodeString& str )
+		{
+			bool bTrue = (str == True);
+			gwen_cast<Controls::ImagePanel>(ctrl)->SetStretch( bTrue );
+		}
+
+	};
 }
 
 class Image_Factory : public Gwen::ControlFactory::Base
@@ -30,7 +47,8 @@ class Image_Factory : public Gwen::ControlFactory::Base
 
 		GWEN_CONTROL_FACTORY_CONSTRUCTOR( Image_Factory, ControlFactory::Base )
 		{
-			AddProperty( new Property::ImageName() );		
+			AddProperty( new Property::ImageName() );	
+			AddProperty( new Property::Stretch() );
 		}
 
 		virtual Gwen::String Name(){ return "ImagePanel"; }

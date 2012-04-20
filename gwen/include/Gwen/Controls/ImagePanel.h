@@ -26,6 +26,8 @@ namespace Gwen
 					SetUV( 0, 0, 1, 1 );
 					SetMouseInputEnabled( false );
 					m_DrawColor = Colors::White;
+
+					SetStretch( true );
 				}
 
 				virtual ~ImagePanel()
@@ -69,7 +71,11 @@ namespace Gwen
 				virtual void Render( Skin::Base* skin )
 				{
 					skin->GetRender()->SetDrawColor( m_DrawColor );
-					skin->GetRender()->DrawTexturedRect( &m_Texture, GetRenderBounds(), m_uv[0], m_uv[1], m_uv[2], m_uv[3] );
+
+					if ( m_bStretch )
+						skin->GetRender()->DrawTexturedRect( &m_Texture, GetRenderBounds(), m_uv[0], m_uv[1], m_uv[2], m_uv[3] );
+					else 
+						skin->GetRender()->DrawTexturedRect( &m_Texture, Gwen::Rect( 0, 0, m_Texture.width, m_Texture.height ), m_uv[0], m_uv[1], m_uv[2], m_uv[3] );
 				}
 
 				virtual void SizeToContents()
@@ -87,11 +93,16 @@ namespace Gwen
 					return m_Texture.FailedToLoad();
 				}
 
+				virtual bool GetStretch(){ return m_bStretch; }
+				virtual void SetStretch( bool b ){ m_bStretch = b; }
+
 			protected:
 
 				Texture			m_Texture;
 				float			m_uv[4];
 				Gwen::Color		m_DrawColor;
+
+				bool			m_bStretch;
 
 		};
 	}
