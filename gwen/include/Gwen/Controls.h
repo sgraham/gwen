@@ -28,6 +28,8 @@
 #include "Gwen/Controls/PageControl.h"
 #include "Gwen/Controls/ProgressBar.h"
 #include "Gwen/Controls/LabelClickable.h"
+#include "Gwen/Controls/VerticalSlider.h"
+#include "Gwen/Controls/HorizontalSlider.h"
 
 #include "Gwen/Controls/Rectangle.h"
 

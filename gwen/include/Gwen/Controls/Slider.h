@@ -65,6 +65,9 @@ namespace Gwen
 				
 				Gwen::Event::Caller	onValueChanged;
 
+				virtual float GetMin(){ return m_fMin; }
+				virtual float GetMax(){ return m_fMax; }
+
 			protected:
 
 				virtual void SetValueInternal( float fVal );

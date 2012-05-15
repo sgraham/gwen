@@ -31,6 +31,11 @@ namespace ControlFactory
 		DECLARE_GWEN_CONTROL_FACTORY( PageControl_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( Rectangle_Factory );
 		DECLARE_GWEN_CONTROL_FACTORY( ProgressBar_Factory );
+		DECLARE_GWEN_CONTROL_FACTORY( ComboBox_Factory );
+
+		DECLARE_GWEN_CONTROL_FACTORY( HorizontalSlider_Factory );
+
+		
 		
 		
 		DECLARE_GWEN_CONTROL_FACTORY( DesignerCanvas_Factory );
