@@ -22,7 +22,11 @@ function DefineSample( name, filetable, linktable, linktabled, definestable )
 	
 	project( "Sample-" .. name )
 	targetdir ( "../bin" )
-	debugdir ( "../bin" )
+	
+	if ( debugdir) then
+		debugdir ( "../bin" )
+	end
+	
 	if ( definestable ) then defines( definestable ) end
 	files { filetable }
 	
