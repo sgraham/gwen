@@ -41,14 +41,6 @@
 	#else
 		#define GWEN_EXPORT __declspec(dllimport)
 	#endif
-
-	#ifdef _MSC_VER
-		#ifndef _DEBUG
-			#pragma comment ( lib, "gwen.lib" )
-		#else
-			#pragma comment ( lib, "gwend.lib" )
-		#endif
-	#endif
 #endif
 
 //
@@ -57,16 +49,6 @@
 #else
 
 	#define GWEN_EXPORT
-
-#ifdef _WIN32
-	#ifdef _MSC_VER
-		#ifndef _DEBUG
-			#pragma comment ( lib, "gwen_static.lib" )
-		#else
-			#pragma comment ( lib, "gwend_static.lib" )
-		#endif
-	#endif
-#endif
 
 #endif
 
