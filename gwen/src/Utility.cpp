@@ -119,7 +119,7 @@ bool Gwen::Utility::Strings::Wildcard( const TextObject& strWildcard, const Text
 
 	if ( strWildcard == "*" ) return true;
 
-	int iPos = W.find( L"*", 0 );
+	size_t iPos = W.find( L"*", 0 );
 	if ( iPos == UnicodeString::npos ) return strWildcard == strHaystack;
 
 	// First half matches
