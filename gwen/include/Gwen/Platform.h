@@ -41,7 +41,7 @@ namespace Gwen
 		//
 		// Needed for things like double click
 		//
-		GWEN_EXPORT float GetTimeInSeconds();
+		GWEN_EXPORT double GetTimeInSeconds();
 
 		//
 		// System Dialogs ( Can return false if unhandled )

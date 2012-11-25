@@ -116,15 +116,15 @@ double GetPerformanceFrequency()
 	return Frequency;
 }
 
-float Gwen::Platform::GetTimeInSeconds()
+double Gwen::Platform::GetTimeInSeconds()
 {
-	static float fCurrentTime = 0.0f;
+	static double fCurrentTime = 0.0;
 	static __int64 iLastTime = 0;
 
 	__int64 thistime;
 	QueryPerformanceCounter( (LARGE_INTEGER*)&thistime );
 
-	float fSecondsDifference = (double)( thistime - iLastTime ) * GetPerformanceFrequency();
+	double fSecondsDifference = (double)( thistime - iLastTime ) * GetPerformanceFrequency();
 	if ( fSecondsDifference > 0.1f ) fSecondsDifference = 0.1f;
 
 	fCurrentTime += fSecondsDifference;

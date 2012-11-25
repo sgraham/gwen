@@ -34,9 +34,9 @@ bool Gwen::Platform::SetClipboardText( const Gwen::UnicodeString& str )
 	return true;
 }
 
-float Gwen::Platform::GetTimeInSeconds()
+double Gwen::Platform::GetTimeInSeconds()
 {
-	float fSeconds = (float) clock() / (float)CLOCKS_PER_SEC;
+	double fSeconds = (double) clock() / (double)CLOCKS_PER_SEC;
 	return fSeconds;
 }
 
