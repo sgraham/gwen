@@ -36,8 +36,10 @@ namespace Gwen
 		const unsigned char Down = 13;
 		const unsigned char Escape = 14;
 		const unsigned char Alt = 15;
+		const unsigned char PageUp = 16;
+		const unsigned char PageDown = 17;
 
-		const unsigned char Count = 16;
+		const unsigned char Count = 18;
 	}
 
 	namespace Input 

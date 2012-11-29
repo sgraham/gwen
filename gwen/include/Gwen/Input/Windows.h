@@ -144,6 +144,8 @@ namespace Gwen
 								else if ( msg.wParam == VK_SPACE ) iKey = Gwen::Key::Space;
 								else if ( msg.wParam == VK_UP ) iKey = Gwen::Key::Up;
 								else if ( msg.wParam == VK_DOWN ) iKey = Gwen::Key::Down;
+								else if ( msg.wParam == VK_PRIOR ) iKey = Gwen::Key::PageUp;
+								else if ( msg.wParam == VK_NEXT ) iKey = Gwen::Key::PageDown;
 
 								if ( iKey != -1 )
 								{

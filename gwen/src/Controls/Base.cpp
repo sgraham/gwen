@@ -1078,6 +1078,8 @@ bool Base::OnKeyPress( int iKey, bool bPress )
 		case Key::Up:			bHandled = OnKeyUp( bPress ); break;
 		case Key::Down:			bHandled = OnKeyDown( bPress ); break;
 		case Key::Escape:		bHandled = OnKeyEscape( bPress ); break;
+		case Key::PageUp:		bHandled = OnKeyPageUp( bPress ); break;
+		case Key::PageDown:		bHandled = OnKeyPageDown( bPress ); break;
 
 		default: break;
 	}

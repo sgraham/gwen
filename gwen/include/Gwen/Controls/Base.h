@@ -245,6 +245,8 @@ namespace Gwen
 				virtual bool OnKeyUp( bool /*bDown*/ ){ return false; }
 				virtual bool OnKeyDown( bool /*bDown*/ ){ return false; }
 				virtual bool OnKeyEscape( bool /*bDown*/ ) { return false; }
+				virtual bool OnKeyPageUp( bool /*bDown*/ ) { return false; }
+				virtual bool OnKeyPageDown( bool /*bDown*/ ) { return false; }
 
 				virtual void OnMouseEnter();
 				virtual void OnMouseLeave();
