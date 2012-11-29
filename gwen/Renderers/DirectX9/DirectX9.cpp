@@ -147,7 +147,7 @@ namespace Gwen
 			fd.Width = 0;
 			fd.MipLevels = 1;
 			fd.CharSet = DEFAULT_CHARSET;
-      fd.Height = MulDiv(font->realsize, GetDeviceCaps(GetWindowDC(GetDesktopWindow()), LOGPIXELSY), 72);
+      fd.Height = -MulDiv(font->realsize, GetDeviceCaps(GetWindowDC(GetDesktopWindow()), LOGPIXELSY), 72);
 			fd.OutputPrecision = OUT_TT_ONLY_PRECIS;
 			fd.Italic = 0;
 			fd.Weight = font->bold ? FW_BOLD : FW_NORMAL;
