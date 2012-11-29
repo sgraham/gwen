@@ -147,19 +147,16 @@ namespace Gwen
 			fd.Width = 0;
 			fd.MipLevels = 1;
 			fd.CharSet = DEFAULT_CHARSET;
-			fd.Height = font->realsize * -1.0f;
-			fd.OutputPrecision = OUT_DEFAULT_PRECIS;
+      fd.Height = MulDiv(font->realsize, GetDeviceCaps(GetWindowDC(GetDesktopWindow()), LOGPIXELSY), 72);
+			fd.OutputPrecision = OUT_TT_ONLY_PRECIS;
 			fd.Italic = 0;
 			fd.Weight = font->bold ? FW_BOLD : FW_NORMAL;
-#ifdef CLEARTYPE_QUALITY
-			fd.Quality = font->realsize < 14 ? DEFAULT_QUALITY : CLEARTYPE_QUALITY;
-#else 
-			fd.Quality = PROOF_QUALITY;
-#endif 
+			fd.Quality = CLEARTYPE_QUALITY;
 			fd.PitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
 
 			LPD3DXFONT pD3DXFont;
 			HRESULT hr = D3DXCreateFontIndirect( m_pDevice, &fd, &pD3DXFont );
+      (void)hr;
 
 			FontData*	pFontData = new FontData();
 			pFontData->pFont = pD3DXFont;
