@@ -6,14 +6,6 @@
 
 #ifdef _WIN32
 
-#ifndef _WIN32_WINNT
-#	define _WIN32_WINNT 0x06000000
-#else
-#	if _WIN32_WINNT < 0x06000000
-#		error Unsupported platform
-#	endif
-#endif
-
 #include "Gwen/Macros.h"
 #include "Gwen/Platform.h"
 #include "Gwen/Input/Windows.h"

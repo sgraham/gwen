@@ -190,6 +190,7 @@ namespace Gwen
 			m_pRT = pRT;
 
 			HRESULT hr = m_pRT->CreateSolidColorBrush( m_Color, &m_pSolidColorBrush );
+      (void)hr;
 
 			for ( Texture::List::const_iterator tex_it = m_TextureList.begin(); tex_it != m_TextureList.end(); ++tex_it )
 			{
