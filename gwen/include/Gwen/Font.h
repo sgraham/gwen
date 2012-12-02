@@ -29,6 +29,14 @@ namespace Gwen
 			bold = false;
 		}
 
+    Font(const UnicodeString& facename, float size) {
+      this->data = NULL;
+      this->facename = facename;
+      this->size = size;
+      this->realsize = 0;
+      this->bold = false;
+    }
+
 		UnicodeString	facename;
 		float size;
 		bool  bold;
