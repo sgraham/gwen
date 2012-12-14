@@ -229,6 +229,23 @@ namespace Gwen
 			);
 		}
 
+		void Direct2D::DrawTexturedRectAlpha( Gwen::Texture* pTexture, Gwen::Rect rect, float alpha, float u1, float v1, float u2, float v2 )
+		{
+			TextureData* pTexData = (TextureData*) pTexture->data;
+
+			// Missing image, not loaded properly?
+			if ( !pTexData || pTexData->pBitmap == NULL ) 
+				return DrawMissingImage( rect );
+
+			Translate( rect );
+
+			m_pRT->DrawBitmap( pTexData->pBitmap, 
+								D2D1::RectF( rect.x, rect.y, rect.x + rect.w, rect.y + rect.h ), 
+								alpha, D2D1_BITMAP_INTERPOLATION_MODE_LINEAR,
+								D2D1::RectF( u1 * pTexture->width, v1 * pTexture->height, u2 * pTexture->width, v2 * pTexture->height )
+			);
+		}
+
 		bool Direct2D::InternalLoadTexture( Gwen::Texture* pTexture )
 		{
 			IWICBitmapDecoder *pDecoder = NULL;
